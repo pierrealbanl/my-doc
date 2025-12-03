@@ -151,3 +151,34 @@ equals x y = x == y
 main = print (equals 200 200)
 ```
 :::
+
+## 5. Les conditions
+
+En Haskell, les conditions peuvent s’écrire principalement de deux manières : avec la forme classique `if` / `then` / `else` ou avec les guards.
+
+### 5.1. Conditions avec `if` / `then` / `else` 
+
+La forme classique d’une condition utilise obligatoirement les mots-clés `if`, `then` et `else`. Contrairement à d’autres langages, le `else` est toujours requis, car une condition est une expression qui doit forcément retourner une valeur.
+
+```haskell
+isNeg :: (Num a, Ord a) => a -> Bool
+isNeg a =
+    if a < 0 then True else False
+```
+
+:::warning
+La valeur `0` appartient obligatoirement à la classe de types `Num`. C’est pour cette raison que la contrainte `Num a` est nécessaire dans la signature de type.
+:::
+
+### 5.2. Conditions avec les guards (pattern matching conditionnel)
+
+**Les guards** sont une autre manière très lisible d’écrire des conditions en Haskell. Ils permettent d’exprimer plusieurs cas à l’aide de conditions successives. 
+
+```haskell
+isNeg :: (Num a, Ord a) => a -> Bool
+isNeg a
+    | a < 0 = True
+    | otherwise = False
+```
+
+Dans les guards, chaque symbole `|` signifie « si », tandis que `otherwise` représente le cas « sinon » et, par défaut, elle correspond à la valeur `True`. Haskell évalue les conditions de haut en bas et s’arrête dès qu’une condition est validée.
