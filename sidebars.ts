@@ -40,6 +40,13 @@ module.exports = {
                 'mastering-the-stack/css'
             ],
         },
+        {
+            type: 'category',
+            label: 'Advanced Programming Languages',
+            items: [
+                'advanced-programming-languages/haskell'
+            ]
+        },
         'maitriser-anglais'
     ],
 }

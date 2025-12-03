@@ -38,13 +38,15 @@ Il assure que toute modification d’une donnée dans le code se reflète automa
 | Property binding    | `property={expression}` | `<img src={imageUrl} />`                                         |
 | Event binding       | `onEvent={openDialog}`  | `<button onClick={() => openDialog()}>Click</button>`            |
 
-## 1.2. Gestion d’état
+## 1.2. Les Hooks en React
+
+**Un Hook** est une fonction spéciale fournie par React qui permet d’ajouter des fonctionnalités à un composant fonctionnel, comme se souvenir de données, réagir à des changements ou encore interagir avec le navigateur.
+
+### 1.2.1. `useState()`
 
 Un état en React, c’est comme une mémoire pour ton composant. C’est une petite boîte où il peut **stocker une information** (un nombre, un texte, vrai/faux, etc.).
 
-### 1.2.1. `useState`
-
-`useState` est un outil qui permet de créer une valeur que le composant peut mémoriser, ainsi qu’une fonction pour la mettre à jour.
+`useState()` est un outil qui permet de créer une valeur que le composant peut mémoriser, ainsi qu’une fonction pour la mettre à jour.
 
 ```tsx
 const [count, setCount] = useState(0);
@@ -69,6 +71,26 @@ function Index() {
 export default Index;
 ```
 À chaque fois que `setCount(...)` est appelé, React met à jour la valeur et réaffiche le composant avec la nouvelle donnée.
+
+### 1.2.2. `useRef<HTMLDivElement>()`
+
+`useRef<HTMLDivElement>()` permet de créer une référence vers une valeur persistante ou vers un élément du DOM.
+
+```tsx
+import {useRef} from "react";
+
+function Index() {
+    const ref = useRef<HTMLDivElement>(null);
+
+    return (
+        <div ref={ref}>
+            <p>Hello World!</p>
+        </div>
+    )
+}
+
+export default Index;
+```
 
 ## 1.3. Rendu conditionnel
 
@@ -158,16 +180,4 @@ export default Index;
 
 :::info
 `key` permet à React d’identifier chaque élément d’une liste de façon unique, exactement comme si on parcourait la liste avec une boucle `for`.
-
-Avant insertion en tête :
-
-| **`items`** | Bob | Alice | Eve | 
-|:------------|:----|:------|:----|
-| **`key`**   | 0   | 1     | 2   | 
-
-Après insertion en tête :
-
-| **`items`** | Alisson | Bob | Alice | Eve | 
-|:------------|:--------|:----|:------|:----|
-| **`key`**   | 0       | 1   | 2     | 3   | 
 :::
