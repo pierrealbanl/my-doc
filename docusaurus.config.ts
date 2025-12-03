@@ -45,7 +45,7 @@ module.exports = {
         },
         prism: {
             theme: prismThemes.vsLight,
-            additionalLanguages: ['java']
+            additionalLanguages: ['java', 'haskell']
         },
     } satisfies Preset.ThemeConfig,
 };

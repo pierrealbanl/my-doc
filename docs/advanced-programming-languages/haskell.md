@@ -50,7 +50,7 @@ Prelude> 1 + 1
 
 **Sans type explicite :**
 
-```
+```haskell
 x = 200
 
 main = print x
@@ -62,7 +62,7 @@ Dans ce cas, Haskell **déduit automatiquement le type** de la variable.
 
 Pour déclarer une variable avec un type explicite, il faut utiliser la syntaxe avec `::`, suivie du type que l’on assigne à la variable :
 
-```
+```haskell
 x :: Int
 x = 200
 
@@ -79,14 +79,14 @@ Il est nécessaire d’utiliser la fonction `main` pour compiler et exécuter un
 
 Le mot `in` signifie : *“dans”*. Il sert à séparer la définition de la variable de l’expression dans laquelle elle est utilisée.
 
-```
+```haskell
 main = print (let x = 200 in x * x * x)
 ```
 
 :::warning
 La variable définie avec `let` n’est accessible **que dans la partie située après** `in`. En dehors de cette expression, elle n’existe plus. Ainsi, soit on utilise directement l’expression dans la fonction `main`, soit on stocke son résultat dans une variable, par exemple :
 
-```
+```haskell
 cube :: Int
 cube = let x = 200 in x * x * x
 
@@ -98,11 +98,56 @@ main = print cube
 
 Pour déclarer une fonction, on doit écrire **une signature de type complète**, c’est-à-dire ce que la fonction prend en entrée et ce qu’elle retourne :
 
-```
-f :: Int -> Int
-f x = x * x * x
+```haskell
+cube :: Int -> Int
+cube x = x * x * x
 
-main = print (f 200)
+main = print (cube 200)
 ```
 
-Ici, la fonction `f` prend un `Int` en entrée et retourne un `Int`. La signature de type s’écrit sous la forme : `function :: Input -> Output`. L’écriture `f x =` signifie que l’on définit la fonction en utilisant la variable `x`, suivie de l’expression qui donne le résultat.
+Ici, la fonction `cube` prend un `Int` en entrée et retourne un `Int`. La signature de type s’écrit sous la forme : `function :: Input -> Output`. L’écriture `cube x =` signifie que l’on définit la fonction en utilisant la variable `x`, suivie de l’expression qui donne le résultat.
+
+## 4. Classes de types et contraintes de typage
+
+Une classe de types regroupe des types qui partagent un même ensemble d’opérations :
+
+| **Classe de types** | **Description**                                                                                | **Instances**                                                                 |
+|:--------------------|:-----------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------|
+| `Num`               | Regroupe les types sur lesquels on peut faire des opérations arithmétiques (`+`, `-`, `*`, …)  | `Int`, `Integer`, `Float`, `Double`                                           |
+| `Eq`                | Regroupe les types dont les valeurs peuvent être comparées avec `==` et `/=`                   | `Int`, `Integer`, `Float`, `Double`, `Char`, `Bool`, `String`, listes, tuples |
+| `Ord`               | Regroupe les types que l’on peut ordonner (`<`, `>`, `<=`, `>=`)                               | `Int`, `Integer`, `Float`, `Double`, `Char`, `Bool`, `String`                 |
+| `Show`              | Regroupe les types que l’on peut convertir en texte pour l’affichage                           | `Int`, `Integer`, `Float`, `Double`, `Char`, `Bool`, `String`, listes, tuples |
+| `Read`              | Regroupe les types que l’on peut lire à partir d’une chaîne de caractères                      | `Int`, `Integer`, `Float`, `Double`, `Char`, `Bool`, `String`                 |
+| `Enum`              | Regroupe les types dont on peut énumérer les valeurs                                           | `Int`, `Integer`, `Char`, `Bool`                                              |
+| `Bounded`           | Regroupe les types possédant une valeur minimale et une valeur maximale                        | `Int`, `Char`, `Bool`, `Ordering`                                             |
+| `Integral`          | Regroupe les types représentant des nombres entiers                                            | `Int`, `Integer`                                                              |
+| `Floating`          | Regroupe les types représentant des nombres décimaux                                           | `Float`, `Double`                                                             |
+| `Functor`           | Regroupe les types sur lesquels on peut appliquer une transformation avec `fmap`               | listes (`[]`), `Maybe`, `Either`, `IO`                                        |
+
+### 4.1. Contraindre les types avec l’opérateur `=>`
+
+Une contrainte de type permet de limiter les types utilisables par une fonction grâce aux classes de types. L’opérateur `=>` sépare à gauche, les contraintes sur les types et à droite, le type proprement dit de la fonction.
+
+```haskell
+cube :: Num a => a -> a
+cube x = x * x * x
+
+equals :: Eq a => a -> a -> Bool
+equals x y = x == y
+
+main :: IO ()
+main = do
+  print (cube 200)
+  print (equals 200 200)
+```
+
+:::info
+À noter qu'il est possible d’imposer plusieurs contraintes à la fois sur un même type :
+
+```haskell
+equals :: (Eq a, Num a) => a -> a -> Bool
+equals x y = x == y
+
+main = print (equals 200 200)
+```
+:::
