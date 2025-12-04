@@ -189,7 +189,7 @@ main = print (isNeg(-200))
 La valeur `0` appartient obligatoirement à la classe de types `Num`. C’est pour cette raison que la contrainte `Num a` est nécessaire dans la signature de type.
 :::
 
-### 6.2. Conditions avec les guards (pattern matching conditionnel)
+### 6.2. Conditions avec les guards
 
 **Les guards** sont une autre manière très lisible d’écrire des conditions en Haskell. Ils permettent d’exprimer plusieurs cas à l’aide de conditions successives. 
 
@@ -202,7 +202,7 @@ isNeg a
 main = print (isNeg(-200))
 ```
 
-Dans les guards, chaque symbole `|` signifie *"si"*, tandis que `otherwise` représente le cas *"sinon"* et, par défaut, elle correspond à la valeur `True`. Haskell évalue les conditions de haut en bas et s’arrête dès qu’une condition est validée.
+Dans les guards, le symbole `|` signifie *"si"*, tandis que l’expression située après le signe `=` correspond à *"alors"*. Le mot-clé `otherwise` lui représente le cas *"sinon"* et correspond, par défaut, à la valeur `True`. Haskell évalue les conditions de haut en bas et s’arrête dès qu’une condition est vérifiée.
 
 :::danger
 Lorsqu’on définit une fonction avec des guards, on ne met pas de signe `=` après le nom de la fonction. Le `=` est utilisé directement dans chaque garde :
@@ -213,6 +213,20 @@ isNeg a
     | otherwise = ...
 ```
 :::
+
+### 6.3. Le pattern matching
+
+Le **pattern matching** permet de reconnaître la forme d’une valeur et d’agir en fonction de cette forme. Contrairement aux `if` et aux guards, il ne repose pas sur des conditions booléennes, mais sur la structure des données. On indique directement : *si la valeur a cette forme, alors on fait ceci.*
+
+```haskell
+func :: Int -> Int
+func 0 = 0
+func x = x * x * x
+
+main = print (func 0)
+```
+
+Ici, on a la forme `func 0`. Si l’on appelle la fonction avec 0, alors on dit que le résultat est égal à 0. Sinon, la valeur est stockée dans x et la fonction retourne son cube.
 
 ## 7. Structures de données
 
@@ -232,3 +246,5 @@ Ici, l’appel `pair 200 400` produit le tuple `(200,400)`, qui contient deux va
 :::info
 À noter qu'un tuple peut contenir 2, 3, 4 valeurs ou plus, mais sa taille est toujours fixe.
 :::
+
+### 7.2. Les listes
