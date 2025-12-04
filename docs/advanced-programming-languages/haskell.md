@@ -228,9 +228,7 @@ main = print (func 0)
 
 Ici, on a la forme `func 0`. Si l’on appelle la fonction avec 0, alors on dit que le résultat est égal à 0. Sinon, la valeur est stockée dans x et la fonction retourne son cube.
 
-## 7. Structures de données
-
-### 7.1. Les tuples
+## 7. Les tuples
 
 Un tuple est une structure de données qui permet de regrouper plusieurs valeurs dans une seule variable, tout en conservant leur ordre. Les valeurs d’un tuple peuvent être de types différents.
 
@@ -247,4 +245,81 @@ Ici, l’appel `pair 200 400` produit le tuple `(200,400)`, qui contient deux va
 À noter qu'un tuple peut contenir 2, 3, 4 valeurs ou plus, mais sa taille est toujours fixe.
 :::
 
-### 7.2. Les listes
+## 8. Les listes
+
+### 8.1. Construire une liste : méthode bas niveau et écriture simplifiée
+
+Pour construire une liste en Haskell, on peut utiliser plusieurs méthodes. **La première méthode** est dite *“bas niveau”*. Elle consiste à comprendre comment une liste est réellement construite en interne. Cette construction se fait à l’aide de l’opérateur `:` appelé cons (le constructeur de liste).
+
+Pour faire simple, en Haskell, construire une liste revient à relier un élément au reste de la liste avec `:`, élément par élément.
+
+```haskell
+list :: [Int]
+list = 200 : 400 : 600 : []
+
+main = print list
+```
+
+Si on analyse de plus près, on voit qu’en réalité la liste est construite de droite à gauche, en partant toujours de la liste vide `[]`, qui représente la fin de la liste :
+
+> Insertion de 600 dans la liste vide = `[600]`
+> 
+> Insertion de 400 dans la liste = `[400, 600]`
+> 
+> Insertion de 200 dans la liste = `[200, 400, 600]`
+
+**La deuxième méthode** est une méthode plus standardisée, utilisée pour simplifier l’écriture du code :
+
+```haskell
+list :: [Int]
+list = [200, 400, 600]
+
+main = print list
+```
+
+En réalité, derrière cette écriture, on retrouve exactement la méthode précédente. Elle est simplement masquée par une syntaxe plus lisible, afin de rendre le code plus clair et plus facile à écrire.
+
+:::warning
+À noter que, dans le cas d’une fonction en Haskell, il n’est pas nécessaire de préciser que la variable `a` est une liste, car son type est déjà défini dans la signature de la fonction comme étant une liste d’entiers. Ainsi, lorsque le paramètre est passé à la fonction, on sait automatiquement qu’il s’agit d’une liste. Il suffit donc de lui donner un nom de variable (comme `a`, par exemple), qui représente bien une liste d’entiers :
+
+```haskell
+list :: [Int] -> [Int]
+list a = a
+
+main = print (list [200, 400, 600])
+```
+:::
+
+### 8.2. Extraction d’une sous-liste à l’aide du cons `:`
+
+Pour accéder à un élément précis dans une liste, on peut utiliser le principe du cons `:` avec une petite subtilité : il est nécessaire d’utiliser des parenthèses pour le pattern matching.
+
+```haskell
+list :: [Int] -> [Int]
+list (a : b : c) = c
+
+main = print (list [200, 400, 600, 800])
+```
+
+Dans cet exemple : 
+
+> a = `200`
+> 
+> b = `400`
+> 
+> c = `[600, 800]`
+ 
+Donc la fonction retourne une liste à partir du troisième élément, soit : `[600, 800]`
+
+### 8.3. Utilisation du wildcard `_` pour ignorer des éléments dans une liste
+
+Si l’on souhaite retourner uniquement la valeur du troisième élément, on peut utiliser le joker (wildcard) `_`, qui signifie *"je ne m’intéresse pas à cette valeur"*. Il permet ainsi d’ignorer les éléments précédents de la liste :
+
+```haskell
+list :: [Int] -> Int
+list (_ : _ : c : _) = c
+
+main = print (list [200, 400, 600, 800])
+```
+
+Ici, les valeurs `200`, `400` et `800` sont ignorées grâce au joker `_`. La variable `c`, quant à elle, correspond au troisième élément de la liste, c’est-à-dire `600`.
