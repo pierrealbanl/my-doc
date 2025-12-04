@@ -105,7 +105,11 @@ func x = x * x * x
 main = print (func 200)
 ```
 
-Ici, la fonction `cube` prend un `Int` en entrée et retourne un `Int`. La signature de type s’écrit sous la forme : `function :: Input -> Output`. L’écriture `cube x =` signifie que l’on définit la fonction en utilisant la variable `x`, suivie de l’expression qui donne le résultat.
+Ici, la fonction `func` prend un `Int` en entrée et retourne un `Int`. La signature de type s’écrit sous la forme : `function :: Input -> Output`. L’écriture `func x =` signifie que l’on définit la fonction en utilisant la variable `x`, suivie de l’expression qui donne le résultat.
+
+:::info
+`x` n’est pas une variable modifiable comme dans les autres langages, mais le paramètre de la fonction `func`, c’est-à-dire le nom donné à la valeur passée en argument, et cette valeur ne peut pas être modifiée.
+:::
 
 ## 4. Les types polymorphes
 
@@ -279,35 +283,24 @@ main = print list
 
 En réalité, derrière cette écriture, on retrouve exactement la méthode précédente. Elle est simplement masquée par une syntaxe plus lisible, afin de rendre le code plus clair et plus facile à écrire.
 
-:::warning
-À noter que, dans le cas d’une fonction en Haskell, il n’est pas nécessaire de préciser que la variable `a` est une liste, car son type est déjà défini dans la signature de la fonction comme étant une liste d’entiers. Ainsi, lorsque le paramètre est passé à la fonction, on sait automatiquement qu’il s’agit d’une liste. Il suffit donc de lui donner un nom de variable (comme `a`, par exemple), qui représente bien une liste d’entiers :
-
-```haskell
-list :: [Int] -> [Int]
-list a = a
-
-main = print (list [200, 400, 600])
-```
-:::
-
 ### 8.2. Extraction d’une sous-liste à l’aide du cons `:`
 
 Pour accéder à un élément précis dans une liste, on peut utiliser le principe du cons `:` avec une petite subtilité : il est nécessaire d’utiliser des parenthèses pour le pattern matching.
 
 ```haskell
 list :: [Int] -> [Int]
-list (a : b : c) = c
+list (x : y : z) = z
 
 main = print (list [200, 400, 600, 800])
 ```
 
 Dans cet exemple : 
 
-> a = `200`
+> x = `200`
 > 
-> b = `400`
+> y = `400`
 > 
-> c = `[600, 800]`
+> z = `[600, 800]`
  
 Donc la fonction retourne une liste à partir du troisième élément, soit : `[600, 800]`
 
@@ -317,9 +310,9 @@ Si l’on souhaite retourner uniquement la valeur du troisième élément, on pe
 
 ```haskell
 list :: [Int] -> Int
-list (_ : _ : c : _) = c
+list (_ : _ : z : _) = z
 
 main = print (list [200, 400, 600, 800])
 ```
 
-Ici, les valeurs `200`, `400` et `800` sont ignorées grâce au joker `_`. La variable `c`, quant à elle, correspond au troisième élément de la liste, c’est-à-dire `600`.
+Ici, les valeurs `200`, `400` et `800` sont ignorées grâce au joker `_`. La variable `z`, quant à elle, correspond au troisième élément de la liste, c’est-à-dire `600`.
