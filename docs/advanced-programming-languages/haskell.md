@@ -99,15 +99,32 @@ main = print cube
 Pour déclarer une fonction, on doit écrire **une signature de type complète**, c’est-à-dire ce que la fonction prend en entrée et ce qu’elle retourne :
 
 ```haskell
-cube :: Int -> Int
-cube x = x * x * x
+func :: Int -> Int
+func x = x * x * x
 
-main = print (cube 200)
+main = print (func 200)
 ```
 
 Ici, la fonction `cube` prend un `Int` en entrée et retourne un `Int`. La signature de type s’écrit sous la forme : `function :: Input -> Output`. L’écriture `cube x =` signifie que l’on définit la fonction en utilisant la variable `x`, suivie de l’expression qui donne le résultat.
 
-## 4. Classes de types et contraintes de typage
+## 4. Les types polymorphes
+
+**Les types polymorphes** permettent d’écrire des fonctions capables de fonctionner avec n’importe quel type de donnée, sans connaître ce type à l’avance.
+
+```haskell
+func :: a -> a
+func a = a
+    
+main = print (func "Bob")
+```
+
+Dans cet exemple, la fonction `func` s’adapte automatiquement au type de la valeur qu’on lui passe en argument.
+
+:::info
+Il est également possible d’utiliser des types polymorphes avec des tuples, des listes et des classes de types. Ces notions seront expliquées plus en détail dans les parties suivantes.
+:::
+
+## 5. Classes de types et contraintes de typage
 
 Une classe de types regroupe des types qui partagent un même ensemble d’opérations :
 
@@ -124,7 +141,7 @@ Une classe de types regroupe des types qui partagent un même ensemble d’opér
 | `Floating`          | Regroupe les types représentant des nombres décimaux                                           | `Float`, `Double`                                                             |
 | `Functor`           | Regroupe les types sur lesquels on peut appliquer une transformation avec `fmap`               | listes (`[]`), `Maybe`, `Either`, `IO`                                        |
 
-### 4.1. Contraindre les types avec l’opérateur `=>`
+### 5.1. Contraindre les types avec l’opérateur `=>`
 
 Une contrainte de type permet de limiter les types utilisables par une fonction grâce aux classes de types. L’opérateur `=>` sépare à gauche, les contraintes sur les types et à droite, le type proprement dit de la fonction.
 
@@ -152,11 +169,11 @@ main = print (equals 200 200)
 ```
 :::
 
-## 5. Les conditions
+## 6. Les conditions
 
 En Haskell, les conditions peuvent s’écrire principalement de deux manières : avec la forme classique `if` / `then` / `else` ou avec les guards.
 
-### 5.1. Conditions avec `if` / `then` / `else` 
+### 6.1. Conditions avec `if` / `then` / `else` 
 
 La forme classique d’une condition utilise obligatoirement les mots-clés `if`, `then` et `else`. Contrairement à d’autres langages, le `else` est toujours requis, car une condition est une expression qui doit forcément retourner une valeur.
 
@@ -164,13 +181,15 @@ La forme classique d’une condition utilise obligatoirement les mots-clés `if`
 isNeg :: (Num a, Ord a) => a -> Bool
 isNeg a =
     if a < 0 then True else False
+    
+main = print (isNeg(-200))
 ```
 
 :::warning
 La valeur `0` appartient obligatoirement à la classe de types `Num`. C’est pour cette raison que la contrainte `Num a` est nécessaire dans la signature de type.
 :::
 
-### 5.2. Conditions avec les guards (pattern matching conditionnel)
+### 6.2. Conditions avec les guards (pattern matching conditionnel)
 
 **Les guards** sont une autre manière très lisible d’écrire des conditions en Haskell. Ils permettent d’exprimer plusieurs cas à l’aide de conditions successives. 
 
@@ -179,6 +198,37 @@ isNeg :: (Num a, Ord a) => a -> Bool
 isNeg a
     | a < 0 = True
     | otherwise = False
+    
+main = print (isNeg(-200))
 ```
 
-Dans les guards, chaque symbole `|` signifie « si », tandis que `otherwise` représente le cas « sinon » et, par défaut, elle correspond à la valeur `True`. Haskell évalue les conditions de haut en bas et s’arrête dès qu’une condition est validée.
+Dans les guards, chaque symbole `|` signifie *"si"*, tandis que `otherwise` représente le cas *"sinon"* et, par défaut, elle correspond à la valeur `True`. Haskell évalue les conditions de haut en bas et s’arrête dès qu’une condition est validée.
+
+:::danger
+Lorsqu’on définit une fonction avec des guards, on ne met pas de signe `=` après le nom de la fonction. Le `=` est utilisé directement dans chaque garde :
+
+```haskell
+isNeg a
+    | ...
+    | otherwise = ...
+```
+:::
+
+## 7. Structures de données
+
+### 7.1. Les tuples
+
+Un tuple est une structure de données qui permet de regrouper plusieurs valeurs dans une seule variable, tout en conservant leur ordre. Les valeurs d’un tuple peuvent être de types différents.
+
+```haskell
+pair :: a -> b -> (a, b)
+pair a b = (a, b)
+
+main = print (pair 200 400)
+```
+
+Ici, l’appel `pair 200 400` produit le tuple `(200,400)`, qui contient deux valeurs ordonnées regroupées dans une même structure.
+
+:::info
+À noter qu'un tuple peut contenir 2, 3, 4 valeurs ou plus, mais sa taille est toujours fixe.
+:::
