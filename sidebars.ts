@@ -51,7 +51,8 @@ module.exports = {
                         'advanced-programming-languages/haskell/introduction',
                         'advanced-programming-languages/haskell/types-variables-fonctions',
                         'advanced-programming-languages/haskell/conditions',
-                        'advanced-programming-languages/haskell/structures-de-donnees'
+                        'advanced-programming-languages/haskell/structures-de-donnees',
+                        'advanced-programming-languages/haskell/recursivite'
                     ]
                 },
             ]

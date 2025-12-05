@@ -7,7 +7,7 @@ title: 2. Les conditions
 
 En Haskell, les conditions peuvent s’écrire principalement de deux manières : avec la forme classique `if` / `then` / `else` ou avec les guards.
 
-### 2.1. Conditions avec `if` / `then` / `else`
+## 2.1. Conditions avec `if` / `then` / `else`
 
 La forme classique d’une condition utilise obligatoirement les mots-clés `if`, `then` et `else`. Contrairement à d’autres langages, le `else` est toujours requis, car une condition est une expression qui doit forcément retourner une valeur.
 
@@ -23,7 +23,7 @@ main = print (isNeg(-5))
 La valeur `0` appartient obligatoirement à la classe de types `Num`. C’est pour cette raison que la contrainte `Num a` est nécessaire dans la signature de type.
 :::
 
-### 2.2. Conditions avec les guards
+## 2.2. Conditions avec les guards
 
 **Les guards** sont une autre manière très lisible d’écrire des conditions en Haskell. Ils permettent d’exprimer plusieurs cas à l’aide de conditions successives.
 
@@ -48,7 +48,7 @@ isNeg x
 ```
 :::
 
-### 2.3. Le pattern matching
+## 2.3. Le pattern matching
 
 Le **pattern matching** permet de reconnaître la forme d’une valeur et d’agir en fonction de cette forme. Contrairement aux `if` et aux guards, il ne repose pas sur des conditions booléennes, mais sur la structure des données. On indique directement : *si la valeur a cette forme, alors on fait ceci.*
 

@@ -56,11 +56,9 @@ main = print list
 
 En réalité, derrière cette écriture, on retrouve exactement la méthode précédente. Elle est simplement masquée par une syntaxe plus lisible, afin de rendre le code plus clair et plus facile à écrire.
 
-### 3.2.2. Déconstruire une liste par récursion
+### 3.2.2. Extraire des éléments précis d’une liste avec l’opérateur `:`
 
-**Déconstruire une liste** consiste à retirer ses éléments un par un grâce à la récursion.
-
-Avant cela, il est important de comprendre comment accéder à des éléments précis d’une liste. Pour ce faire, on peut utiliser l’opérateur de construction `:` (cons). Une particularité importante est que l’on doit obligatoirement utiliser des parenthèses pour décomposer correctement la liste.
+Il est essentiel de savoir comment extraire des éléments précis d’une liste. Pour cela, on utilise l’opérateur de construction `:` (appelé cons). Une règle importante à respecter est l’usage des parenthèses, qui permettent de décomposer correctement la structure de la liste.
 
 ```haskell
 list :: [Int] -> [Int]
@@ -71,32 +69,9 @@ main = print (list [5, 10, 15, 20])
 
 Dans cet exemple : x = `5` ; y = `10` ; z = `[15, 20]`. Donc la fonction retourne une liste à partir du troisième élément, soit : `[15, 20]`
 
-Maintenant, pour déconstruire une liste par récursion, il est indispensable de définir **un cas d’arrêt et un cas récursif :**
+### 3.2.3. Extraire un élément précis d’une liste avec `:` et `_`
 
-```haskell
-list :: [Int] -> [Int]
-list [] = 0 : []
-list (_ : y) = list y
-
-main = print (list [5, 10, 15, 20])
-```
-
-Dans cet exemple : `list [] = 0 : []` est le cas d’arrêt et `list (_ : y) = list y` est le cas récursif. Pour comprendre le cheminement, voici une explication détaillée :
-
-On appelle `list` avec la liste `[5, 10, 15, 20]` :
-
-```
-list (5 : [10, 15, 20]) = list [10, 15, 20]
-list (10 : [15, 20])    = list [15, 20]
-list (15 : [20])        = list [20]
-list (20 : [])          = list []
-```
-
-On atteint alors le cas d’arrêt : `list [] = [0]`. Donc le résultat final est : `[0]`
-
-### 3.2.3. Utilisation du wildcard `_` pour ignorer des éléments dans une liste
-
-Si l’on souhaite retourner uniquement la valeur du troisième élément, on peut utiliser le joker (wildcard) `_`, qui signifie *"je ne m’intéresse pas à cette valeur"*. Il permet ainsi d’ignorer les éléments précédents de la liste :
+Si l’on souhaite retourner uniquement la valeur d’un élément précis, on peut utiliser le joker (wildcard) `_`, qui signifie *"je ne m’intéresse pas à cette valeur"*. Il permet ainsi d’ignorer les éléments précédents de la liste :
 
 ```haskell
 list :: [Int] -> Int
