@@ -51,7 +51,7 @@ Prelude> 1 + 1
 **Sans type explicite :**
 
 ```haskell
-x = 200
+x = 5
 
 main = print x
 ```
@@ -64,7 +64,7 @@ Pour déclarer une variable avec un type explicite, il faut utiliser la syntaxe 
 
 ```haskell
 x :: Int
-x = 200
+x = 5
 
 main = print x
 ```
@@ -80,7 +80,7 @@ Il est nécessaire d’utiliser la fonction `main` pour compiler et exécuter un
 Le mot `in` signifie : *“dans”*. Il sert à séparer la définition de la variable de l’expression dans laquelle elle est utilisée.
 
 ```haskell
-main = print (let x = 200 in x * x * x)
+main = print (let x = 5 in x * x * x)
 ```
 
 :::warning
@@ -88,7 +88,7 @@ La variable définie avec `let` n’est accessible **que dans la partie située 
 
 ```haskell
 cube :: Int
-cube = let x = 200 in x * x * x
+cube = let x = 5 in x * x * x
 
 main = print cube
 ```
@@ -102,7 +102,7 @@ Pour déclarer une fonction, on doit écrire **une signature de type complète**
 func :: Int -> Int
 func x = x * x * x
 
-main = print (func 200)
+main = print (func 5)
 ```
 
 Ici, la fonction `func` prend un `Int` en entrée et retourne un `Int`. La signature de type s’écrit sous la forme : `function :: Input -> Output`. L’écriture `func x =` signifie que l’on définit la fonction en utilisant la variable `x`, suivie de l’expression qui donne le résultat.
@@ -117,7 +117,7 @@ Ici, la fonction `func` prend un `Int` en entrée et retourne un `Int`. La signa
 
 ```haskell
 func :: a -> a
-func a = a
+func x = x
     
 main = print (func "Bob")
 ```
@@ -158,8 +158,8 @@ equals x y = x == y
 
 main :: IO ()
 main = do
-  print (cube 200)
-  print (equals 200 200)
+  print (cube 5)
+  print (equals 5 10)
 ```
 
 :::info
@@ -169,7 +169,7 @@ main = do
 equals :: (Eq a, Num a) => a -> a -> Bool
 equals x y = x == y
 
-main = print (equals 200 200)
+main = print (equals 5 10)
 ```
 :::
 
@@ -183,10 +183,10 @@ La forme classique d’une condition utilise obligatoirement les mots-clés `if`
 
 ```haskell
 isNeg :: (Num a, Ord a) => a -> Bool
-isNeg a =
-    if a < 0 then True else False
+isNeg x =
+    if x < 0 then True else False
     
-main = print (isNeg(-200))
+main = print (isNeg(-5))
 ```
 
 :::warning
@@ -199,11 +199,11 @@ La valeur `0` appartient obligatoirement à la classe de types `Num`. C’est po
 
 ```haskell
 isNeg :: (Num a, Ord a) => a -> Bool
-isNeg a
-    | a < 0 = True
+isNeg x
+    | x < 0 = True
     | otherwise = False
     
-main = print (isNeg(-200))
+main = print (isNeg(-5))
 ```
 
 Dans les guards, le symbole `|` signifie *"si"*, tandis que l’expression située après le signe `=` correspond à *"alors"*. Le mot-clé `otherwise` lui représente le cas *"sinon"* et correspond, par défaut, à la valeur `True`. Haskell évalue les conditions de haut en bas et s’arrête dès qu’une condition est vérifiée.
@@ -212,7 +212,7 @@ Dans les guards, le symbole `|` signifie *"si"*, tandis que l’expression situ�
 Lorsqu’on définit une fonction avec des guards, on ne met pas de signe `=` après le nom de la fonction. Le `=` est utilisé directement dans chaque garde :
 
 ```haskell
-isNeg a
+isNeg x
     | ...
     | otherwise = ...
 ```
@@ -238,12 +238,12 @@ Un tuple est une structure de données qui permet de regrouper plusieurs valeurs
 
 ```haskell
 pair :: a -> b -> (a, b)
-pair a b = (a, b)
+pair x y = (x, y)
 
-main = print (pair 200 400)
+main = print (pair 5 10)
 ```
 
-Ici, l’appel `pair 200 400` produit le tuple `(200,400)`, qui contient deux valeurs ordonnées regroupées dans une même structure.
+Ici, l’appel `pair 5 10` produit le tuple `(5, 10)`, qui contient deux valeurs ordonnées regroupées dans une même structure.
 
 :::info
 À noter qu'un tuple peut contenir 2, 3, 4 valeurs ou plus, mais sa taille est toujours fixe.
@@ -259,50 +259,67 @@ Pour faire simple, en Haskell, construire une liste revient à relier un éléme
 
 ```haskell
 list :: [Int]
-list = 200 : 400 : 600 : []
+list = 5 : 10 : 15 : []
 
 main = print list
 ```
 
 Si on analyse de plus près, on voit qu’en réalité la liste est construite de droite à gauche, en partant toujours de la liste vide `[]`, qui représente la fin de la liste :
 
-> Insertion de 600 dans la liste vide = `[600]`
+> Insertion de 15 dans la liste vide = `[15]`
 > 
-> Insertion de 400 dans la liste = `[400, 600]`
+> Insertion de 10 dans la liste = `[10, 15]`
 > 
-> Insertion de 200 dans la liste = `[200, 400, 600]`
+> Insertion de 5 dans la liste = `[5, 10, 15]`
 
 **La deuxième méthode** est une méthode plus standardisée, utilisée pour simplifier l’écriture du code :
 
 ```haskell
 list :: [Int]
-list = [200, 400, 600]
+list = [5, 10, 15]
 
 main = print list
 ```
 
 En réalité, derrière cette écriture, on retrouve exactement la méthode précédente. Elle est simplement masquée par une syntaxe plus lisible, afin de rendre le code plus clair et plus facile à écrire.
 
-### 8.2. Extraction d’une sous-liste à l’aide du cons `:`
+### 8.2. Déconstruire une liste par récursion
 
-Pour accéder à un élément précis dans une liste, on peut utiliser le principe du cons `:` avec une petite subtilité : il est nécessaire d’utiliser des parenthèses pour le pattern matching.
+**Déconstruire une liste** consiste à retirer ses éléments un par un grâce à la récursion.
+
+Avant cela, il est important de comprendre comment accéder à des éléments précis d’une liste. Pour ce faire, on peut utiliser l’opérateur de construction `:` (cons). Une particularité importante est que l’on doit obligatoirement utiliser des parenthèses pour décomposer correctement la liste.
 
 ```haskell
 list :: [Int] -> [Int]
 list (x : y : z) = z
 
-main = print (list [200, 400, 600, 800])
+main = print (list [5, 10, 15, 20])
 ```
 
-Dans cet exemple : 
+Dans cet exemple : x = `5` ; y = `10` ; z = `[15, 20]`. Donc la fonction retourne une liste à partir du troisième élément, soit : `[15, 20]`
 
-> x = `200`
-> 
-> y = `400`
-> 
-> z = `[600, 800]`
- 
-Donc la fonction retourne une liste à partir du troisième élément, soit : `[600, 800]`
+Maintenant, pour déconstruire une liste par récursion, il est indispensable de définir **un cas d’arrêt et un cas récursif :**
+
+```haskell
+list :: [Int] -> [Int]
+list [] = 0 : []
+list (_ : y) = list y
+
+main = print (list [5, 10, 15, 20])
+```
+
+Dans cet exemple : `list [] = 0 : []` est le cas d’arrêt et `list (_ : y) = list y` est le cas récursif. Pour comprendre le cheminement, voici une explication détaillée :
+
+On appelle `list` avec la liste `[5, 10, 15, 20]` :
+
+```
+list (5 : [10, 15, 20]) = list [10, 15, 20]
+list (10 : [15, 20])    = list [15, 20]
+list (15 : [20])        = list [20]
+list (20 : [])          = list []
+```
+
+On atteint alors le cas d’arrêt : `list [] = [0]`. Donc le résultat final est : `[0]`
 
 ### 8.3. Utilisation du wildcard `_` pour ignorer des éléments dans une liste
 
@@ -312,7 +329,7 @@ Si l’on souhaite retourner uniquement la valeur du troisième élément, on pe
 list :: [Int] -> Int
 list (_ : _ : z : _) = z
 
-main = print (list [200, 400, 600, 800])
+main = print (list [5, 10, 15, 20])
 ```
 
-Ici, les valeurs `200`, `400` et `800` sont ignorées grâce au joker `_`. La variable `z`, quant à elle, correspond au troisième élément de la liste, c’est-à-dire `600`.
+Ici, les valeurs `5`, `10` et `20` sont ignorées grâce au joker `_`. La variable `z`, quant à elle, correspond au troisième élément de la liste, c’est-à-dire `15`.

@@ -44,7 +44,16 @@ module.exports = {
             type: 'category',
             label: 'Advanced Programming Languages',
             items: [
-                'advanced-programming-languages/haskell'
+                {
+                    type: 'category',
+                    label: 'Haskell',
+                    items: [
+                        'advanced-programming-languages/haskell/introduction',
+                        'advanced-programming-languages/haskell/types-variables-fonctions',
+                        'advanced-programming-languages/haskell/conditions',
+                        'advanced-programming-languages/haskell/structures-de-donnees'
+                    ]
+                },
             ]
         },
         'maitriser-anglais'
