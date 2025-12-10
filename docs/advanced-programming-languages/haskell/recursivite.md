@@ -33,12 +33,12 @@ length' (_ : xs) = 1 + length' xs
 
 -- Returns a list containing the first N elements of a list.
 take' :: Int -> [a] -> [a]
-take' _ [] = error "Error: the list is empty"
+take' n x
+    | n < 0 = error "Error: invalid index"
+    | length' x <= n = x
+take' _ [] = []
 take' 0 _ = []
-take' i x
-    | length' x <= i = x
-    | i < 0 = error "Error: invalid index"
-take' i (x : xs) = x : take' (i - 1) xs
+take' n (x : xs) = x : take' (n - 1) xs
 
 main = print (take' 3 [5, 10, 15, 20, 25])
 ```
@@ -48,7 +48,7 @@ main = print (take' 3 [5, 10, 15, 20, 25])
 On appelle take' avec la liste [5, 10, 15, 20, 25] et l'index 3.
 
 Soit take' 0 _ = [] défini comme le cas d’arrêt, 
-et take' i (x : xs) = x : take' (i - 1) xs défini comme le cas récursif.
+et take' n (x : xs) = x : take' (n - 1) xs défini comme le cas récursif.
 -}
 
 take' 3 (5  : [10, 15, 20, 25]) = 5  : take' 2 [10, 15, 20, 25]
@@ -64,10 +64,10 @@ take' 3 (5  : [10, 15, 20, 25]) = 5  : take' 2 [10, 15, 20, 25] = 5  : [10, 15] 
 --Donc le résultat finale pour un appel de la fonction take' 3 [5, 10, 15, 20, 25] est [5, 10, 15]
 ```
 
-Pour mieux comprendre, la fonction `take'` est appelée à chaque fois, et `i` diminue à chaque appel car on l’a définie ainsi :
+Pour mieux comprendre, la fonction `take'` est appelée à chaque fois, et `n` diminue à chaque appel car on l’a définie ainsi :
 
 ```haskell
-take' (i - 1) xs
+take' (n - 1) xs
 ```
 
 Un point extrêmement important à comprendre en Haskell est que **la récursivité se termine uniquement lorsqu’une condition d’arrêt est atteinte.** Dans notre exemple, la condition d’arrêt est :
@@ -76,9 +76,9 @@ Un point extrêmement important à comprendre en Haskell est que **la récursivi
 take' 0 _ = []
 ```
 
-Cela signifie que **lorsque `i` atteint 0, Haskell cesse totalement les appels récursifs.** À ce moment précis, Haskell **ne continue plus la descente récursive** mais commence **la remontée de la pile d’appels.** Chaque appel précédent, qui était en attente sous la forme :
+Cela signifie que **lorsque `n` atteint 0, Haskell cesse totalement les appels récursifs.** À ce moment précis, Haskell **ne continue plus la descente récursive** mais commence **la remontée de la pile d’appels.** Chaque appel précédent, qui était en attente sous la forme :
 
-`x : take' (i - 1) xs` reçoit alors un résultat fixe à la place de `take' (i - 1) xs`.
+`x : take' (n - 1) xs` reçoit alors un résultat fixe à la place de `take' (n - 1) xs`.
 
 Ce remplacement progressif transforme peu à peu les appels récursifs en valeurs concrètes :
 
