@@ -55,9 +55,9 @@ Le **pattern matching** permet de reconnaître la forme d’une valeur et d’ag
 ```haskell
 func :: Int -> Int
 func 0 = 0
-func x = x * x * x
+func n = n * n * n
 
 main = print (func 0)
 ```
 
-Ici, on a la forme `func 0`. Si l’on appelle la fonction avec 0, alors on dit que le résultat est égal à 0. Sinon, la valeur est stockée dans x et la fonction retourne son cube.
+Ici, on a la forme `func 0`. Si l’on appelle la fonction avec 0, alors on dit que le résultat est égal à 0. Sinon, la valeur est stockée dans `n` et la fonction retourne son cube.

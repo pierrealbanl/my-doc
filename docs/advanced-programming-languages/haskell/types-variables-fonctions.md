@@ -24,9 +24,9 @@ title: 1. Types, variables et fonctions
 **Sans type explicite :**
 
 ```haskell
-x = 5
+n = 5
 
-main = print x
+main = print n
 ```
 
 Dans ce cas, Haskell **déduit automatiquement le type** de la variable.
@@ -36,13 +36,13 @@ Dans ce cas, Haskell **déduit automatiquement le type** de la variable.
 Pour déclarer une variable avec un type explicite, il faut utiliser la syntaxe avec `::`, suivie du type que l’on assigne à la variable :
 
 ```haskell
-x :: Int
-x = 5
+n :: Int
+n = 5
 
-main = print x
+main = print n
 ```
 
-Ici, on indique clairement que `x` est de type `Int`.
+Ici, on indique clairement que `n` est de type `Int`.
 
 :::info
 Il est nécessaire d’utiliser la fonction `main` pour compiler et exécuter un programme Haskell. Les variables et les fonctions sont définies dans le fichier, et l’affichage du résultat se fait à l’aide de `print`.
@@ -53,7 +53,7 @@ Il est nécessaire d’utiliser la fonction `main` pour compiler et exécuter un
 Le mot `in` signifie : *“dans”*. Il sert à séparer la définition de la variable de l’expression dans laquelle elle est utilisée.
 
 ```haskell
-main = print (let x = 5 in x * x * x)
+main = print (let n = 5 in n * n * n)
 ```
 
 :::warning
@@ -61,7 +61,7 @@ La variable définie avec `let` n’est accessible **que dans la partie située 
 
 ```haskell
 cube :: Int
-cube = let x = 5 in x * x * x
+cube = let n = 5 in n * n * n
 
 main = print cube
 ```
@@ -73,7 +73,7 @@ Pour déclarer une fonction, on doit écrire **une signature de type complète**
 
 ```haskell
 func :: Int -> Int
-func x = x * x * x
+func n = n * n * n
 
 main = print (func 5)
 ```
@@ -81,7 +81,7 @@ main = print (func 5)
 Ici, la fonction `func` prend un `Int` en entrée et retourne un `Int`. La signature de type s’écrit sous la forme : `function :: Input -> Output`. L’écriture `func x =` signifie que l’on définit la fonction en utilisant la variable `x`, suivie de l’expression qui donne le résultat.
 
 :::info
-`x` n’est pas une variable modifiable comme dans les autres langages, mais le paramètre de la fonction `func`, c’est-à-dire le nom donné à la valeur passée en argument, et cette valeur ne peut pas être modifiée.
+`n` n’est pas une variable modifiable comme dans les autres langages, mais le paramètre de la fonction `func`, c’est-à-dire le nom donné à la valeur passée en argument, et cette valeur ne peut pas être modifiée.
 :::
 
 ## 1.4. Les types polymorphes

@@ -62,12 +62,12 @@ Il est essentiel de savoir comment extraire des éléments précis d’une liste
 
 ```haskell
 list :: [Int] -> [Int]
-list (x : y : z) = z
+list (x : xs) = xs
 
-main = print (list [5, 10, 15, 20])
+main = print (list [5, 10, 15, 20, 25])
 ```
 
-Dans cet exemple : x = `5` ; y = `10` ; z = `[15, 20]`. Donc la fonction retourne une liste à partir du troisième élément, soit : `[15, 20]`
+Dans cet exemple : x = `5` ; xs = `[10, 15, 20, 25]`. Donc la fonction retourne une liste à partir du deuxième élément, soit : `[10, 15, 20, 25]`
 
 ### 3.2.3. Extraire un élément précis d’une liste avec `:` et `_`
 
@@ -80,4 +80,4 @@ list (_ : _ : z : _) = z
 main = print (list [5, 10, 15, 20])
 ```
 
-Ici, les valeurs `5`, `10` et `20` sont ignorées grâce au joker `_`. La variable `z`, quant à elle, correspond au troisième élément de la liste, c’est-à-dire `15`.
+Ici, les valeurs `5`, `10` et le reste de la liste`[20]` sont ignorées grâce au joker `_`. La variable `z`, quant à elle, correspond au troisième élément de la liste, c’est-à-dire `15`.

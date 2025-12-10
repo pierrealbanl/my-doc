@@ -29,15 +29,16 @@ Prenons l’exemple d’une fonction qui permet de retourner une liste contenant
 -- Computes the number of elements in a list.
 length' :: [a] -> Int
 length' []      = 0
-length' (_ : y) = 1 + length' y
+length' (_ : xs) = 1 + length' xs
 
 -- Returns a list containing the first N elements of a list.
 take' :: Int -> [a] -> [a]
+take' _ [] = error "Error: the list is empty"
 take' 0 _ = []
 take' i x
     | length' x <= i = x
     | i < 0 = error "Error: invalid index"
-take' i (x : y) = x : take' (i - 1) y
+take' i (x : xs) = x : take' (i - 1) xs
 
 main = print (take' 3 [5, 10, 15, 20, 25])
 ```
