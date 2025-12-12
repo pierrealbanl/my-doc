@@ -36,7 +36,7 @@ isNeg x
 main = print (isNeg(-5))
 ```
 
-Dans les guards, le symbole `|` signifie *"si"*, tandis que l’expression située après le signe `=` correspond à *"alors"*. Le mot-clé `otherwise` lui représente le cas *"sinon"* et correspond, par défaut, à la valeur `True`. Haskell évalue les conditions de haut en bas et s’arrête dès qu’une condition est vérifiée.
+> Dans les guards, le symbole `|` signifie : *si*, tandis que l’expression située après le signe `=` correspond à : *alors*. Le mot-clé `otherwise` lui représente le cas : *sinon* et correspond, par défaut, à la valeur `True`. Haskell évalue les conditions de haut en bas et s’arrête dès qu’une condition est vérifiée.
 
 :::danger
 Lorsqu’on définit une fonction avec des guards, on ne met pas de signe `=` après le nom de la fonction. Le `=` est utilisé directement dans chaque garde :

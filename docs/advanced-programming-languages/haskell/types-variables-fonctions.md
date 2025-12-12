@@ -50,7 +50,7 @@ Il est nécessaire d’utiliser la fonction `main` pour compiler et exécuter un
 
 ### 1.1.2. Déclaration locale avec `let ... in`
 
-Le mot `in` signifie : *“dans”*. Il sert à séparer la définition de la variable de l’expression dans laquelle elle est utilisée.
+Le mot `in` signifie : *dans*. Il sert à séparer la définition de la variable de l’expression dans laquelle elle est utilisée.
 
 ```haskell
 main = print (let n = 5 in n * n * n)
@@ -143,5 +143,31 @@ equals :: (Eq a, Num a) => a -> a -> Bool
 equals x y = x == y
 
 main = print (equals 5 10)
+```
+:::
+
+## 1.6. Le type `Maybe` : approche explicite de la gestion des erreurs
+
+Il existe plusieurs façons de gérer les cas d’erreur. La plus simple consiste à les traiter au cas par cas. Toutefois, pour rendre le code plus explicite en Haskell, on peut utiliser une autre approche : le type `Maybe`. 
+
+`Maybe` est un type qui indique, dès la signature d’une fonction, qu’un résultat peut être manquant. Il permet ainsi de rendre les fonctions plus sûres en gérant explicitement les cas d’échec.
+
+```haskell
+safeDiv :: Int -> Int -> Maybe Int -- --> Maybe Int signifie : potentiellement une valeur de type Int.
+safeDiv n 0 = Nothing -- --> Nothing représente l’absence de valeur.
+safeDiv n k = Just (n `div` k) -- --> Just indique qu’une valeur de type Int est bien présente.
+
+main = print (safeDiv 10 2)
+```
+
+:::warning
+À noter que l’opérateur `/` est réservé uniquement aux types fractionnaires (`Float`, `Double`, etc...) :
+
+```haskell
+safeDiv :: Double -> Double -> Maybe Double
+safeDiv n 0 = Nothing
+safeDiv n k = Just (n / k)
+
+main = print (safeDiv 10.0 2.0)
 ```
 :::
