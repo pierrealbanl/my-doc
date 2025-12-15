@@ -112,6 +112,8 @@ unzip' :: [(a, b)] -> ([a], [b])
 unzip' [] = ([], [])
 unzip' ((x', y') : xs) =
   (x' : first (unzip' xs), y' : second (unzip' xs))
+
+main = print (unzip' [(5, 10), (15, 20)])
 ```
 
 ```haskell

@@ -174,7 +174,7 @@ Ici, il est impossible d’instancier un objet lorsque le constructeur de `Vehic
 :::
 
 :::info
-Pour rendre la classe utilisable, il faut rendre le constructeur et les méthodes publiques. *Cela sera expliqué plus en détail dans la suite, notamment avec le concept de JavaBean, un modèle d’encapsulation dans la partie 1.4.*
+Pour rendre la classe utilisable, il faut rendre le constructeur et les méthodes publiques. *Cela sera expliqué plus en détail dans la suite, notamment avec le concept de JavaBean, un modèle d’encapsulation dans la section 1.4.*
 :::
 
 ---

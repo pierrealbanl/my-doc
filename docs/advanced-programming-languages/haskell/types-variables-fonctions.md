@@ -148,6 +148,10 @@ main = print (equals 5 10)
 
 ## 1.6. Le type `Maybe` : approche explicite de la gestion des erreurs
 
+:::info
+*Cette section traite de la récursivité. Il est recommandé d’y revenir uniquement après avoir vu et compris ce concept, présenté dans la section 4.*
+:::
+
 Il existe plusieurs façons de gérer les cas d’erreur. La plus simple consiste à les traiter au cas par cas. Toutefois, pour rendre le code plus explicite en Haskell, on peut utiliser une autre approche : le type `Maybe`. 
 
 `Maybe` est un type qui indique, dès la signature d’une fonction, qu’un résultat peut être manquant. Il permet ainsi de rendre les fonctions plus sûres en gérant explicitement les cas d’échec.
