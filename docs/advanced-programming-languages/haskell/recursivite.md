@@ -23,6 +23,12 @@ Sans cas d’arrêt, la fonction entre dans une boucle infinie.
 
 ## 4.1. Étude complète du mécanisme récursif
 
+Pour comprendre correctement la récursivité, il est nécessaire d’adopter une méthode de travail rigoureuse. Il est important de souligner que la récursivité peut être étudiée efficacement sur papier. **L’utilisation d’un brouillon est fortement recommandée afin de tester et de dérouler les appels récursifs étape par étape.**
+
+Les sections *4.1.1. et 4.1.2.* présentent des exemples de récursivité appliqués respectivement à une liste simple et à une liste de tuples, accompagnés du détail complet de chaque calcul. Cette approche, proche du raisonnement mathématique, illustre le fait que l’informatique de bas niveau peut également être abordée de manière écrite, en s’appuyant sur un raisonnement formel et structuré.
+
+### 4.1.1. Récursion sur une liste simple
+
 Prenons l’exemple d’une fonction qui permet de retourner une liste contenant les N premiers éléments d’une liste :
 
 ```haskell
@@ -44,24 +50,23 @@ main = print (take' 3 [5, 10, 15, 20, 25])
 ```
 
 ```haskell
-{-
-On appelle take' avec la liste [5, 10, 15, 20, 25] et l'index 3.
+-- On appelle take' avec la liste [5, 10, 15, 20, 25] et l'index 3.
 
-Soit take' 0 _ = [] défini comme le cas d’arrêt, 
-et take' n (x : xs) = x : take' (n - 1) xs défini comme le cas récursif.
--}
+-- Soit take' 0 _ = [] défini comme le cas d’arrêt, 
+-- et take' n (x : xs) = x : take' (n - 1) xs défini comme le cas récursif.
 
 take' 3 (5  : [10, 15, 20, 25]) = 5  : take' 2 [10, 15, 20, 25]
 take' 2 (10 : [15, 20, 25])     = 10 : take' 1 [15, 20, 25]
 take' 1 (15 : [20, 25])         = 15 : take' 0 [20, 25]
 
---D’après le cas d’arrêt take' 0 (20 : [25]) = []. On effectue ensuite la remontée de la pile :
+-- D’après le cas d’arrêt take' 0 (20 : [25]) = []. On effectue ensuite la remontée de la pile :
 
 take' 1 (15 : [20, 25])         = 15 : take' 0 [20, 25]         = 15 : []       = [15]
 take' 2 (10 : [15, 20, 25])     = 10 : take' 1 [15, 20, 25]     = 10 : [15]     = [10, 15]
 take' 3 (5  : [10, 15, 20, 25]) = 5  : take' 2 [10, 15, 20, 25] = 5  : [10, 15] = [5, 10, 15]
 
---Donc le résultat finale pour un appel de la fonction take' 3 [5, 10, 15, 20, 25] est [5, 10, 15]
+-- Donc le résultat final pour un appel de la fonction take' 3 [5, 10, 15, 20, 25] 
+-- est [5, 10, 15].
 ```
 
 Pour mieux comprendre, la fonction `take'` est appelée à chaque fois, et `n` diminue à chaque appel car on l’a définie ainsi :
@@ -89,3 +94,46 @@ Ce remplacement progressif transforme peu à peu les appels récursifs en valeur
 ```
 
 La récursivité n’est donc plus active à ce moment-là : elle est complètement résolue. Donc le résultat final est : `[5, 10, 15]`
+
+### 4.1.2. Récursion sur une liste de tuples
+
+Prenons l’exemple d’une fonction qui permet de transformer une liste de tuples en un tuple contenant deux listes distinctes :
+
+```haskell
+-- Function from First.hs
+first :: (a, b) -> a
+first (x, y) = x
+
+-- Function from Second.hs
+second :: (a, b) -> b
+second (x, y) = y
+
+unzip' :: [(a, b)] -> ([a], [b])
+unzip' [] = ([], [])
+unzip' ((x', y') : xs) =
+  (x' : first (unzip' xs), y' : second (unzip' xs))
+```
+
+```haskell
+-- On appelle unzip' avec une liste de tuples [(5, 10), (15, 20)].
+
+-- Soit unzip' [] = ([], []) défini comme le cas d’arrêt, 
+-- et unzip' ((x', y') : xs) = (x' : first (unzip' xs), y' : second (unzip' xs)) 
+-- défini comme le cas récursif.
+
+unzip' ((5, 10)  : [(15, 20)]) = (5  : first (unzip' [(15, 20)]), 10 : second (unzip' [(15, 20)]))
+unzip' ((15, 20) : [])         = (15 : first (unzip' []), 20 : second (unzip' []))
+
+-- D’après le cas d’arrêt unzip' [] = ([], []). On effectue ensuite la remontée de la pile :
+
+unzip' ((15, 20) : []) = (15 : first (unzip' []), 20 : second (unzip' [])) 
+                       = (15 : first ([], []), 20 : second ([], []))
+                       = (15 : [], 20 : [])
+                       = ([15], [20])        
+unzip' ((5, 10) : [(15, 20)]) = (5 : first ([15], [20]), 10 : second ([15], [20]))
+                              = (5 : [15], 10 : [20])
+                              = ([5, 15], [10, 20])
+                              
+-- Donc le résultat final pour un appel de la fonction unzip' [(5, 10), (15, 20)]
+-- est ([5, 15], [10, 20]).
+```

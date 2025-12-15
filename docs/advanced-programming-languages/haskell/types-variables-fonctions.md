@@ -153,21 +153,17 @@ Il existe plusieurs façons de gérer les cas d’erreur. La plus simple consist
 `Maybe` est un type qui indique, dès la signature d’une fonction, qu’un résultat peut être manquant. Il permet ainsi de rendre les fonctions plus sûres en gérant explicitement les cas d’échec.
 
 ```haskell
-safeDiv :: Int -> Int -> Maybe Int -- --> Maybe Int signifie : potentiellement une valeur de type Int.
-safeDiv n 0 = Nothing -- --> Nothing représente l’absence de valeur.
-safeDiv n k = Just (n `div` k) -- --> Just indique qu’une valeur de type Int est bien présente.
+-- Function from Length.hs
+length' :: [a] -> Int
+length' [] = 0
+length' (_ : xs) = 1 + length' xs
 
-main = print (safeDiv 10 2)
+safeIndexOf :: [a] -> Int -> Maybe a -- --> Maybe a signifie : potentiellement une valeur de type a.
+safeIndexOf [] _ = Nothing -- --> Nothing représente l’absence de valeur.
+safeIndexOf x n
+    | n >= length' x || n < 0 = Nothing -- --> Nothing représente l’absence de valeur.
+safeIndexOf (x : _) 0 = Just x -- --> Just indique qu’une valeur de type a est bien présente.
+safeIndexOf (_ : xs) n = safeIndexOf xs (n - 1)
+
+main = print (safeIndexOf [5, 10, 15, 20] 3)
 ```
-
-:::warning
-À noter que l’opérateur `/` est réservé uniquement aux types fractionnaires (`Float`, `Double`, etc...) :
-
-```haskell
-safeDiv :: Double -> Double -> Maybe Double
-safeDiv n 0 = Nothing
-safeDiv n k = Just (n / k)
-
-main = print (safeDiv 10.0 2.0)
-```
-:::
