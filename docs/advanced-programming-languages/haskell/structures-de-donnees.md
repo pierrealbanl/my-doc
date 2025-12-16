@@ -7,7 +7,7 @@ title: 3. Les structures de données
 
 ## 3.1. Les tuples
 
-Un tuple est une structure de données qui permet de regrouper plusieurs valeurs dans une seule variable, tout en conservant leur ordre. Les valeurs d’un tuple peuvent être de types différents.
+En Haskell, un tuple est une structure de données qui permet de regrouper plusieurs valeurs dans une seule variable, tout en conservant leur ordre. Les valeurs d’un tuple peuvent être de types différents.
 
 ```haskell
 pair :: a -> b -> (a, b)
