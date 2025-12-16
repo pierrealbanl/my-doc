@@ -60,7 +60,8 @@ module.exports = {
                     label: 'Rust',
                     items: [
                         'advanced-programming-languages/rust/introduction',
-                        'advanced-programming-languages/rust/types-variables-fonctions'
+                        'advanced-programming-languages/rust/types-variables-fonctions',
+                        'advanced-programming-languages/rust/conditions-et-boucles'
                     ]
                 },
             ]
