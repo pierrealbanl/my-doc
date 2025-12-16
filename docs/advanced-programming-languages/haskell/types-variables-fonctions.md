@@ -19,7 +19,7 @@ title: 1. Types, variables et fonctions
 
 ### 1.1.1. Déclaration d'une variable sans et avec type explicite
 
-**Un type explicite** correspond à un type que l’on spécifie directement lors de la déclaration de la variable. Lorsqu’aucun type n’est précisé, le compilateur détermine automatiquement le type de la variable. Il est cependant recommandé de déclarer les types de manière explicite afin d’améliorer la lisibilité et la fiabilité du code.
+En Haskell, si aucun type n’est indiqué, le compilateur détermine automatiquement le type de la variable. Il est cependant recommandé de déclarer les types de manière explicite afin d’améliorer la lisibilité et la fiabilité du code.
 
 **Sans type explicite :**
 
@@ -28,8 +28,6 @@ n = 5
 
 main = print n
 ```
-
-Dans ce cas, Haskell **déduit automatiquement le type** de la variable.
 
 **Avec type explicite :**
 
@@ -41,8 +39,6 @@ n = 5
 
 main = print n
 ```
-
-Ici, on indique clairement que `n` est de type `Int`.
 
 :::info
 Il est nécessaire d’utiliser la fonction `main` pour compiler et exécuter un programme Haskell. Les variables et les fonctions sont définies dans le fichier, et l’affichage du résultat se fait à l’aide de `print`.

@@ -55,6 +55,14 @@ module.exports = {
                         'advanced-programming-languages/haskell/recursivite'
                     ]
                 },
+                {
+                    type: 'category',
+                    label: 'Rust',
+                    items: [
+                        'advanced-programming-languages/rust/introduction',
+                        'advanced-programming-languages/rust/types-variables-fonctions'
+                    ]
+                },
             ]
         },
         'maitriser-anglais'
