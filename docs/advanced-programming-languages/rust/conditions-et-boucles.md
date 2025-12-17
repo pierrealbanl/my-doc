@@ -1,9 +1,9 @@
 ---
 id: conditions-et-boucles
-title: 2. Conditions et boucles
+title: 2. Les conditions et boucles
 ---
 
-# Conditions et boucles
+# Les conditions et boucles
 
 ## 2.1. Conditions : `if` comme expression
 
@@ -34,7 +34,52 @@ fn main() {
 }
 ```
 
-## 2.2. Les différentes boucles
+## 2.2. Le pattern matching
+
+Comme en Haskell, Rust propose le pattern matching. La différence principale est que, contrairement à Haskell, **le pattern matching ne s’utilise pas directement dans la définition des fonctions, mais à l’intérieur du corps** de celles-ci, principalement avec l’instruction `match`.
+
+```rust
+fn main() {
+    let n: i32 = 5;
+
+    let result: i32 = match n {
+        0 => 0,
+        n => n * n * n,
+    };
+    println!("{result}");
+}
+```
+
+De la même façon, Rust propose un type équivalent au `Maybe` de Haskell : `Option<T>`. Ce type permet de représenter soit la présence, soit l’absence d’une valeur. Bien que son rôle soit similaire, son implémentation diffère de celle de Haskell.
+
+Les correspondances entre les deux langages sont les suivantes :
+
+> `Maybe a` → `Option<T>`
+> 
+> `Just a` → `Some(a)`
+> 
+> `Nothing` → `None`
+
+En pratique, `Some(a)` et `None` sont souvent utilisés dans des constructions conditionnelles, puis manipulés via le pattern matching. Voici un exemple utilisant `Option<T>` pour gérer une division qui peut échouer :
+
+```rust
+fn divide(a: i32, b: i32) -> Option<i32> {
+    if b == 0 {
+        None
+    } else {
+        Some(a / b)
+    }
+}
+
+fn main() {
+    match divide(10, 0) {
+        Some(x) => println!("{x}"),
+        None => println!("Error: cannot divide"),
+    }
+}
+```
+
+## 2.3. Les différentes boucles
 
 **Les boucles** reposent sur les mêmes principes que dans les autres langages, à l’exception de la syntaxe qui diffère légèrement. Toutefois, Rust propose une boucle spécifique au langage, `loop`, qui permet de créer une boucle infinie dont on sort explicitement à l’aide de `break`.
 

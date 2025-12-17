@@ -532,7 +532,7 @@ public class Main {
 }
 ```
 
-### 2.7.5. Table de correspondance : `HashMap`
+### 2.7.5. Stocker et manipuler des paires clé–valeur : `HashMap`
 
 La classe `HashMap` est une structure de données qui permet de stocker des paires clé/valeur. Chaque clé est unique et associée à une valeur correspondante. Cette structure fonctionne comme un dictionnaire : elle permet de retrouver rapidement une valeur à partir de sa clé, sans avoir à parcourir toute la collection. En revanche, l’ordre d’insertion des éléments n’est pas conservé.
 

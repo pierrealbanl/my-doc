@@ -67,12 +67,24 @@ fn main() {
 ```
 
 :::warning
-À noter que, comme les tuples peuvent contenir des éléments de types différents, ils ne peuvent pas être parcourus avec une boucle `for`.
+Les tuples ne sont pas itérables avec for car leurs éléments peuvent être de types différents et leur taille est fixe à la compilation.
 :::
+
+### 3.3.1. Déstructuration des tuples
+
+La déstructuration d’un tuple permet d’extraire ses valeurs et de les assigner à des variables distinctes.
+
+```rust
+fn main() {
+    let tuple: (&str, i32) = ("Bob", 20);
+    let (name, age) = tuple;
+    println!("{name} {age}");
+}
+```
 
 ## 3.4. Stocker et manipuler des paires clé–valeur : `HashMap`
 
-En Rust, une `HashMap` est une structure de données fournie par la bibliothèque standard et permet de stocker des paires clé–valeur.
+`HashMap` est une structure de données de la bibliothèque standard de Rust permettant d’associer des clés à des valeurs. Elle est définie dans le module `std::collections` et doit être importée avant toute utilisation.
 
 ```rust
 use std::collections::HashMap;
@@ -83,7 +95,37 @@ fn main() {
     map.insert("Alice", 25);
     println!("{:?}", map);
 
+    // Parcours des éléments avec une boucle `for`
+    for (name, age) in &map {
+        println!("{name} {age}");
+    }
+
     map.remove("Alice");
     println!("{:?}", map);
+}
+```
+
+### 3.4.1. Accéder à une valeur dans une `HashMap`
+
+La méthode `.get` permet d’accéder à la valeur associée à une clé dans une HashMap. Elle renvoie une `Option<T>`, qu’il faut traiter pour gérer le cas où la clé n’existe pas. Il existe plusieurs façons de traiter cette valeur selon que la clé est présente ou non :
+
+```rust
+use std::collections::HashMap;
+
+fn main() {
+    let mut map: HashMap<&str, i32> = HashMap::new();
+    map.insert("Bob", 20);
+    map.insert("Alice", 25);
+
+    // Accès à une valeur avec `if let Some(...)`
+    if let Some(age) = map.get("Bob") {
+        println!("{age}");
+    }
+
+    // Accès à une valeur avec `match`
+    match map.get("Bob") {
+        Some(age) => println!("{age}"),
+        None => println!("Error: no value associated with this key"),
+    }
 }
 ```
