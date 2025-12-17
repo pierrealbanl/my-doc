@@ -138,7 +138,7 @@ public class Vehicle extends Object {...}
 
 Même sans la mention `extends Object`, le compilateur Java l’ajoute automatiquement. Ainsi, puisque toutes les classes dérivent de `Object`, chaque instance en Java possède un ensemble minimal de méthodes communes définies dans cette classe, telles que `toString()` ou `equals(Object obj)`.
 
-## 2.4. Les interfaces
+## 2.4. Les interfaces : `interface`
 
 **Une interface** est un contrat qui définit un ensemble de méthodes que les classes qui l’implémentent doivent fournir.
 

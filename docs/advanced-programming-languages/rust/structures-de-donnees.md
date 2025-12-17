@@ -129,3 +129,67 @@ fn main() {
     }
 }
 ```
+
+## 3.5. Modéliser des objets avec des structures et des énumérations
+
+### 3.5.1. Les structures : `struct`
+
+Une `struct` est un type personnalisé qui permet de regrouper plusieurs valeurs liées entre elles sous un même nom. Elle sert à modéliser un objet du monde réel en rassemblant ses données.
+
+```rust
+struct Vehicle {
+    manufacturer: String,
+    weight: i32,
+    engine_power: i32
+}
+
+fn main() {
+    // `vehicle` est une instance de `Vehicle`
+    let mut vehicle = Vehicle {
+        manufacturer: String::from("Ferrari"),
+        weight: 1380,
+        engine_power: 570
+    };
+    println!("{}", vehicle.manufacturer);
+    println!("{}", vehicle.weight);
+    println!("{}", vehicle.engine_power);
+
+    vehicle.manufacturer = String::from("Mercedes");
+    vehicle.weight = 11700;
+    vehicle.engine_power = 625;
+    println!("{}", vehicle.manufacturer);
+    println!("{}", vehicle.weight);
+    println!("{}", vehicle.engine_power);
+}
+```
+
+Dans cet exemple, `vehicle` est une instance de `Vehicle`. Il s’agit d’une instance de la structure `Vehicle`, contenant ses propres valeurs pour chaque champ.
+
+### 3.5.2. Les énumérations : `enum`
+
+Un `enum` permet de définir **un type qui peut prendre plusieurs formes possibles.**
+
+```rust
+enum VehicleFuel {
+    Petrol {octane: i32},
+    Diesel,
+    Electric
+}
+
+fn vehicle_fuel(vehicle_fuel: VehicleFuel) {
+    // Pour utiliser un enum, on utilise le pattern matching avec match
+    match vehicle_fuel {
+        VehicleFuel::Petrol {octane} => println!("{}", octane),
+        VehicleFuel::Diesel => println!("Diesel"),
+        VehicleFuel::Electric => println!("Electric"),
+    }
+}
+
+fn main() {
+    vehicle_fuel(VehicleFuel::Petrol {octane: 98});
+    vehicle_fuel(VehicleFuel::Diesel);
+    vehicle_fuel(VehicleFuel::Electric);
+}
+```
+
+Chaque variante de l’énumération représente un état ou une forme possible du type. Le pattern matching permet de traiter chaque cas de manière explicite, garantissant que toutes les possibilités sont prises en compte.
