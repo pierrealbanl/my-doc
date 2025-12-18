@@ -3,6 +3,43 @@ module.exports = {
         'intro',
         {
             type: 'category',
+            label: 'Advanced Programming Languages',
+            items: [
+                {
+                    type: 'category',
+                    label: 'Haskell',
+                    items: [
+                        'advanced-programming-languages/haskell/introduction',
+                        'advanced-programming-languages/haskell/types-variables-fonctions',
+                        'advanced-programming-languages/haskell/conditions',
+                        'advanced-programming-languages/haskell/structures-de-donnees',
+                        'advanced-programming-languages/haskell/recursivite'
+                    ]
+                },
+                {
+                    type: 'category',
+                    label: 'Rust',
+                    items: [
+                        'advanced-programming-languages/rust/introduction',
+                        'advanced-programming-languages/rust/types-variables-fonctions',
+                        'advanced-programming-languages/rust/conditions-et-boucles',
+                        'advanced-programming-languages/rust/ownership-et-borrowing',
+                        'advanced-programming-languages/rust/structures-de-donnees',
+                        'advanced-programming-languages/rust/modelisation-comportement-objets',
+                        'advanced-programming-languages/rust/types-generiques'
+                    ]
+                },
+                {
+                    type: 'category',
+                    label: 'C++',
+                    items: [
+                        'advanced-programming-languages/cpp/introduction',
+                    ]
+                }
+            ]
+        },
+        {
+            type: 'category',
             label: 'Mastering the Stack: Complete Guide',
             items: [
                 {
@@ -39,36 +76,6 @@ module.exports = {
                 'mastering-the-stack/angular',
                 'mastering-the-stack/css'
             ],
-        },
-        {
-            type: 'category',
-            label: 'Advanced Programming Languages',
-            items: [
-                {
-                    type: 'category',
-                    label: 'Haskell',
-                    items: [
-                        'advanced-programming-languages/haskell/introduction',
-                        'advanced-programming-languages/haskell/types-variables-fonctions',
-                        'advanced-programming-languages/haskell/conditions',
-                        'advanced-programming-languages/haskell/structures-de-donnees',
-                        'advanced-programming-languages/haskell/recursivite'
-                    ]
-                },
-                {
-                    type: 'category',
-                    label: 'Rust',
-                    items: [
-                        'advanced-programming-languages/rust/introduction',
-                        'advanced-programming-languages/rust/types-variables-fonctions',
-                        'advanced-programming-languages/rust/conditions-et-boucles',
-                        'advanced-programming-languages/rust/ownership-et-borrowing',
-                        'advanced-programming-languages/rust/structures-de-donnees',
-                        'advanced-programming-languages/rust/modelisation-comportement-objets',
-                        'advanced-programming-languages/rust/types-generiques'
-                    ]
-                },
-            ]
         },
         'maitriser-anglais'
     ],
