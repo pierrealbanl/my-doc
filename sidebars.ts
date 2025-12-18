@@ -62,8 +62,10 @@ module.exports = {
                         'advanced-programming-languages/rust/introduction',
                         'advanced-programming-languages/rust/types-variables-fonctions',
                         'advanced-programming-languages/rust/conditions-et-boucles',
+                        'advanced-programming-languages/rust/ownership-et-borrowing',
                         'advanced-programming-languages/rust/structures-de-donnees',
-                        'advanced-programming-languages/rust/modelisation-comportement-objets'
+                        'advanced-programming-languages/rust/modelisation-comportement-objets',
+                        'advanced-programming-languages/rust/types-generiques'
                     ]
                 },
             ]

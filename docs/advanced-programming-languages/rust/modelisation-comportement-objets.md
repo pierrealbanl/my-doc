@@ -1,15 +1,15 @@
 ---
 id: modelisation-comportement-objets
-title: 4. Modélisation du comportement des objets
+title: 5. Modélisation du comportement des objets
 ---
 
 # Modélisation du comportement des objets
 
-## 4.1. Implémentation et méthodes : `impl`
+## 5.1. Implémentation et méthodes : `impl`
 
 Le mot-clé `impl` permet de définir le comportement associé à une `struct` ou à un `enum`, ainsi que d’implémenter des interfaces via les `trait`. Bien que Rust ne possède pas de classes, la combinaison de ces éléments permet de reproduire les principaux concepts de la programmation orientée objet.
 
-### 4.1.1. Implémentation de méthodes pour une structure
+### 5.1.1. Implémentation de méthodes pour une structure
 
 ```rust
 struct Vehicle {
@@ -43,7 +43,7 @@ Ici, le bloc `impl` permet d’implémenter des méthodes pour la structure `Veh
 
 Dans une approche orientée objet, une instance de la structure est d’abord créée, puis la méthode associée est appelée sur cette instance afin de manipuler ou d’exploiter ses données.
 
-### 4.1.2. Associer un comportement à un type avec les traits
+### 5.1.2. Associer un comportement à un type avec les traits
 
 Un trait permet de **définir un ensemble de méthodes communes.** Implémenter un trait pour un type donné `impl Trait for Type` oblige à écrire toutes les méthodes demandées par ce trait.
 
@@ -81,7 +81,7 @@ fn main() {
 
 Une fois le trait implémenté, les méthodes du trait peuvent être appelées directement sur les variables de ce type.
 
-### 4.1.3. Implémentation de méthodes pour une énumération
+### 5.1.3. Implémentation de méthodes pour une énumération
 
 ```rust
 enum VehicleFuel {
