@@ -36,6 +36,7 @@ class Vehicle {
 ```java
 public class Main {
     public static void main(String[] args) {
+        // `ferrari` est une instance de `Vehicle`
         Vehicle ferrari = new Vehicle(1380, 570);
         System.out.println("La Ferrari après 10 secondes : " + ferrari.calculateSpeed(10) + " km/h");
     }

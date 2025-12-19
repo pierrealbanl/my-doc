@@ -33,7 +33,7 @@ module.exports = {
                     type: 'category',
                     label: 'C++',
                     items: [
-                        'advanced-programming-languages/cpp/introduction',
+                        'advanced-programming-languages/cpp/introduction'
                     ]
                 }
             ]

@@ -138,8 +138,10 @@ console.log(ArrowFunction(5,5));
 Une fonction fléchée peut utiliser deux formes de retour :
 
 ```ts
+// Retour implicite
 const ArrowFunctionImplicit = (a: number, b: number): number => a + b;
 
+// Retour explicite
 const ArrowFunctionExplicit = (a: number, b: number): number => {
     return a + b;
 }
