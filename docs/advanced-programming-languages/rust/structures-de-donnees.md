@@ -107,7 +107,7 @@ fn main() {
 
 ### 4.4.1. Accéder à une valeur dans une `HashMap`
 
-La méthode `.get` permet d’accéder à la valeur associée à une clé dans une HashMap. Elle renvoie une `Option<T>`, qu’il faut traiter pour gérer le cas où la clé n’existe pas. Il existe plusieurs façons de traiter cette valeur selon que la clé est présente ou non :
+La méthode `.get` permet d’accéder à la valeur associée à une clé dans une `HashMap`. Elle renvoie une `Option<T>`, qu’il faut traiter pour gérer le cas où la clé n’existe pas. Il existe plusieurs façons de traiter cette valeur selon que la clé est présente ou non :
 
 ```rust
 use std::collections::HashMap;

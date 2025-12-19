@@ -5,7 +5,7 @@ title: 6. Types génériques
 
 # Types génériques
 
-Comme en TypeScript ou en Java, **les types génériques** en Rust permettent d’écrire des fonctions et des structures utilisables avec différents types, à condition qu’ils respectent certaines règles, tout en adoptant une approche plus stricte et plus performante.
+En rust, **Les types génériques** permettent d’écrire des fonctions et des structures utilisables avec différents types, à condition qu’ils respectent certaines règles, tout en adoptant une approche plus stricte et plus performante.
 
 Les principaux cas d’utilisation des types génériques :
 

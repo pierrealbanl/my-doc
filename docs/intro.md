@@ -8,11 +8,29 @@ title: Préambule
 
 Ce document constitue un socle technique destiné à accompagner la progression en **développement logiciel full stack**, ainsi que l’apprentissage de **langages avancés** tels que **Haskell, Rust ou C++.** L’objectif est de proposer un guide pédagogique évolutif permettant à la fois d’apprendre et de disposer d’une référence utile pour la réalisation de projets concrets.
 
+### Pré-requis et bases fondamentales
+
 Je recommande vivement de commencer par acquérir des bases en langage bas niveau, comme le C, afin de se familiariser avec les fondements essentiels de la programmation : déclaration de types, boucles, conditions et fonctions.
 
-L’apprentissage peut se faire en parallèle pour la majorité des langages, à l’exception du **Java ou du C++**, qu’il est préférable d’aborder en priorité. Ces langages offrent une base solide pour comprendre la programmation orientée objet (POO). **Les concepts fondamentaux de la POO seront principalement présentés à travers la documentation Java, car ce langage repose essentiellement sur ce paradigme**, contrairement au C++, qui est multiparadigme. *Ma recommandation personnelle est donc de commencer par l’apprentissage du Java.* Une fois ces bases acquises, l’ordre d’apprentissage des autres langages devient secondaire et peut se faire librement. Chaque documentation abordera ensuite l’implémentation de ces concepts selon le langage étudié.
+### Ordre recommandé d’apprentissage des langages
+
+L’apprentissage peut se faire en parallèle pour la majorité des langages, à l’exception du **Java ou du C++**, qu’il est préférable d’aborder en priorité. Ces langages offrent **une base solide pour comprendre la programmation orientée objet (POO).** Une fois ces bases acquises, l’ordre d’apprentissage des autres langages devient secondaire et peut se faire librement. Chaque documentation abordera ensuite l’implémentation de ces concepts selon le langage étudié.
+
+### Disclaimer concernant les définitions des concepts partagés
+
+:::warning
+La plupart des langages partagent des concepts, (par exemple les tableaux, les tuples, la POO, etc..). Les définitions de ces concepts peuvent faire l’objet de variations selon le langage étudié. Voici un aperçu des différences ou de l’absence de différences auxquelles vous pouvez vous attendre d’un langage à l’autre :
+
+> - *Java / C++* : définition ± commune et complète des concepts partagés entre les deux langages des concepts partagés, incluant des explications théoriques et des exemples complets pour chaque concept.
+> - *TypeScript* : définition des concepts partagés avec une comparaison directe avec Java, incluant des explications théoriques et des exemples complets pour chaque concept.
+> - *Rust / Haskell* : définition des concepts partagés adaptée en fonction du langage, incluant des explications théoriques et des exemples complets pour chaque concept.
+:::
+
+### Utilisation pédagogique des LLMs
 
 L’utilisation des LLMs est recommandée dès lors qu’ils sont employés comme outils pédagogiques. L’idée est de ne pas reproduire aveuglément du code sans en comprendre la logique, mais de l’utiliser comme un support d’apprentissage et de vérification.
+
+### Environnement de développement recommandé
 
 Je recommande d’utiliser les IDE de JetBrains pour leur excellente intégration automatique et leur forte présence dans le monde de la technologie. La plupart des grandes entreprises utilisent ces environnements de développement. Ils offrent un gain de temps considérable grâce à la prise en charge native de nombreux langages et à la disponibilité immédiate de plugins essentiels :
 

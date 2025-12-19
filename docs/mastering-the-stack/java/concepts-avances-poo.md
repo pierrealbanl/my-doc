@@ -5,7 +5,7 @@ title: 1. Concepts avancés de la programmation orientée objet (POO)
 
 # Concepts avancés de la programmation orientée objet (POO)
 
-**La programmation orientée objet** est une façon de programmer qui consiste à organiser le code autour d’objets plutôt que de simples fonctions. Un objet, c’est une sorte de *“chose”* qui représente un élément du monde réel (comme une voiture, un étudiant ou un compte bancaire). Ces objets sont créés à partir de classes, qui servent de modèles. Par exemple, une classe Voiture décrit ce qu’est une voiture, et on peut ensuite créer plusieurs objets de ce type (`ferrari`, `mercedes`, etc...).
+**La programmation orientée objet** est une façon de programmer qui consiste à organiser le code autour d’objets plutôt que de simples fonctions. Un objet, c’est une sorte de *“chose”* qui représente un élément du monde réel comme une *voiture, un étudiant ou un compte bancaire.*
 
 ## 1.1. Les classes et objets
 
@@ -14,26 +14,31 @@ title: 1. Concepts avancés de la programmation orientée objet (POO)
 **Une classe** est un modèle ou un plan qui décrit **les caractéristiques (propriétés) et les comportements (méthodes)** que posséderont les objets créés à partir d’elle.
 
 :::info
-Dans l’exemple qui suit, ne pas tenir compte des mots `public` et `static` et ni des types. L’important est de se concentrer uniquement sur les explications relatives aux propriétés, aux méthodes et au constructeur.
+Dans l’exemple qui suit, ne pas tenir compte des mots `public` et `static`. L’important est de se concentrer uniquement sur les explications relatives aux propriétés, aux méthodes et au constructeur.
 :::
 
 ```java
 class Vehicle {
+    // Les propriétés `weight` et `enginePower` stockent des données
     double weight;
     double enginePower;
 
+    /* Le constructeur `Vehicle(...)` est une méthode spéciale utilisée pour
+     * créer une nouvelle instance (ou objet) de type `Vehicle`.
+     * Il sert à initialiser les propriétés de l'objet avec les valeurs fournies 
+     * en paramètre, comme dans l’exemple `new Vehicle(1380, 570);`.
+     */
     Vehicle(double weight, double enginePower) {
         this.weight = weight;
         this.enginePower = enginePower;
     }
 
+    // La méthode `calculateSpeed(...)`, définit une action que l’objet peut effectuer
     double calculateSpeed(float seconds) {
         return ((enginePower / weight) * seconds) * 3.6;
     }
 }
-```
 
-```java
 public class Main {
     public static void main(String[] args) {
         // `ferrari` est une instance de `Vehicle`
@@ -46,12 +51,6 @@ public class Main {
 `ferrari` est une variable qui référence un objet, autrement dit une **instance** de la classe `Vehicle`. Lorsque l’on parle d’instance, on fait référence à l’objet complet en mémoire, c’est-à-dire à une structure qui regroupe des propriétés et des méthodes :
 
 > **Une instance** désigne le fait que cet objet a été créé à partir d'un modèle (une classe).
-
-**Les propriétés** `weight` et `enginePower`, qui **stockent des données**.
-
-**Les méthodes** `calculateSpeed(...)`, **définit une action** que l’objet peut effectuer.
-
-**Le constructeur** `Vehicle(double weight, double enginePower) {...}` est une méthode spéciale utilisée pour créer une nouvelle instance (ou objet) de type `Vehicle`. Il sert à initialiser les propriétés de l'objet  (`weight` et `enginePower`) avec les valeurs fournies en paramètre, comme dans l’exemple `new Vehicle(1380, 570);`. Ainsi, dès sa création, l’objet contient déjà les informations de l’utilisateur.
 
 ## 1.2. Modificateurs d’accès
 
