@@ -53,7 +53,7 @@ fn main() {
 
 ## 4.3. Les tuples
 
-En Rust, un tuple est une structure simple qui regroupe un nombre fixe d'éléments, où chaque élément peut avoir un type différent.
+**Un tuple** est une structure de données qui permet de regrouper plusieurs valeurs dans une seule variable, tout en conservant leur ordre. Les valeurs d’un tuple peuvent être de types différents.
 
 ```rust
 fn main() {

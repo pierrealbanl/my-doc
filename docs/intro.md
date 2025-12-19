@@ -16,16 +16,6 @@ Je recommande vivement de commencer par acquérir des bases en langage bas nivea
 
 L’apprentissage peut se faire en parallèle pour la majorité des langages, à l’exception du **Java ou du C++**, qu’il est préférable d’aborder en priorité. Ces langages offrent **une base solide pour comprendre la programmation orientée objet (POO).** Une fois ces bases acquises, l’ordre d’apprentissage des autres langages devient secondaire et peut se faire librement. Chaque documentation abordera ensuite l’implémentation de ces concepts selon le langage étudié.
 
-### Disclaimer concernant les définitions des concepts partagés
-
-:::warning
-La plupart des langages partagent des concepts, (par exemple les tableaux, les tuples, la POO, etc..). Les définitions de ces concepts peuvent faire l’objet de variations selon le langage étudié. Voici un aperçu des différences ou de l’absence de différences auxquelles vous pouvez vous attendre d’un langage à l’autre :
-
-> - *Java / C++* : définition ± commune et complète des concepts partagés entre les deux langages des concepts partagés, incluant des explications théoriques et des exemples complets pour chaque concept.
-> - *TypeScript* : définition des concepts partagés avec une comparaison directe avec Java, incluant des explications théoriques et des exemples complets pour chaque concept.
-> - *Rust / Haskell* : définition des concepts partagés adaptée en fonction du langage, incluant des explications théoriques et des exemples complets pour chaque concept.
-:::
-
 ### Utilisation pédagogique des LLMs
 
 L’utilisation des LLMs est recommandée dès lors qu’ils sont employés comme outils pédagogiques. L’idée est de ne pas reproduire aveuglément du code sans en comprendre la logique, mais de l’utiliser comme un support d’apprentissage et de vérification.

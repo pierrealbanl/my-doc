@@ -184,7 +184,7 @@ function index(): void {
 index();
 ```
 
-## 3.6. Table de correspondance : `Map<K,V>`
+## 3.6. Stocker et manipuler des paires clé–valeur : `Map<K,V>`
 
 Le fonctionnement d’une `Map` en TypeScript est proche de celui d’une `HashMap` en Java : il s’agit d’une structure de données qui permet de stocker des paires clé/valeur. Contrairement à Java, où l’on instancie souvent une classe concrète implémentant l’interface `Map` (par exemple `HashMap`), TypeScript fournit directement un unique type `Map<K, V>`.
 
