@@ -52,11 +52,131 @@ public class Main {
 
 > **Une instance** désigne le fait que cet objet a été créé à partir d'un modèle (une classe).
 
-## 1.2. Modificateurs d’accès
+## 1.2. Le polymorphisme : héritage, liaison dynamique et overloading
+
+:::info
+*Dans cette section, il n’est pas nécessaire de prêter attention aux mots-clés `public` et `private`, qui sont des modificateurs. Cette notion sera abordée plus loin, dans la section 1.3.*
+:::
+
+```java
+public class Vehicle {
+    private double weight;
+    private double enginePower;
+
+    public Vehicle(double weight, double enginePower) {
+        this.weight = weight;
+        this.enginePower = enginePower;
+    }
+
+    public double calculateSpeed(float seconds) {
+        return ((enginePower / weight) * seconds) * 3.6;
+    }
+}
+
+class Car extends Vehicle {
+    public Car(double weight, double enginePower) {
+        super(weight, enginePower);
+    }
+
+    public double calculateSpeed(float seconds) {
+        return super.calculateSpeed(seconds);
+    }
+}
+
+class Truck extends Vehicle {
+    public Truck(double weight, double enginePower) {
+        super(weight, enginePower);
+    }
+
+    public double calculateSpeed(float seconds) {
+        return super.calculateSpeed(seconds);
+    }
+}
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Vehicle ferrari = new Car(1380, 570);
+        Vehicle mercedes = new Truck(11700, 625);
+
+        System.out.println("La Ferrari après 10 secondes : " + ferrari.calculateSpeed(10) + " km/h");
+        System.out.println("La Mercedes après 10 secondes : " + mercedes.calculateSpeed(10) + " km/h");
+    }
+}
+```
+
+**L'héritage** permet à une sous-classe de réutiliser les propriétés et méthodes d'une super-classe :
+
+```java
+class Car extends Vehicle {...}
+
+class Truck extends Vehicle {...}
+```
+
+Le mot-clé `extends` signifie *"hérite de"*, c’est-à-dire que les classes `Car`et `Truck` héritent des propriétés et méthodes de la super-classe `Vehicle`. Autrement dit les classes `Car` et `Truck` sont des sous-classes de la super-classe `Vehicle`.
+
+**La liaison dynamique** est un mécanisme qui détermine quelle méthode redéfinie (overriding) doit être exécutée au moment de l’exécution, selon le type réel de l’objet référencé. Elle permet d’appeler la bonne méthode même si la variable est de type parent, mais que l’objet réel appartient à une sous-classe.
+
+:::info
+**L’overriding** est un mécanisme qui permet à une sous-classe de fournir sa propre implémentation d’une méthode déjà définie dans la classe parente. La méthode redéfinie doit avoir **le même nom, les mêmes paramètres et le même type de retour** que celle du parent.
+
+La classe `Vehicle` définit :
+
+```java
+public double calculateSpeed(float seconds) { ... }
+```
+
+Dans les sous-classes `Car` et `Truck`, la même méthode est redéfinie :
+
+```java
+public double calculateSpeed(float seconds) {
+    return super.calculateSpeed(seconds);
+}
+```
+:::
+
+:::info
+**L’overloading** est un mécanisme qui détermine quelle méthode appeler en fonction des paramètres passés. Il permet de définir plusieurs méthodes avec le même nom, mais avec des paramètres différents. Ce choix est fait au moment de la compilation, ce qui permet au compilateur de savoir exactement quelle version de la méthode exécuter.
+
+```java
+public class Vehicle {
+    private double weight;
+    private double enginePower;
+
+    public Vehicle(double weight, double enginePower) {
+        this.weight = weight;
+        this.enginePower = enginePower;
+    }
+
+    public double calculateSpeed(float seconds) {
+        return ((enginePower / weight) * seconds) * 3.6;
+    }
+
+    public double calculateSpeed(float seconds, double traction) {
+        return ((enginePower / weight) * seconds) * 3.6 * traction;
+    }
+}
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Vehicle ferrari = new Vehicle(1380, 570);
+
+        System.out.println("La Ferrari avec adhérence après 10 secondes : " + ferrari.calculateSpeed(10, 0.9) + " km/h");
+    }
+}
+```
+:::
+
+**Le polymorphisme** est le concept global qui dit qu’un même objet peut avoir plusieurs comportements différents selon le contexte. Il est rendu possible grâce à la combinaison de l’overloading (polymorphisme statique) et de la liaison dynamique (polymorphisme dynamique).
+
+## 1.3. Modificateurs d’accès
 
 **Les modificateurs d’accès** permettent de contrôler qui peut accéder à une classe, une méthode, une propriété ou un constructeur. Ils jouent un rôle essentiel pour organiser le code, protéger les données sensibles et structurer la visibilité entre les différentes parties d’un programme.
 
-### 1.2.1. Pour les classes : `public`
+### 1.3.1. Pour les classes : `public`
 
 | **Modificateur**  | **Description**                                                |
 |:------------------|:---------------------------------------------------------------|
@@ -104,7 +224,7 @@ public class Main {
 }
 ```
 
-### 1.2.2. Pour les propriétés, méthodes et constructeurs : `public`, `private` et `protected`
+### 1.3.2. Pour les propriétés, méthodes et constructeurs : `public`, `private` et `protected`
 
 | **Modificateur**  | **Description**                                      |
 |:------------------|:-----------------------------------------------------|
@@ -174,7 +294,7 @@ Ici, il est impossible d’instancier un objet lorsque le constructeur de `Vehic
 :::
 
 :::info
-Pour rendre la classe utilisable, il faut rendre le constructeur et les méthodes publiques. *Cela sera expliqué plus en détail dans la suite, notamment avec le concept de JavaBean, un modèle d’encapsulation dans la section 1.4.*
+Pour rendre la classe utilisable, il faut rendre le constructeur et les méthodes publiques. *Cela sera expliqué plus en détail dans la suite, notamment avec le concept de JavaBean, un modèle d’encapsulation dans la section 1.5.*
 :::
 
 ---
@@ -223,6 +343,8 @@ public class Main {
 }
 ```
 
+Les membres déclarés `protected` (méthodes, propriétés ou constructeurs) ne sont pas accessibles directement depuis l’extérieur de la classe. Ils sont destinés à être utilisés à l’intérieur de la classe elle-même ou par les classes qui en héritent. En pratique, un membre `protected` sert souvent de mécanisme intermédiaire : une méthode ou une propriété interne utilisée par d’autres méthodes, publiques ou non, afin de structurer la logique de la classe tout en permettant son extension par héritage.
+
 :::warning
 Petite particularité : lorsqu’une méthode est redéfinie dans une sous-classe, on ne peut pas réduire la visibilité de la méthode héritée. C’est une règle fondamentale en Java, ce qui signifie que la méthode redéfinie doit conserver au moins le même niveau d’accès que celle de la classe parente, ou bien l’élargir (par exemple, en la déclarant `protected` ou `public`).
 :::
@@ -262,11 +384,11 @@ public class Main {
 }
 ```
 
-## 1.3. Modificateurs non liés à l'accès
+## 1.4. Modificateurs non liés à l'accès
 
 **Les modificateurs non liés à l’accès** permettent de préciser le comportement, l’héritage ou l’utilisation d’une classe, d’une méthode ou d’une propriété, sans pour autant influencer leur visibilité.
 
-### 1.3.1. Pour les classes : `final` et `abstract`
+### 1.4.1. Pour les classes : `final` et `abstract`
 
 | **Modificateur** | **Description**                                       |
 |:-----------------|:------------------------------------------------------|
@@ -314,7 +436,7 @@ public class Main {
 ```
 :::
 
-### 1.3.2. Pour les propriétés et méthodes : `final`, `abstract` et `static`
+### 1.4.2. Pour les propriétés et méthodes : `final`, `abstract` et `static`
 
 | **Modificateur** | **Description**                                                                                                                                                                   |
 |:-----------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -416,7 +538,7 @@ public class Main {
 Même si on écrit `ferrari.category = "A2";`, la valeur changera aussi pour l’objet `lamborghini`. En effet, une propriété `static` est partagée par tous les objets de la classe : elle n’appartient pas à une instance, mais à la classe elle-même.
 :::
 
-## 1.4. JavaBean : modèle d'encapsulation pour structurer de données
+## 1.5. JavaBean : modèle d'encapsulation pour structurer de données
 
 **L'encapsulation** est une règle essentielle en programmation orientée objet. Elle consiste à protéger les données internes d’un objet en les rendant inaccessibles directement depuis l’extérieur.
 
@@ -459,117 +581,3 @@ public class Main {
     }
 }
 ```
-
-## 1.5. Le polymorphisme : héritage, liaison dynamique et overloading
-
-```java
-public class Vehicle {
-    private double weight;
-    private double enginePower;
-
-    public Vehicle(double weight, double enginePower) {
-        this.weight = weight;
-        this.enginePower = enginePower;
-    }
-
-    public double calculateSpeed(float seconds) {
-        return ((enginePower / weight) * seconds) * 3.6;
-    }
-}
-
-class Car extends Vehicle {
-    public Car(double weight, double enginePower) {
-        super(weight, enginePower);
-    }
-
-    public double calculateSpeed(float seconds) {
-        return super.calculateSpeed(seconds);
-    }
-}
-
-class Truck extends Vehicle {
-    public Truck(double weight, double enginePower) {
-        super(weight, enginePower);
-    }
-
-    public double calculateSpeed(float seconds) {
-        return super.calculateSpeed(seconds);
-    }
-}
-```
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        Vehicle ferrari = new Car(1380, 570);
-        Vehicle mercedes = new Truck(11700, 625);
-
-        System.out.println("La Ferrari après 10 secondes : " + ferrari.calculateSpeed(10) + " km/h");
-        System.out.println("La Mercedes après 10 secondes : " + mercedes.calculateSpeed(10) + " km/h");
-    }
-}
-```
-
-**L'héritage** permet à une sous-classe de réutiliser les propriétés et méthodes d'une super-classe :
-
-```java
-class Car extends Vehicle {...}
-
-class Truck extends Vehicle {...}
-```
-
-Le mot-clé `extends` signifie *"hérite de"*, c’est-à-dire que les classes `Car`et `Truck` héritent des propriétés et méthodes de la super-classe `Vehicle`. Autrement dit les classes `Car` et `Truck` sont des sous-classes de la super-classe `Vehicle`.
-
-**La liaison dynamique** est un mécanisme qui détermine quelle méthode redéfinie (overriding) doit être exécutée au moment de l’exécution, selon le type réel de l’objet référencé. Elle permet d’appeler la bonne méthode même si la variable est de type parent, mais que l’objet réel appartient à une sous-classe.
-
-:::info
-**L’overriding** est un mécanisme qui permet à une sous-classe de fournir sa propre implémentation d’une méthode déjà définie dans la classe parente. La méthode redéfinie doit avoir **le même nom, les mêmes paramètres et le même type de retour** que celle du parent.
-
-La classe `Vehicle` définit :
-
-```java
-public double calculateSpeed(float seconds) { ... }
-```
-
-Dans les sous-classes `Car` et `Truck`, la même méthode est redéfinie :
-
-```java
-public double calculateSpeed(float seconds) {
-    return super.calculateSpeed(seconds);
-}
-```
-:::
-
-**L’overloading** est un mécanisme qui détermine quelle méthode appeler en fonction des paramètres passés. Il permet de définir plusieurs méthodes avec le même nom, mais avec des paramètres différents. Ce choix est fait au moment de la compilation, ce qui permet au compilateur de savoir exactement quelle version de la méthode exécuter.
-
-```java
-public class Vehicle {
-    private double weight;
-    private double enginePower;
-
-    public Vehicle(double weight, double enginePower) {
-        this.weight = weight;
-        this.enginePower = enginePower;
-    }
-
-    public double calculateSpeed(float seconds) {
-        return ((enginePower / weight) * seconds) * 3.6;
-    }
-
-    public double calculateSpeed(float seconds, double traction) {
-        return ((enginePower / weight) * seconds) * 3.6 * traction;
-    }
-}
-```
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        Vehicle ferrari = new Vehicle(1380, 570);
-
-        System.out.println("La Ferrari avec adhérence après 10 secondes : " + ferrari.calculateSpeed(10, 0.9) + " km/h");
-    }
-}
-```
-
-**Le polymorphisme** est le concept global qui dit qu’un même objet peut avoir plusieurs comportements différents selon le contexte. Il est rendu possible grâce à la combinaison de l’overloading (polymorphisme statique) et de la liaison dynamique (polymorphisme dynamique).

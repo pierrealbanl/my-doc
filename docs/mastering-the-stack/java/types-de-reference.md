@@ -35,10 +35,6 @@ Petite particularité : `void` n’est pas un type de valeur utilisable pour des
 | `valueOf()`                                                                       | Tous                                              | Transforme une **chaîne de caractères** ou une **valeur primitive** en un objet wrapper.  |
 | `toString(type)`                                                                  | Tous                                              | Transforme un **primitif** en une chaîne de caractères.                                   |
 
-:::info
-*En Java, String fait partie des types de référence. Pour une explication détaillée, consulte la section 2.2.*
-:::
-
 ```java
 public class Main {
     public static void main(String[] args) {
