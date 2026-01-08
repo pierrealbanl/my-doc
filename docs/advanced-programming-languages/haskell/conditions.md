@@ -13,8 +13,8 @@ La forme classique d’une condition utilise obligatoirement les mots-clés `if`
 
 ```haskell
 isNeg :: (Num a, Ord a) => a -> Bool
-isNeg x =
-    if x < 0 then True else False
+isNeg n =
+    if n < 0 then True else False
     
 main = print (isNeg(-5))
 ```
@@ -29,8 +29,8 @@ La valeur `0` appartient obligatoirement à la classe de types `Num`. C’est po
 
 ```haskell
 isNeg :: (Num a, Ord a) => a -> Bool
-isNeg x
-    | x < 0 = True
+isNeg n
+    | n < 0 = True
     | otherwise = False
     
 main = print (isNeg(-5))
@@ -42,7 +42,7 @@ main = print (isNeg(-5))
 Lorsqu’on définit une fonction avec des guards, on ne met pas de signe `=` après le nom de la fonction. Le `=` est utilisé directement dans chaque garde :
 
 ```haskell
-isNeg x
+isNeg n
     | ...
     | otherwise = ...
 ```
