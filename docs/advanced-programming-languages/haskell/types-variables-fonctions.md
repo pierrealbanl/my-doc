@@ -97,7 +97,33 @@ Dans cet exemple, la fonction `func` s’adapte automatiquement au type de la va
 Il est également possible d’utiliser des types polymorphes avec des tuples, des listes et des classes de types. Ces notions seront expliquées plus en détail dans les parties suivantes.
 :::
 
-## 1.5. Classes de types et contraintes de typage
+## 1.5. Le type `Maybe` : approche explicite de la gestion des erreurs
+
+:::info
+*Cette section traite de la récursivité. Il est recommandé d’y revenir uniquement après avoir vu et compris ce concept, présenté dans la section 4.*
+:::
+
+Il existe plusieurs façons de gérer les cas d’erreur. La plus simple consiste à les traiter au cas par cas. Toutefois, pour rendre le code plus explicite en Haskell, on peut utiliser une autre approche : le type `Maybe`.
+
+`Maybe` est un type qui indique, dès la signature d’une fonction, qu’un résultat peut être manquant. Il permet ainsi de rendre les fonctions plus sûres en gérant explicitement les cas d’échec.
+
+```haskell
+-- Function from Length.hs
+length' :: [a] -> Int
+length' [] = 0
+length' (_ : xs) = 1 + length' xs
+
+safeIndexOf :: [a] -> Int -> Maybe a -- --> Maybe a signifie : potentiellement une valeur de type a.
+safeIndexOf [] _ = Nothing -- --> Nothing représente l’absence de valeur.
+safeIndexOf x n
+    | n >= length' x || n < 0 = Nothing -- --> Nothing représente l’absence de valeur.
+safeIndexOf (x : _) 0 = Just x -- --> Just indique qu’une valeur de type a est bien présente.
+safeIndexOf (_ : xs) n = safeIndexOf xs (n - 1)
+
+main = print (safeIndexOf [5, 10, 15, 20] 3)
+```
+
+## 1.6. Classes de types et contraintes de typage
 
 Une classe de types regroupe des types qui partagent un même ensemble d’opérations :
 
@@ -114,7 +140,7 @@ Une classe de types regroupe des types qui partagent un même ensemble d’opér
 | `Floating`          | Regroupe les types représentant des nombres décimaux                                           | `Float`, `Double`                                                             |
 | `Functor`           | Regroupe les types sur lesquels on peut appliquer une transformation avec `fmap`               | listes (`[]`), `Maybe`, `Either`, `IO`                                        |
 
-### 1.5.1. Contraindre les types avec l’opérateur `=>`
+### 1.6.1. Contraindre les types avec l’opérateur `=>`
 
 Une contrainte de type permet de limiter les types utilisables par une fonction grâce aux classes de types. L’opérateur `=>` sépare à gauche, les contraintes sur les types et à droite, le type proprement dit de la fonction.
 
@@ -142,28 +168,23 @@ main = print (equals 5 10)
 ```
 :::
 
-## 1.6. Le type `Maybe` : approche explicite de la gestion des erreurs
+### 1.6.2. Définition de types et génération automatique d’instances avec `data` et `deriving`
 
-:::info
-*Cette section traite de la récursivité. Il est recommandé d’y revenir uniquement après avoir vu et compris ce concept, présenté dans la section 4.*
-:::
-
-Il existe plusieurs façons de gérer les cas d’erreur. La plus simple consiste à les traiter au cas par cas. Toutefois, pour rendre le code plus explicite en Haskell, on peut utiliser une autre approche : le type `Maybe`. 
-
-`Maybe` est un type qui indique, dès la signature d’une fonction, qu’un résultat peut être manquant. Il permet ainsi de rendre les fonctions plus sûres en gérant explicitement les cas d’échec.
+`data` permet de définir les formes possibles d’une valeur.
 
 ```haskell
--- Function from Length.hs
-length' :: [a] -> Int
-length' [] = 0
-length' (_ : xs) = 1 + length' xs
+data Vehicle = Ferrari | Mercedes | Lamborghini
+    deriving Eq
+```
 
-safeIndexOf :: [a] -> Int -> Maybe a -- --> Maybe a signifie : potentiellement une valeur de type a.
-safeIndexOf [] _ = Nothing -- --> Nothing représente l’absence de valeur.
-safeIndexOf x n
-    | n >= length' x || n < 0 = Nothing -- --> Nothing représente l’absence de valeur.
-safeIndexOf (x : _) 0 = Just x -- --> Just indique qu’une valeur de type a est bien présente.
-safeIndexOf (_ : xs) n = safeIndexOf xs (n - 1)
+`data Vehicle` signifie : *voici toutes les formes que le type `Vehicle` peut prendre.* 
 
-main = print (safeIndexOf [5, 10, 15, 20] 3)
+Ce qui nous intéresse ici, c’est `deriving`, qui permet de demander au compilateur de générer automatiquement du code lors de la compilation. Dans notre cas, `deriving Eq` génère le code nécessaire pour comparer les différentes valeurs du type `Vehicle` et déterminer si deux valeurs sont identiques ou non.
+
+```
+ghci> Ferrari == Mercedes
+False
+
+ghci> Ferrari == Ferrari
+True
 ```
