@@ -167,24 +167,3 @@ equals x y = x == y
 main = print (equals 5 10)
 ```
 :::
-
-### 1.6.2. Définition de types et génération automatique d’instances avec `data` et `deriving`
-
-`data` permet de définir les formes possibles d’une valeur.
-
-```haskell
-data Vehicle = Ferrari | Mercedes | Lamborghini
-    deriving Eq
-```
-
-`data Vehicle` signifie : *voici toutes les formes que le type `Vehicle` peut prendre.* 
-
-Ce qui nous intéresse ici, c’est `deriving`, qui permet de demander au compilateur de générer automatiquement du code lors de la compilation. Dans notre cas, `deriving Eq` génère le code nécessaire pour comparer les différentes valeurs du type `Vehicle` et déterminer si deux valeurs sont identiques ou non.
-
-```
-ghci> Ferrari == Mercedes
-False
-
-ghci> Ferrari == Ferrari
-True
-```

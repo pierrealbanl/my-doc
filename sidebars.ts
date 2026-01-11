@@ -7,13 +7,22 @@ module.exports = {
             items: [
                 {
                     type: 'category',
+                    label: 'C++',
+                    items: [
+                        'advanced-programming-languages/cpp/introduction',
+                        'advanced-programming-languages/cpp/concepts-avances-poo'
+                    ]
+                },
+                {
+                    type: 'category',
                     label: 'Haskell',
                     items: [
                         'advanced-programming-languages/haskell/introduction',
                         'advanced-programming-languages/haskell/types-variables-fonctions',
                         'advanced-programming-languages/haskell/conditions',
                         'advanced-programming-languages/haskell/structures-de-donnees',
-                        'advanced-programming-languages/haskell/recursivite'
+                        'advanced-programming-languages/haskell/recursivite',
+                        'advanced-programming-languages/haskell/haskell-avance',
                     ]
                 },
                 {
@@ -27,14 +36,6 @@ module.exports = {
                         'advanced-programming-languages/rust/structures-de-donnees',
                         'advanced-programming-languages/rust/modelisation-comportement-objets',
                         'advanced-programming-languages/rust/types-generiques'
-                    ]
-                },
-                {
-                    type: 'category',
-                    label: 'C++',
-                    items: [
-                        'advanced-programming-languages/cpp/introduction',
-                        'advanced-programming-languages/cpp/concepts-avances-poo'
                     ]
                 }
             ]
