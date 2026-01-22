@@ -34,9 +34,9 @@ Pour créer une classe, on définit d’abord sa déclaration dans un fichier d�
          * en paramètre, comme dans l’exemple `new Vehicle(1380, 570);`.
          */
         Vehicle(double weight, double enginePower);
-        
+
         // La méthode `calculateSpeed(...)`, définit une action que l’objet peut effectuer
-        double calculateSpeed(float seconds);
+        double calculateSpeed(float seconds) const;
     };
 
 #endif // VEHICLE_H
@@ -47,11 +47,11 @@ Le comportement réel des méthodes (et l’initialisation des propriétés) est
 ```cpp title="Vehicle.cpp"
 #include "Vehicle.h"
 
-Vehicle::Vehicle(double weight, double enginePower)
+Vehicle::Vehicle(const double weight, const double enginePower)
     : weight(weight), enginePower(enginePower) {}
 
-double Vehicle::calculateSpeed(float seconds) {
-    return ((enginePower / weight) * seconds) * 3.6;
+double Vehicle::calculateSpeed(const float seconds) const {
+    return ((this->enginePower / this->weight) * seconds) * 3.6;
 }
 ```
 
@@ -63,8 +63,9 @@ Une fois la classe définie, il est possible de créer une instance de la classe
 
 int main() {
     // `ferrari` est une instance de `Vehicle`
-    Vehicle ferrari(1380, 570);
-    std::cout << "Vitesse après 10 secondes : " << ferrari.calculateSpeed(10) << " km/h\n";
+    Vehicle const ferrari(1380, 570);
+    
+    std::cout << "Vitesse apres 10 secondes : " << ferrari.calculateSpeed(10) << " km/h\n";
 }
 ```
 
@@ -75,7 +76,7 @@ int main() {
 ## 1.2. Le polymorphisme : héritage, liaison dynamique et overloading
 
 :::info
-*Dans cette section, il n’est pas nécessaire de prêter attention aux mots-clés `public`, `private` et `override`, qui sont des modificateurs. Cette notion sera abordée plus loin, dans la section 1.3.1. et 1.4.3.*
+*Dans cette section, il n’est pas nécessaire de prêter attention aux mots-clés `protected`, `public` et `override`, qui sont des modificateurs. Cette notion sera abordée plus loin, dans la section 1.3.1. et 1.4.3.*
 :::
 
 ```cpp title="Vehicle.h"
@@ -83,13 +84,14 @@ int main() {
     #define VEHICLE_H
 
     class Vehicle {
-    private:
-        double weight, enginePower;
+    protected:
+        double _weight, _enginePower;
     public:
         Vehicle(double weight, double enginePower);
 
         // Évite les problèmes de ressources non libérées, les fuites mémoire et les comportements indéfinis
         virtual ~Vehicle() = default;
+        
         // `virtual` permet de choisir la méthode à appeler au moment de l’exécution
         virtual double calculateSpeed(float seconds);
     };
@@ -114,25 +116,25 @@ int main() {
 ```cpp title="Vehicle.cpp"
 #include "Vehicle.h"
 
-Vehicle::Vehicle(double weight, double enginePower)
-    : weight(weight), enginePower(enginePower) {}
+Vehicle::Vehicle(const double weight, const double enginePower)
+    : _weight(weight), _enginePower(enginePower) {}
 
-double Vehicle::calculateSpeed(float seconds) {
-    return ((enginePower / weight) * seconds) * 3.6;
+double Vehicle::calculateSpeed(const float seconds) {
+    return ((this->_enginePower / this->_weight) * seconds) * 3.6;
 }
 
-Car::Car(double weight, double enginePower)
+Car::Car(const double weight, const double enginePower)
     : Vehicle(weight, enginePower) {}
 
-double Car::calculateSpeed(float seconds) {
-    return Vehicle::calculateSpeed(seconds);
+double Car::calculateSpeed(const float seconds) {
+    return ((this->_enginePower / this->_weight) * seconds) * 7.2;
 }
 
-Truck::Truck(double weight, double enginePower)
+Truck::Truck(const double weight, const double enginePower)
     : Vehicle(weight, enginePower) {}
 
-double Truck::calculateSpeed(float seconds) {
-    return Vehicle::calculateSpeed(seconds);
+double Truck::calculateSpeed(const float seconds) {
+    return ((this->_enginePower / this->_weight) * seconds) * 10.8;
 }
 ```
 
@@ -143,12 +145,12 @@ double Truck::calculateSpeed(float seconds) {
 int main() {
     // `ferrari` est un pointeur de type `Vehicle` vers un objet de type `Car`
     Vehicle *ferrari = new Car(1380, 570);
-    
+
     // `mercedes` est un pointeur de type `Vehicle` vers un objet de type `Truck`
     Vehicle *mercedes = new Car(11700, 625);
 
-    std::cout << "Vitesse après 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
-    std::cout << "Vitesse après 10 secondes : " << mercedes->calculateSpeed(10) << " km/h\n";
+    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
+    std::cout << "Vitesse apres 10 secondes : " << mercedes->calculateSpeed(10) << " km/h\n";
 
     delete ferrari;
     delete mercedes;
@@ -175,17 +177,17 @@ Par défaut, **la liasion n'est pas dynamique elle est static.** L’utilisation
 La classe `Vehicle` définit :
 
 ```cpp
-double Vehicle::calculateSpeed(float seconds) {...}
+double Vehicle::calculateSpeed(const float seconds) const {...}
 ```
 
 Dans les sous-classes `Car` et `Truck`, la même méthode est redéfinie :
 
 ```cpp
-double Car::calculateSpeed(float seconds) {
+double Car::calculateSpeed(const float seconds) {
     return Vehicle::calculateSpeed(seconds);
 }
 
-double Truck::calculateSpeed(float seconds) {
+double Truck::calculateSpeed(const float seconds) {
     return Vehicle::calculateSpeed(seconds);
 }
 ```
@@ -200,12 +202,12 @@ double Truck::calculateSpeed(float seconds) {
 
     class Vehicle {
     private:
-        double weight, enginePower;
+        double _weight, _enginePower;
     public:
         Vehicle(double weight, double enginePower);
 
-        double calculateSpeed(float seconds);
-        double calculateSpeed(float seconds, double traction);
+        double calculateSpeed(float seconds) const;
+        double calculateSpeed(float seconds, double traction) const;
     };
 
 #endif // VEHICLE_H
@@ -215,14 +217,14 @@ double Truck::calculateSpeed(float seconds) {
 #include "Vehicle.h"
 
 Vehicle::Vehicle(double weight, double enginePower)
-    : weight(weight), enginePower(enginePower) {}
+    : _weight(weight), _enginePower(enginePower) {}
 
-double Vehicle::calculateSpeed(float seconds) {
-    return ((enginePower / weight) * seconds) * 3.6;
+double Vehicle::calculateSpeed(const float seconds) const {
+    return ((this->_enginePower / this->_weight) * seconds) * 3.6;
 }
 
-double Vehicle::calculateSpeed(float seconds, double traction) {
-    return ((enginePower / weight) * seconds) * 3.6 * traction;
+double Vehicle::calculateSpeed(const float seconds, const double traction) const {
+    return ((this->_enginePower / this->_weight) * seconds) * 3.6 * traction;
 }
 ```
 
@@ -232,9 +234,9 @@ double Vehicle::calculateSpeed(float seconds, double traction) {
 
 int main() {
     // `ferrari` est une instance de `Vehicle`
-    Vehicle *ferrari = new Vehicle(1380, 570);
+    Vehicle const *ferrari = new Vehicle(1380, 570);
 
-    std::cout << "Vitesse après 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
+    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
 
     delete ferrari;
 }
@@ -261,9 +263,7 @@ int main() {
     public:
         double weight, enginePower;
         Vehicle(double weight, double enginePower);
-
-        virtual ~Vehicle() = default;
-        virtual double calculateSpeed(float seconds);
+        double calculateSpeed(float seconds) const;
     };
 
 #endif // VEHICLE_H
@@ -272,11 +272,11 @@ int main() {
 ```cpp title="Vehicle.cpp"
 #include "Vehicle.h"
 
-Vehicle::Vehicle(double weight, double enginePower)
+Vehicle::Vehicle(const double weight, const double enginePower)
     : weight(weight), enginePower(enginePower) {}
 
-double Vehicle::calculateSpeed(float seconds) {
-    return ((enginePower / weight) * seconds) * 3.6;
+double Vehicle::calculateSpeed(const float seconds) const {
+    return ((this->enginePower / this->weight) * seconds) * 3.6;
 }
 ```
 
@@ -285,9 +285,9 @@ double Vehicle::calculateSpeed(float seconds) {
 #include "Vehicle.h"
 
 int main() {
-    Vehicle *ferrari = new Vehicle(1380, 570);
+    Vehicle const *ferrari = new Vehicle(1380, 570);
 
-    std::cout << "Vitesse après 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
+    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
 
     delete ferrari;
 }
@@ -305,11 +305,9 @@ int main() {
 
     class Vehicle {
     private:
-        double weight, enginePower;
+        double _weight, _enginePower;
         Vehicle(double weight, double enginePower);
-
-        virtual ~Vehicle() = default;
-        virtual double calculateSpeed(float seconds);
+        double calculateSpeed(float seconds) const;
     };
 
 #endif // VEHICLE_H
@@ -318,11 +316,11 @@ int main() {
 ```cpp title="Vehicle.cpp"
 #include "Vehicle.h"
 
-Vehicle::Vehicle(double weight, double enginePower)
-    : weight(weight), enginePower(enginePower) {}
+Vehicle::Vehicle(const double weight, const double enginePower)
+    : _weight(weight), _enginePower(enginePower) {}
 
-double Vehicle::calculateSpeed(float seconds) {
-    return ((enginePower / weight) * seconds) * 3.6;
+double Vehicle::calculateSpeed(const float seconds) const {
+    return ((this->_enginePower / this->_weight) * seconds) * 3.6;
 }
 ```
 
@@ -332,10 +330,10 @@ double Vehicle::calculateSpeed(float seconds) {
 
 int main() {
     // Erreur de compilation
-    Vehicle *ferrari = new Vehicle(1380, 570);
+    Vehicle const *ferrari = new Vehicle(1380, 570);
 
     // Erreur de compilation
-    std::cout << "Vitesse après 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
+    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
 
     // Erreur de compilation
     delete ferrari;
@@ -362,10 +360,9 @@ Ici, il est impossible d’instancier un objet lorsque le constructeur de `Vehic
 
     class Vehicle {
     protected:
-        double weight, enginePower;
+        double _weight, _enginePower;
         Vehicle(double weight, double enginePower);
-        
-    // Une méthode publique est nécessaire pour exploiter la liaison dynamique        
+    // Une méthode publique est nécessaire pour exploiter la liaison dynamique
     public:
         virtual ~Vehicle() = default;
         virtual double calculateSpeed(float seconds);
@@ -383,18 +380,18 @@ Ici, il est impossible d’instancier un objet lorsque le constructeur de `Vehic
 ```cpp title="Vehicle.cpp"
 #include "Vehicle.h"
 
-Vehicle::Vehicle(double weight, double enginePower)
-    : weight(weight), enginePower(enginePower) {}
+Vehicle::Vehicle(const double weight, const double enginePower)
+    : _weight(weight), _enginePower(enginePower) {}
 
-double Vehicle::calculateSpeed(float seconds) {
-    return ((enginePower / weight) * seconds) * 3.6;
+double Vehicle::calculateSpeed(const float seconds) {
+    return ((this->_enginePower / this->_weight) * seconds) * 3.6;
 }
 
-Car::Car(double weight, double enginePower)
+Car::Car(const double weight, const double enginePower)
     : Vehicle(weight, enginePower) {}
 
-double Car::calculateSpeed(float seconds) {
-    return Vehicle::calculateSpeed(seconds);
+double Car::calculateSpeed(const float seconds) {
+    return ((this->_enginePower / this->_weight) * seconds) * 7.2;
 }
 ```
 
@@ -405,7 +402,7 @@ double Car::calculateSpeed(float seconds) {
 int main() {
     Vehicle *ferrari = new Car(1380, 570);
 
-    std::cout << "Vitesse après 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
+    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
 
     delete ferrari;
 }
@@ -453,10 +450,10 @@ Les membres déclarés `protected` (méthodes, propriétés ou constructeurs) ne
     public:
         static double weight;
         const double enginePower;
+        
         Vehicle(double enginePower);
 
-        virtual ~Vehicle() = default;
-        virtual double calculateSpeed(float seconds);
+        double calculateSpeed(float seconds) const;
     };
 
 #endif // VEHICLE_H
@@ -465,12 +462,12 @@ Les membres déclarés `protected` (méthodes, propriétés ou constructeurs) ne
 ```cpp title="Vehicle.cpp"
 #include "Vehicle.h"
 
-Vehicle::Vehicle(double enginePower)
+Vehicle::Vehicle(const double enginePower)
     : enginePower(enginePower) {}
 
 double Vehicle::weight = 1380;
 
-double Vehicle::calculateSpeed(float seconds) {
+double Vehicle::calculateSpeed(const float seconds) const {
 
     return ((enginePower / weight) * seconds) * 3.6;
 }
@@ -481,9 +478,9 @@ double Vehicle::calculateSpeed(float seconds) {
 #include "Vehicle.h"
 
 int main() {
-    Vehicle *ferrari = new Vehicle(570);
+    Vehicle const *ferrari = new Vehicle(570);
 
-    std::cout << "Vitesse après 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
+    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
 
     delete ferrari;
 }
@@ -502,8 +499,11 @@ int main() {
     class Vehicle {
     public:
         double weight, enginePower;
+
         Vehicle(double weight, double enginePower);
-        double calculateSpeed(float seconds);
+        virtual ~Vehicle() = default;
+
+        virtual double calculateSpeed(float seconds);
     };
 
     class Car : public Vehicle {
@@ -518,18 +518,18 @@ int main() {
 ```cpp title="Vehicle.cpp"
 #include "Vehicle.h"
 
-Vehicle::Vehicle(double weight, double enginePower)
+Vehicle::Vehicle(const double weight, const double enginePower)
     : weight(weight), enginePower(enginePower) {}
 
-double Vehicle::calculateSpeed(float seconds) {
-    return ((enginePower / weight) * seconds) * 3.6;
+double Vehicle::calculateSpeed(const float seconds) {
+    return ((this->enginePower / this->weight) * seconds) * 3.6;
 }
 
-Car::Car(double weight, double enginePower)
+Car::Car(const double weight, const double enginePower)
     : Vehicle(weight, enginePower) {}
 
-double Car::calculateSpeed(float seconds) {
-    return Vehicle::calculateSpeed(seconds);
+double Car::calculateSpeed(const float seconds) {
+    return ((this->enginePower / this->weight) * seconds) * 7.2;
 }
 ```
 
@@ -540,7 +540,7 @@ double Car::calculateSpeed(float seconds) {
 int main() {
     Vehicle *ferrari = new Car(1380, 570);
 
-    std::cout << "Vitesse après 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
+    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
 
     delete ferrari;
 }
@@ -561,9 +561,10 @@ Lorsqu’une méthode virtuelle est redéfinie dans une sous classe, il ne s’a
     class Vehicle {
     public:
         double weight, enginePower;
+        
         Vehicle(double weight, double enginePower);
-
         virtual ~Vehicle() = default;
+        
         virtual double calculateSpeed(float seconds) final; // Erreur de compilation
     };
 
@@ -590,21 +591,21 @@ class Vehicle {
 public:
     static std::string category;
 
-    static double releaseDate(double date) {
+    static double releaseDate(const double date) {
         return date;
     }
 };
 
-std::string Vehicle::category = "";
+std::string Vehicle::category;
 
 int main() {
-    Vehicle *ferrari = new Vehicle();
-    Vehicle *lamborghini = new Vehicle();
+    Vehicle const *ferrari = new Vehicle();
+    Vehicle const *lamborghini = new Vehicle();
     Vehicle::category = "A1";
 
-    std::cout << "Date de sortie des voitures : " << ferrari->releaseDate(2024) << "\n";
-    std::cout << "Catégorie de la Ferrari : " << ferrari->category << "\n";
-    std::cout << "Catégorie de la Lamborghini : " << lamborghini->category << "\n";
+    std::cout << "Date de sortie des voitures : " << Vehicle::releaseDate(2024) << "\n";
+    std::cout << "Categorie de la Ferrari : " << Vehicle::category << "\n";
+    std::cout << "Categorie de la Lamborghini : " << Vehicle::category << "\n";
 
     delete ferrari;
     delete lamborghini;
@@ -626,8 +627,7 @@ int main() {
         double weight, enginePower;
         Vehicle(double weight, double enginePower);
 
-        virtual ~Vehicle() = default;
-        virtual double calculateSpeed(float seconds) const;
+        double calculateSpeed(float seconds) const;
     };
 
 #endif // VEHICLE_H
@@ -636,12 +636,12 @@ int main() {
 ```cpp title="Vehicle.cpp"
 #include "Vehicle.h"
 
-Vehicle::Vehicle(double weight, double enginePower)
+Vehicle::Vehicle(const double weight, const double enginePower)
     : weight(weight), enginePower(enginePower) {}
 
-double Vehicle::calculateSpeed(float seconds) const {
+double Vehicle::calculateSpeed(const float seconds) const {
     // Erreur de compilation
-    enginePower = 500;
+    this->enginePower = 500;
     return ((enginePower / weight) * seconds) * 3.6;
 }
 ```
@@ -651,9 +651,9 @@ double Vehicle::calculateSpeed(float seconds) const {
 #include "Vehicle.h"
 
 int main() {
-    Vehicle *ferrari = new Vehicle(1380, 570);
+    Vehicle const *ferrari = new Vehicle(1380, 570);
 
-    std::cout << "Vitesse après 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
+    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
 
     delete ferrari;
 }
