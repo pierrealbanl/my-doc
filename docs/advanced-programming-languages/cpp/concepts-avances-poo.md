@@ -147,7 +147,7 @@ int main() {
     Vehicle *ferrari = new Car(1380, 570);
 
     // `mercedes` est un pointeur de type `Vehicle` vers un objet de type `Truck`
-    Vehicle *mercedes = new Car(11700, 625);
+    Vehicle *mercedes = new Truck(11700, 625);
 
     std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
     std::cout << "Vitesse apres 10 secondes : " << mercedes->calculateSpeed(10) << " km/h\n";
@@ -184,11 +184,11 @@ Dans les sous-classes `Car` et `Truck`, la même méthode est redéfinie :
 
 ```cpp
 double Car::calculateSpeed(const float seconds) {
-    return Vehicle::calculateSpeed(seconds);
+    return ((this->_enginePower / this->_weight) * seconds) * 7.2;
 }
 
 double Truck::calculateSpeed(const float seconds) {
-    return Vehicle::calculateSpeed(seconds);
+    return ((this->_enginePower / this->_weight) * seconds) * 10.8;
 }
 ```
 :::
@@ -561,11 +561,11 @@ Lorsqu’une méthode virtuelle est redéfinie dans une sous classe, il ne s’a
     class Vehicle {
     public:
         double weight, enginePower;
-        
+            
         Vehicle(double weight, double enginePower);
         virtual ~Vehicle() = default;
-        
-        virtual double calculateSpeed(float seconds) final; // Erreur de compilation
+            
+        virtual double calculateSpeed(float seconds) final;
     };
 
     class Car : public Vehicle {
@@ -599,16 +599,9 @@ public:
 std::string Vehicle::category;
 
 int main() {
-    Vehicle const *ferrari = new Vehicle();
-    Vehicle const *lamborghini = new Vehicle();
     Vehicle::category = "A1";
-
     std::cout << "Date de sortie des voitures : " << Vehicle::releaseDate(2024) << "\n";
-    std::cout << "Categorie de la Ferrari : " << Vehicle::category << "\n";
-    std::cout << "Categorie de la Lamborghini : " << Vehicle::category << "\n";
-
-    delete ferrari;
-    delete lamborghini;
+    std::cout << "Categorie des voitures : " << Vehicle::category << "\n";
 }
 ```
 
