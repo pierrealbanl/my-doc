@@ -6,7 +6,7 @@ title: Préambule
 
 # Préambule
 
-Ce document constitue un socle technique destiné à accompagner la progression en **développement logiciel full stack**, ainsi que l’apprentissage de **langages avancés** tels que **Haskell, Rust ou C++.** L’objectif est de proposer un guide pédagogique évolutif permettant à la fois d’apprendre et de disposer d’une référence utile pour la réalisation de projets concrets.
+Ce document constitue un socle technique destiné à accompagner la progression en **développement logiciel full stack.** L’objectif est de proposer un guide pédagogique évolutif permettant à la fois d’apprendre et de disposer d’une référence utile pour la réalisation de projets concrets.
 
 ### Pré-requis et bases fondamentales
 
@@ -14,11 +14,7 @@ Je recommande vivement de commencer par acquérir des bases en langage bas nivea
 
 ### Ordre recommandé d’apprentissage des langages
 
-L’apprentissage peut se faire en parallèle pour la majorité des langages, à l’exception du **Java ou du C++**, qu’il est préférable d’aborder en priorité. Ces langages offrent **une base solide pour comprendre la programmation orientée objet (POO).** Une fois ces bases acquises, l’ordre d’apprentissage des autres langages devient secondaire et peut se faire librement. Chaque documentation abordera ensuite l’implémentation de ces concepts selon le langage étudié.
-
-### Utilisation pédagogique des LLMs
-
-L’utilisation des LLMs est recommandée dès lors qu’ils sont employés comme outils pédagogiques. L’idée est de ne pas reproduire aveuglément du code sans en comprendre la logique, mais de l’utiliser comme un support d’apprentissage et de vérification.
+L’apprentissage peut se faire en parallèle pour la majorité des langages, à l’exception du **CPP**, qu’il est préférable d’aborder en priorité. Ce langage offre une base solide pour comprendre la programmation orientée objet (POO). Une fois ces bases acquises, l’ordre d’apprentissage des autres langages devient secondaire et peut se faire librement. Chaque documentation abordera ensuite l’implémentation de ces concepts selon le langage étudié.
 
 ### Environnement de développement recommandé
 

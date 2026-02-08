@@ -27,7 +27,15 @@ module.exports = {
         ],
     ],
 
+    markdown: {
+        mermaid: true,
+    },
+    themes: ['@docusaurus/theme-mermaid'],
+
     themeConfig: {
+        tableOfContents: {
+            maxHeadingLevel: 4,
+        },
         navbar: {
             items: [
                 {
@@ -45,7 +53,7 @@ module.exports = {
         },
         prism: {
             theme: prismThemes.vsLight,
-            additionalLanguages: ['java', 'haskell']
+            additionalLanguages: ['java']
         },
     } satisfies Preset.ThemeConfig,
 };

@@ -80,6 +80,10 @@ h3 {
     font-size: 23px;
 }
 
+h4 {
+    font-size: 20px;
+}
+
 /* Defines the general background and text color of the navigation bar. */
 .navbar {
     background-color: #ffffff;

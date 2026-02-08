@@ -9,49 +9,106 @@ title: 1. Concepts avancés de la programmation orientée objet (POO)
 
 ## 1.1. Les classes et objets
 
-**Un objet** est une structure de données qui regroupe des **valeurs nommées appelées propriétés** et des **fonctions appelées méthodes.**
+> **Un objet** est une structure de données qui regroupe des **valeurs nommées appelées propriétés** et des **fonctions appelées méthodes.**
 
-**Une classe** est un modèle ou un plan qui décrit **les caractéristiques (propriétés) et les comportements (méthodes)** que posséderont les objets créés à partir d’elle.
+> **Une classe** est un modèle ou un plan qui décrit **les caractéristiques (propriétés) et les comportements (méthodes)** que posséderont les objets créés à partir d’elle.
 
-:::info
-*Dans cette section, il n’est pas nécessaire de prêter attention aux mots-clés `public`, qui est un modificateur. Cette notion sera abordée plus loin, dans la section 1.3.1.*
-:::
+Pour créer une classe, on définit d’abord sa déclaration dans un fichier d’en-tête `.hpp`. Cette déclaration décrit la structure de la classe : ses propriétés, ses méthodes et ses constructeurs. Le fichier `.hpp` ne contient que cette description, sans implémentation :
 
-Pour créer une classe, on définit d’abord sa déclaration dans un fichier d’en-tête `.h`. Cette déclaration décrit la structure de la classe : ses propriétés, ses méthodes et ses constructeurs. Le fichier `.h` ne contient que cette description, sans implémentation :
+```cpp title="Vehicle.hpp"
+#ifndef VEHICLE_HPP
+    #define VEHICLE_HPP
 
-```cpp title="Vehicle.h"
-#ifndef VEHICLE_H
-    #define VEHICLE_H
+    // Une énumération définit un type contenant un ensemble fixe de valeurs possibles.
+    enum class Color {
+        Black,
+        White,
+        Gray,
+        Silver,
+        Red,
+        DarkRed,
+        Crimson,
+        Pink,
+        HotPink,
+        Blue,
+        DarkBlue,
+        Navy,
+        SkyBlue,
+        Cyan,
+        Turquoise,
+        Green,
+        DarkGreen,
+        Lime,
+        Olive,
+        Teal,
+        Yellow,
+        Gold,
+        Orange,
+        DarkOrange,
+        Purple,
+        Indigo,
+        Violet,
+        Magenta,
+        Brown,
+        SaddleBrown,
+        Chocolate,
+        Beige,
+        Ivory,
+        Coral
+    };
 
     class Vehicle {
     public:
-        // Les propriétés `weight` et `enginePower` stockent des données
-        double weight, enginePower;
-
-        /* Le constructeur `Vehicle(...)` est une méthode spéciale utilisée pour
-         * créer une nouvelle instance (ou objet) de type `Vehicle`.
-         * Il sert à initialiser les propriétés de l'objet avec les valeurs fournies
-         * en paramètre, comme dans l’exemple `new Vehicle(1380, 570);`.
+        /* Le constructeur `Vehicle` est une fonction spéciale appelée lors de la
+         * création d’un objet `Vehicle`. Il sert à initialiser l’objet avec la
+         * couleur passée en paramètre.
+         *
+         * NOTE : Si une classe ne possède aucune propriété à initialiser,
+         * on peut utiliser un constructeur par défaut :
+         * `Vehicle() = default;`
          */
-        Vehicle(double weight, double enginePower);
+        Vehicle(Color color);
 
-        // La méthode `calculateSpeed(...)`, définit une action que l’objet peut effectuer
-        double calculateSpeed(float seconds) const;
+        /* Le destructeur est appelé quand l’objet disparaît, pour libérer les ressources
+         * qu’il utilisait. Ici, il est défini par défaut car la classe ne gère aucune
+         * ressource dynamique (mémoire allouée manuellement, fichiers, connexions, etc.).
+         */
+        ~Vehicle() = default;
+
+        // Un setter permet de modifier une valeur
+        void setColor(Color color);
+
+        // Un getter permet de lire une valeur
+        Color getColor() const;
+    private:
+        // La propriété `_color` stocke la couleur associée au véhicule
+        Color _color;
     };
 
-#endif // VEHICLE_H
+#endif
 ```
+
+:::info
+_Les mot-clés `public` et `private` sont des modificateurs d’accès utilisés pour les propriétés, les constructeurs et les méthodes. Il existe différents types de modificateurs d’accès, qui seront présentés progressivement._
+
+> Les membres déclarés `public` sont accessibles depuis n’importe quel autre fichier, à condition que la déclaration de la classe soit visible via un `#include`.
+> 
+> Les membres déclarés `private` sont accessibles uniquement à l’intérieur de la classe dans laquelle ils sont définis.
+:::
 
 Le comportement réel des méthodes (et l’initialisation des propriétés) est ensuite implémenté dans un fichier source `.cpp` :
 
 ```cpp title="Vehicle.cpp"
-#include "Vehicle.h"
+#include "Vehicle.hpp"
 
-Vehicle::Vehicle(const double weight, const double enginePower)
-    : weight(weight), enginePower(enginePower) {}
+Vehicle::Vehicle(const Color color) : _color(color) {}
 
-double Vehicle::calculateSpeed(const float seconds) const {
-    return ((this->enginePower / this->weight) * seconds) * 3.6;
+void Vehicle::setColor(const Color color) {
+    this->_color = color;
+}
+
+Color Vehicle::getColor() const {
+    return this->_color;
 }
 ```
 
@@ -59,13 +116,14 @@ Une fois la classe définie, il est possible de créer une instance de la classe
 
 ```cpp title="main.cpp"
 #include <iostream>
-#include "Vehicle.h"
+#include "Vehicle.hpp"
 
 int main() {
     // `ferrari` est une instance de `Vehicle`
-    Vehicle const ferrari(1380, 570);
-    
-    std::cout << "Vitesse apres 10 secondes : " << ferrari.calculateSpeed(10) << " km/h\n";
+    Vehicle const ferrari(Color::Red);
+
+    if (ferrari.getColor() == Color::Red)
+        std::cout << "La couleur de la Ferrari est rouge !" << std::endl;
 }
 ```
 
@@ -73,581 +131,335 @@ int main() {
 
 > **Une instance** désigne le fait que cet objet a été créé à partir d'un modèle (une classe).
 
-## 1.2. Le polymorphisme : héritage, liaison dynamique et overloading
+## 1.2. Le polymorphisme : héritage et overriding
 
-:::info
-*Dans cette section, il n’est pas nécessaire de prêter attention aux mots-clés `protected`, `public` et `override`, qui sont des modificateurs. Cette notion sera abordée plus loin, dans la section 1.3.1. et 1.4.3.*
-:::
+> **Le polymorphisme** est le concept global qui dit qu’un même objet peut avoir plusieurs comportements différents selon le contexte, grâce aux fonctions virtuelles et à l’overriding.
 
-```cpp title="Vehicle.h"
-#ifndef VEHICLE_H
-    #define VEHICLE_H
+Si cela paraît flou, c’est normal : le concept sera abordé progressivement, étape par étape, à l’aide d’un exemple concret, puis d’explications détaillées :
+
+```cpp title="Vehicle.hpp"
+#ifndef VEHICLE_HPP
+    #define VEHICLE_HPP
+
+    enum class Color {...};
 
     class Vehicle {
-    protected:
-        double _weight, _enginePower;
     public:
-        Vehicle(double weight, double enginePower);
-
+        Vehicle(Color color);
         // Évite les problèmes de ressources non libérées, les fuites mémoire et les comportements indéfinis
         virtual ~Vehicle() = default;
-        
+
+        void setColor(Color color);
+        Color getColor() const;
+
         // `virtual` permet de choisir la méthode à appeler au moment de l’exécution
-        virtual double calculateSpeed(float seconds);
+        virtual void displayFuelType() const = 0;
+    protected:
+        Color _color;
     };
 
-    // Déclaration de la classe `Car` héritant publiquement de `Vehicle`
-    class Car : public Vehicle {
-    public:
-        Car(double weight, double enginePower);
-        double calculateSpeed(float seconds) override;
-    };
-
-    // Déclaration de la classe `Truck` héritant publiquement de `Vehicle`
-    class Truck : public Vehicle {
-    public:
-        Truck(double weight, double enginePower);
-        double calculateSpeed(float seconds) override;
-    };
-
-#endif // VEHICLE_H
+#endif
 ```
 
+:::info
+`protected` : Les membres déclarés `protected` sont accessibles à l’intérieur de la classe où ils sont définis ainsi que dans ses sous-classes. En revanche, ils ne sont pas accessibles depuis l’extérieur de cette hiérarchie de classes.
+:::
+
 ```cpp title="Vehicle.cpp"
-#include "Vehicle.h"
+#include "Vehicle.hpp"
 
-Vehicle::Vehicle(const double weight, const double enginePower)
-    : _weight(weight), _enginePower(enginePower) {}
+Vehicle::Vehicle(const Color color) : _color(color) {}
 
-double Vehicle::calculateSpeed(const float seconds) {
-    return ((this->_enginePower / this->_weight) * seconds) * 3.6;
+void Vehicle::setColor(const Color color) {
+    this->_color = color;
 }
 
-Car::Car(const double weight, const double enginePower)
-    : Vehicle(weight, enginePower) {}
+Color Vehicle::getColor() const {
+    return this->_color;
+}
+```
 
-double Car::calculateSpeed(const float seconds) {
-    return ((this->_enginePower / this->_weight) * seconds) * 7.2;
+```cpp title="Ferrari.hpp"
+#ifndef FERRARI_HPP
+    #define FERRARI_HPP
+
+    #include "Vehicle.hpp"
+
+    // Déclaration de la classe `Ferrari` héritant publiquement de `Vehicle`
+    class Ferrari : public Vehicle {
+    public:
+        Ferrari(Color color);
+        ~Ferrari() override = default;
+
+        void displayFuelType() const override;
+    };
+
+#endif
+```
+
+```cpp title="Ferrari.cpp"
+#include "Ferrari.hpp"
+#include <iostream>
+
+Ferrari::Ferrari(const Color color) : Vehicle(color) {}
+
+void Ferrari::displayFuelType() const {
+    std::cout << "Le carburant utilisé est du SP98, optimisé pour les moteurs haute performance." << std::endl;
+}
+```
+
+```cpp title="Tesla.hpp"
+#ifndef TESLA_HPP
+    #define TESLA_HPP
+
+    #include "Vehicle.hpp"
+
+    // Déclaration de la classe `Tesla` héritant publiquement de `Vehicle`
+    class Tesla : public Vehicle {
+    public:
+        Tesla(Color color);
+        ~Tesla() override = default;
+
+        void displayFuelType() const override;
+    };
+
+#endif
+```
+
+```cpp title="Tesla.cpp"
+#include "Tesla.hpp"
+#include <iostream>
+
+Tesla::Tesla(const Color color) : Vehicle(color) {}
+
+void Tesla::displayFuelType() const {
+    std::cout << "Ce véhicule est alimenté exclusivement par l’électricité." << std::endl;
 }
 
-Truck::Truck(const double weight, const double enginePower)
-    : Vehicle(weight, enginePower) {}
-
-double Truck::calculateSpeed(const float seconds) {
-    return ((this->_enginePower / this->_weight) * seconds) * 10.8;
-}
 ```
 
 ```cpp title="main.cpp"
-#include <iostream>
-#include "Vehicle.h"
+#include "Ferrari.hpp"
+#include "Tesla.hpp"
 
 int main() {
-    // `ferrari` est un pointeur de type `Vehicle` vers un objet de type `Car`
-    Vehicle *ferrari = new Car(1380, 570);
-
-    // `mercedes` est un pointeur de type `Vehicle` vers un objet de type `Truck`
-    Vehicle *mercedes = new Truck(11700, 625);
-
-    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
-    std::cout << "Vitesse apres 10 secondes : " << mercedes->calculateSpeed(10) << " km/h\n";
+    // `new Ferrari(...)` alloue un objet en mémoire et renvoie son adresse
+    const Vehicle *ferrari = new Ferrari(Color::Red);
+    ferrari->displayFuelType();
+    
+    const Vehicle *tesla = new Tesla(Color::White);
+    tesla->displayFuelType();
 
     delete ferrari;
-    delete mercedes;
+    delete tesla;
 }
 ```
 
-**L'héritage** permet à une sous-classe de réutiliser les propriétés et méthodes d'une super-classe :
+### 1.2.1. L'héritage
+
+Dans un premier temps, il convient de définir l’héritage et de comprendre son fonctionnement.
+
+> **L’héritage** permet à une sous-classe de réutiliser les propriétés et les méthodes d’une super-classe.
 
 ```cpp
-class Car : public Vehicle { ... };
+class Ferrari : public Vehicle {...};
 
-class Truck : public Vehicle { ... };
+class Tesla : public Vehicle {...};
 ```
 
-Le mot-clé `public Vehicle` signifie *"hérite de"*, c’est-à-dire que les classes `Car`et `Truck` héritent des propriétés et méthodes de la super-classe `Vehicle`. Autrement dit les classes `Car` et `Truck` sont des sous-classes de la super-classe `Vehicle`.
+Le mot-clé `public Vehicle` signifie _"hérite de"_. Ainsi, les classes `Ferrari` et `Tesla` héritent des propriétés et des méthodes de la super-classe `Vehicle`. Elles deviennent donc des sous-classes de `Vehicle`.
 
-**La liaison dynamique** est un mécanisme qui détermine quelle méthode redéfinie (overriding) doit être exécutée au moment de l’exécution, selon le type réel de l’objet référencé. Elle permet d’appeler la bonne méthode même si la variable est de type parent, mais que l’objet réel appartient à une sous-classe. 
+:::warning
+Point très important à comprendre concernant l’héritage : il arrive que certaines méthodes soient redéfinies (overriding) dans une sous-classe. Toutefois, une sous-classe peut également choisir de ne pas redéfinir une méthode et d’utiliser directement celle héritée de la classe parente.
 
-Par défaut, **la liasion n'est pas dynamique elle est static.** L’utilisation du mot-clé `virtual` permet d’activer la liaison dynamique : la méthode appelée est choisie à l’exécution selon le type réel de l’objet, même si celui-ci est manipulé via une référence d'une super-classe.
+Afin de bien comprendre ces mécanismes, il est nécessaire de distinguer la surcharge (overloading) de la redéfinition (overriding).
+:::
 
-:::info
-**L’overriding** est un mécanisme qui permet à une sous-classe de fournir sa propre implémentation d’une méthode déjà définie dans la classe parente. La méthode redéfinie doit avoir **le même nom, les mêmes paramètres et le même type de retour** que celle du parent.
+### 1.2.2. L'overriding : la redéfinition
+
+> **L’overriding** est un mécanisme qui permet à une sous-classe de fournir sa propre implémentation d’une méthode déjà définie dans la classe parente. La méthode redéfinie doit avoir **le même nom, les mêmes paramètres et le même type de retour** que celle du parent.
 
 La classe `Vehicle` définit :
 
+```cpp title="Vehicle.hpp"
+virtual void displayFuelType() const = 0;
+```
+
+Dans les sous-classes `Ferrari` et `Tesla`, la même méthode est redéfinie :
+
+```cpp title="Ferrari.hpp, Tesla.hpp"
+void displayFuelType() const override;
+```
+
+```cpp title="Ferrari.cpp, Tesla.hpp"
+void Ferrari::displayFuelType() const {
+    std::cout << "Le carburant utilisé est du SP98, optimisé pour les moteurs haute performance." << std::endl;
+}
+
+void Tesla::displayFuelType() const {
+    std::cout << "Ce véhicule est alimenté exclusivement par l’électricité." << std::endl;
+}
+```
+
+
+#### 1.2.2.1. Le mot clé `virtual`
+
+Pour comprendre le mot-clé `virtual`, il faut d’abord comprendre une problématique liée à l’héritage en programmation orientée objet. Lorsque deux objets différents partagent une même classe parente et appellent la même méthode, le compilateur ne sait pas toujours quelle version de la méthode utiliser.
+
 ```cpp
-double Vehicle::calculateSpeed(const float seconds) const {...}
+const Vehicle *ferrari = new Ferrari(Color::Red);
+ferrari->displayFuelType();
+
+const Vehicle *tesla = new Tesla(Color::White);
+tesla->displayFuelType();
 ```
 
-Dans les sous-classes `Car` et `Truck`, la même méthode est redéfinie :
+Dans ce cas, les objets sont vus comme des `Vehicle`, même s’ils sont en réalité une `Ferrari` et une `Tesla`. Sans mécanisme particulier, c’est la méthode de la classe `Vehicle` qui serait appelée. C’est ici qu’intervient le mot-clé `virtual`, qui permet **la liaison dynamique.**
 
-```cpp
-double Car::calculateSpeed(const float seconds) {
-    return ((this->_enginePower / this->_weight) * seconds) * 7.2;
-}
+> **La liaison dynamique** est un mécanisme qui détermine quelle méthode redéfinie (overriding) doit être exécutée au moment de l’exécution, selon le type réel de l’objet.
 
-double Truck::calculateSpeed(const float seconds) {
-    return ((this->_enginePower / this->_weight) * seconds) * 10.8;
-}
-```
+## 1.3. Interfaces et classes abstraites
+
+> **Une interface** est une classe abstraite qui sert uniquement à définir un contrat de comportement, sans fournir d’implémentation ni d’état.
+
+> **Une classe abstraite** est une classe qu’on ne peut pas instancier, parce qu’elle contient au moins une méthode virtuelle pure (classe abstraite = classe de base incomplète).
+
+:::warning
+Ne pas confondre **méthode virtuelle** et **méthode virtuelle pure** : ce n’est pas la même chose. Une méthode virtuelle peut avoir une implémentation dans une classe, tandis qu’une méthode virtuelle pure (déclarée avec = 0) est uniquement déclarée et doit être implémentée dans les sous-classes.
+
+> Méthode virtuelle pure : `virtual void func() = 0;`
+> 
+> Méthode virtuelle : `virtual void func();`
 :::
 
-:::info
-**L’overloading** est un mécanisme qui détermine quelle méthode appeler en fonction des paramètres passés. Il permet de définir plusieurs méthodes avec le même nom, mais avec des paramètres différents. Ce choix est fait au moment de la compilation, ce qui permet au compilateur de savoir exactement quelle version de la méthode exécuter.
+```cpp title="IVehicle.hpp"
+#ifndef IVEHICLE_HPP
+    #define IVEHICLE_HPP
 
-```cpp title="Vehicle.h"
-#ifndef VEHICLE_H
-    #define VEHICLE_H
+    enum class Color {...};
 
-    class Vehicle {
-    private:
-        double _weight, _enginePower;
+    class IVehicle {
     public:
-        Vehicle(double weight, double enginePower);
-
-        double calculateSpeed(float seconds) const;
-        double calculateSpeed(float seconds, double traction) const;
+        virtual ~IVehicle() = default;
+        virtual void setColor(Color color) = 0;
+        virtual Color getColor() const = 0;
+        virtual void displayFuelType() const = 0;
     };
 
-#endif // VEHICLE_H
+#endif
 ```
 
-```cpp title="Vehicle.cpp"
-#include "Vehicle.h"
+Dans l’exemple ci-dessus, on montre la définition d’une interface, qui est en pratique une classe abstraite.
 
-Vehicle::Vehicle(double weight, double enginePower)
-    : _weight(weight), _enginePower(enginePower) {}
+Pour créer une interface, on déclare uniquement des méthodes virtuelles pures (à implémenter plus tard dans des sous-classes), ainsi qu’un destructeur virtuel défini par défaut, indispensable pour permettre une destruction correcte via un pointeur de base.
 
-double Vehicle::calculateSpeed(const float seconds) const {
-    return ((this->_enginePower / this->_weight) * seconds) * 3.6;
-}
+```cpp title="AVehicle.hpp"
+#ifndef AVEHICLE_HPP
+    #define AVEHICLE_HPP
 
-double Vehicle::calculateSpeed(const float seconds, const double traction) const {
-    return ((this->_enginePower / this->_weight) * seconds) * 3.6 * traction;
-}
-```
+    #include "IVehicle.hpp"
 
-```cpp title="main.cpp"
-#include <iostream>
-#include "Vehicle.h"
-
-int main() {
-    // `ferrari` est une instance de `Vehicle`
-    Vehicle const *ferrari = new Vehicle(1380, 570);
-
-    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
-
-    delete ferrari;
-}
-```
-:::
-
-**Le polymorphisme** est le concept global qui dit qu’un même objet peut avoir plusieurs comportements différents selon le contexte. Il est rendu possible grâce à la combinaison de l’overloading (polymorphisme statique) et de la liaison dynamique (polymorphisme dynamique).
-
-## 1.3. Modificateurs d’accès
-
-**Les modificateurs d’accès** permettent de contrôler qui peut accéder à une méthode, une propriété ou un constructeur. Ils jouent un rôle essentiel pour organiser le code, protéger les données sensibles et structurer la visibilité entre les différentes parties d’un programme.
-
-### 1.3.1. Pour les propriétés, méthodes et constructeurs : `public`, `private` et `protected`
-
-| **Modificateur**  | **Description**                                                                                                                         |
-|:------------------|:----------------------------------------------------------------------------------------------------------------------------------------|
-| `public`          | Le code est accessible depuis n’importe quel autre fichier, à condition que la déclaration de la classe soit visible via un `#include`. |
-
-```cpp title="Vehicle.h"
-#ifndef VEHICLE_H
-    #define VEHICLE_H
-
-    class Vehicle {
+    class AVehicle : public IVehicle {
     public:
-        double weight, enginePower;
-        Vehicle(double weight, double enginePower);
-        double calculateSpeed(float seconds) const;
-    };
+        AVehicle(Color color);
+        ~AVehicle() override = default;
 
-#endif // VEHICLE_H
-```
-
-```cpp title="Vehicle.cpp"
-#include "Vehicle.h"
-
-Vehicle::Vehicle(const double weight, const double enginePower)
-    : weight(weight), enginePower(enginePower) {}
-
-double Vehicle::calculateSpeed(const float seconds) const {
-    return ((this->enginePower / this->weight) * seconds) * 3.6;
-}
-```
-
-```cpp title="main.cpp"
-#include <iostream>
-#include "Vehicle.h"
-
-int main() {
-    Vehicle const *ferrari = new Vehicle(1380, 570);
-
-    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
-
-    delete ferrari;
-}
-```
-
----
-
-| **Modificateur**  | **Description**                                                                |
-|:------------------|:-------------------------------------------------------------------------------|
-| `private`         | Le code est accessible uniquement à l’intérieur de la classe où il est défini. |
-
-```cpp title="Vehicle.h"
-#ifndef VEHICLE_H
-    #define VEHICLE_H
-
-    class Vehicle {
-    private:
-        double _weight, _enginePower;
-        Vehicle(double weight, double enginePower);
-        double calculateSpeed(float seconds) const;
-    };
-
-#endif // VEHICLE_H
-```
-
-```cpp title="Vehicle.cpp"
-#include "Vehicle.h"
-
-Vehicle::Vehicle(const double weight, const double enginePower)
-    : _weight(weight), _enginePower(enginePower) {}
-
-double Vehicle::calculateSpeed(const float seconds) const {
-    return ((this->_enginePower / this->_weight) * seconds) * 3.6;
-}
-```
-
-```cpp title="main.cpp"
-#include <iostream>
-#include "Vehicle.h"
-
-int main() {
-    // Erreur de compilation
-    Vehicle const *ferrari = new Vehicle(1380, 570);
-
-    // Erreur de compilation
-    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
-
-    // Erreur de compilation
-    delete ferrari;
-}
-```
-
-:::danger
-Ici, il est impossible d’instancier un objet lorsque le constructeur de `Vehicle` est privé, et il est également impossible d’appeler une méthode privée depuis une autre classe.
-:::
-
----
-
-| **Modificateur**  | **Description**                                                                                                                                                      |
-|:------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `protected`       | Le code est accessible à l’intérieur de la classe où il est défini et dans les sous-classes. Il n’est pas accessible depuis l’extérieur de la hiérarchie de classes. |
-
-:::info
-*Dans cette partie, il n’est pas nécessaire de prêter attention aux mots-clés `override`, qui est un modificateur. Cette notion sera abordée plus loin, dans la section 1.4.3.*
-:::
-
-```cpp title="Vehicle.h"
-#ifndef VEHICLE_H
-    #define VEHICLE_H
-
-    class Vehicle {
+        void setColor(Color color) override;
+        Color getColor() const override;
     protected:
-        double _weight, _enginePower;
-        Vehicle(double weight, double enginePower);
-    // Une méthode publique est nécessaire pour exploiter la liaison dynamique
-    public:
-        virtual ~Vehicle() = default;
-        virtual double calculateSpeed(float seconds);
+        Color _color;
     };
 
-    class Car : public Vehicle {
-    public:
-        Car(double weight, double enginePower);
-        double calculateSpeed(float seconds) override;
-    };
-
-#endif // VEHICLE_H
+#endif
 ```
 
-```cpp title="Vehicle.cpp"
-#include "Vehicle.h"
+Dans l’exemple ci-dessus, on présente la définition d’une classe abstraite qui hérite d’une interface (elle-même une classe abstraite). La classe `AVehicle` fournit une implémentation partielle, notamment pour la gestion de la couleur, mais laisse certaines méthodes non définies.
 
-Vehicle::Vehicle(const double weight, const double enginePower)
-    : _weight(weight), _enginePower(enginePower) {}
+La méthode `displayFuelType()` devra être implémentée dans les classes concrètes qui hériteront de `AVehicle`.
 
-double Vehicle::calculateSpeed(const float seconds) {
-    return ((this->_enginePower / this->_weight) * seconds) * 3.6;
-}
+## 1.4. Héritage multiple et ambiguïtés en CPP
 
-Car::Car(const double weight, const double enginePower)
-    : Vehicle(weight, enginePower) {}
+> **L’héritage multiple** est un mécanisme qui permet à une classe d’hériter de plusieurs classes parentes simultanément. La classe dérivée combine ainsi les propriétés et les méthodes de chacune de ses classes de base.
 
-double Car::calculateSpeed(const float seconds) {
-    return ((this->_enginePower / this->_weight) * seconds) * 7.2;
-}
-```
+Pour comprendre l’héritage multiple, on va reprendre le code utilisé précédemment pour présenter le polymorphisme, puis ajouter une troisième sous-classe qui héritera à la fois de `Ferrari` et de `Tesla`. On l’appellera `ExperimentalVehicle`.
 
-```cpp title="main.cpp"
-#include <iostream>
-#include "Vehicle.h"
+L’héritage multiple peut conduire à une structure appelée **héritage en diamant** lorsque plusieurs classes parentes partagent une même classe de base :
 
-int main() {
-    Vehicle *ferrari = new Car(1380, 570);
+```mermaid
+flowchart TD
 
-    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
+    IVehicle[IVehicle]
+    AVehicle[AVehicle]
+    Ferrari[Ferrari]
+    Tesla[Tesla]
+    ExperimentalVehicle[ExperimentalVehicle]
 
-    delete ferrari;
-}
-```
+    IVehicle --> AVehicle
+    AVehicle --> Ferrari
+    AVehicle --> Tesla
+    Ferrari --> ExperimentalVehicle
+    Tesla --> ExperimentalVehicle
 
-Les membres déclarés `protected` (méthodes, propriétés ou constructeurs) ne sont pas accessibles directement depuis l’extérieur de la classe. Ils sont destinés à être utilisés à l’intérieur de la classe elle-même ou par les classes qui en héritent. En pratique, un membre `protected` sert souvent de mécanisme intermédiaire : une méthode ou une propriété interne utilisée par d’autres méthodes, publiques ou non, afin de structurer la logique de la classe tout en permettant son extension par héritage.
-
-## 1.4. Modificateurs non liés à l'accès
-
-**Les modificateurs non liés à l’accès** permettent de préciser le comportement, l’héritage ou l’utilisation d’une classe, d’une méthode ou d’une propriété, sans pour autant influencer leur visibilité.
-
-### 1.4.1. Pour les classes : `final`
-
-| **Modificateur** | **Description**                                       |
-|:-----------------|:------------------------------------------------------|
-| `final`          | Empêche toute autre classe d’hériter de cette classe. |
-
-```cpp title="Vehicle.h"
-#ifndef VEHICLE_H
-    #define VEHICLE_H
-
-    class Vehicle final {
-    };
-
-    // Erreur de compilation
-    class Car : public Vehicle {
-    };
-
-#endif // VEHICLE_H
-```
-
-### 1.4.2. Pour les propriétés : `static` et `const`
-
-| Modificateur | Description                                                                                          |
-|:-------------|:-----------------------------------------------------------------------------------------------------|
-| `static`     | Associe la propriété à la classe elle-même : une seule valeur est partagée par toutes les instances. |
-| `const`      | Rend la propriété immuable après son initialisation : sa valeur ne peut plus être modifiée.          |
-
-
-```cpp title="Vehicle.h"
-#ifndef VEHICLE_H
-    #define VEHICLE_H
-
-    class Vehicle {
-    public:
-        static double weight;
-        const double enginePower;
-        
-        Vehicle(double enginePower);
-
-        double calculateSpeed(float seconds) const;
-    };
-
-#endif // VEHICLE_H
-```
-
-```cpp title="Vehicle.cpp"
-#include "Vehicle.h"
-
-Vehicle::Vehicle(const double enginePower)
-    : enginePower(enginePower) {}
-
-double Vehicle::weight = 1380;
-
-double Vehicle::calculateSpeed(const float seconds) const {
-
-    return ((enginePower / weight) * seconds) * 3.6;
-}
-```
-
-```cpp title="main.cpp"
-#include <iostream>
-#include "Vehicle.h"
-
-int main() {
-    Vehicle const *ferrari = new Vehicle(570);
-
-    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
-
-    delete ferrari;
-}
-```
-
-### 1.4.3. Pour les méthodes : `override`, `final`, `static` et `const`
-
-| **Modificateur** | **Description**                                                              |
-|:-----------------|:-----------------------------------------------------------------------------|
-| `override`       | Indique qu’une méthode redéfinit une méthode virtuelle de la classe parente. |
-
-```cpp title="Vehicle.h"
-#ifndef VEHICLE_H
-    #define VEHICLE_H
-
-    class Vehicle {
-    public:
-        double weight, enginePower;
-
-        Vehicle(double weight, double enginePower);
-        virtual ~Vehicle() = default;
-
-        virtual double calculateSpeed(float seconds);
-    };
-
-    class Car : public Vehicle {
-    public:
-        Car(double weight, double enginePower);
-        double calculateSpeed(float seconds) override;
-    };
-
-#endif // VEHICLE_H
-```
-
-```cpp title="Vehicle.cpp"
-#include "Vehicle.h"
-
-Vehicle::Vehicle(const double weight, const double enginePower)
-    : weight(weight), enginePower(enginePower) {}
-
-double Vehicle::calculateSpeed(const float seconds) {
-    return ((this->enginePower / this->weight) * seconds) * 3.6;
-}
-
-Car::Car(const double weight, const double enginePower)
-    : Vehicle(weight, enginePower) {}
-
-double Car::calculateSpeed(const float seconds) {
-    return ((this->enginePower / this->weight) * seconds) * 7.2;
-}
-```
-
-```cpp title="main.cpp"
-#include <iostream>
-#include "Vehicle.h"
-
-int main() {
-    Vehicle *ferrari = new Car(1380, 570);
-
-    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
-
-    delete ferrari;
-}
-```
-
-Lorsqu’une méthode virtuelle est redéfinie dans une sous classe, il ne s’agit pas de créer une nouvelle méthode indépendante, mais de fournir une implémentation spécifique d’une méthode définie dans la classe parente.
-
----
-
-| **Modificateur** | **Description**                                                                                                   |
-|:-----------------|:------------------------------------------------------------------------------------------------------------------|
-| `final`          | Empêche toute modification ou redéfinition : une méthode `final` ne peut pas être redéfinie dans une sous-classe. |
-
-```cpp title="Vehicle.h"
-#ifndef VEHICLE_H
-    #define VEHICLE_H
-
-    class Vehicle {
-    public:
-        double weight, enginePower;
-            
-        Vehicle(double weight, double enginePower);
-        virtual ~Vehicle() = default;
-            
-        virtual double calculateSpeed(float seconds) final;
-    };
-
-    class Car : public Vehicle {
-    public:
-        Car(double weight, double enginePower);
-        double calculateSpeed(float seconds) override; // Erreur de compilation
-    };
-
-#endif // VEHICLE_H
+    style IVehicle fill:#F7F1B8,stroke:#888,color:#333
+    style ExperimentalVehicle fill:#CDECCD,stroke:#7AA87A,color:#1F3D1F
+    style AVehicle fill:#CFE8FF,stroke:#6FA3D9,color:#1B3A57
+    style Ferrari fill:#F2F2F2,stroke:#888,color:#333
+    style Tesla fill:#F2F2F2,stroke:#888,color:#333
 ```
 
 ---
 
-| **Modificateur** | **Description**                                                                  |
-|:-----------------|:---------------------------------------------------------------------------------|
-| `static`         | Associe la propriété ou la méthode à la classe elle-même, et non à une instance. |
+Il suffit de faire hériter `Ferrari` et `Tesla` dans la déclaration de la classe :
+
+```cpp title="ExperimentalVehicle.hpp"
+#ifndef EXPERIMENTAL_VEHICLE_HPP
+    #define EXPERIMENTAL_VEHICLE_HPP
+
+    #include "Ferrari.hpp"
+    #include "Tesla.hpp"
+
+    class ExperimentalVehicle : public Ferrari, public Tesla {
+    public:
+        ExperimentalVehicle(Color color);
+        ~ExperimentalVehicle() override = default;
+
+        void displayFuelType() const override;
+    };
+
+#endif
+```
+
+Puis, dans le constructeur, on appelle les constructeurs de chacune des classes parentes :
+
+```cpp title="ExperimentalVehicle.cpp"
+#include "ExperimentalVehicle.hpp"
+#include <iostream>
+
+ExperimentalVehicle::ExperimentalVehicle(const Color color) 
+    : AVehicle(color), Ferrari(color), Tesla(color) {}
+
+void ExperimentalVehicle::displayFuelType() const {
+    std::cout << "Ce véhicule expérimental fonctionne en mode hybride." << std::endl;
+}
+```
+
+:::warning
+Le problème ici est que `ExperimentalVehicle` contient deux copies distinctes de `AVehicle`.
 
 ```cpp
-#include <iostream>
-#include <string>
-
-class Vehicle {
-public:
-    static std::string category;
-
-    static double releaseDate(const double date) {
-        return date;
-    }
-};
-
-std::string Vehicle::category;
-
-int main() {
-    Vehicle::category = "A1";
-    std::cout << "Date de sortie des voitures : " << Vehicle::releaseDate(2024) << "\n";
-    std::cout << "Categorie des voitures : " << Vehicle::category << "\n";
-}
+ExperimentalVehicle ev(Color::Red);
+ev.setColor(Color::Black); // Ambiguïté sur les membres
 ```
 
----
+Ici, le compilateur ne sait pas si l’on souhaite appeler `Ferrari::AVehicle::setColor` ou `Tesla::AVehicle::setColor`. 
 
-| **Modificateur** | **Description**                                                  |
-|:-----------------|:-----------------------------------------------------------------|
-| `const`          | Indique qu’une méthode ne modifie pas l’état interne de l’objet. |
+:::success
+Il faut donc partager une seule instance de `AVehicle` entre les deux classes en utilisant l’héritage virtuel :
 
-```cpp title="Vehicle.h"
-#ifndef VEHICLE_H
-    #define VEHICLE_H
-
-    class Vehicle {
-    public:
-        double weight, enginePower;
-        Vehicle(double weight, double enginePower);
-
-        double calculateSpeed(float seconds) const;
-    };
-
-#endif // VEHICLE_H
+```cpp
+class Ferrari : virtual public AVehicle {...}
+class Tesla : virtual public AVehicle {...}
 ```
 
-```cpp title="Vehicle.cpp"
-#include "Vehicle.h"
-
-Vehicle::Vehicle(const double weight, const double enginePower)
-    : weight(weight), enginePower(enginePower) {}
-
-double Vehicle::calculateSpeed(const float seconds) const {
-    // Erreur de compilation
-    this->enginePower = 500;
-    return ((enginePower / weight) * seconds) * 3.6;
-}
-```
-
-```cpp title="main.cpp"
-#include <iostream>
-#include "Vehicle.h"
-
-int main() {
-    Vehicle const *ferrari = new Vehicle(1380, 570);
-
-    std::cout << "Vitesse apres 10 secondes : " << ferrari->calculateSpeed(10) << " km/h\n";
-
-    delete ferrari;
-}
-```
+Dans le cas d’un héritage virtuel, c’est la classe la plus dérivée `ExperimentalVehicle` qui est responsable de la construction de la base virtuelle `AVehicle`.
+:::
