@@ -42,7 +42,7 @@ VehicleFactory::VehicleFactory() {
     * `std::unique_ptr` possède un objet dynamique et gère automatiquement sa destruction.
     */
    _map["Ferrari"] = [](Color c) {
-      return std::make_unique<Ferrari> (c);
+      return std::make_unique<Ferrari>(c);
    };
 
    _map["Tesla"] = [](Color c) {
@@ -54,6 +54,19 @@ std::unique_ptr<IVehicle> VehicleFactory::create(const std::string &key, const C
    if (_map.contains(key))
       return _map[key](color);
    return nullptr;
+}
+```
+
+```cpp title="main.cpp"
+#include "VehicleFactory.hpp"
+
+int main() {
+    VehicleFactory vehicleFactory;
+    const std::unique_ptr<IVehicle> ferrari = vehicleFactory.create("Ferrari", Color::Red);
+    const std::unique_ptr<IVehicle> tesla = vehicleFactory.create("Tesla", Color::White);
+
+    ferrari->displayFuelType();
+    tesla->displayFuelType();
 }
 ```
 
