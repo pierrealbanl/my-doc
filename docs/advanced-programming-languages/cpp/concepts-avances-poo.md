@@ -377,7 +377,7 @@ Dans l’exemple ci-dessus, on présente la définition d’une classe abstraite
 
 La méthode `displayFuelType()` devra être implémentée dans les classes concrètes qui hériteront de `AVehicle`.
 
-## 1.4. Héritage multiple et ambiguïtés en CPP
+## 1.4. Héritage multiple et ambiguïtés
 
 > **L’héritage multiple** est un mécanisme qui permet à une classe d’hériter de plusieurs classes parentes simultanément. La classe dérivée combine ainsi les propriétés et les méthodes de chacune de ses classes de base.
 

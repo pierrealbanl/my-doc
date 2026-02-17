@@ -10,7 +10,8 @@ module.exports = {
                     label: 'CPP',
                     items: [
                         'advanced-programming-languages/cpp/preambule',
-                        'advanced-programming-languages/cpp/concepts-avances-poo'
+                        'advanced-programming-languages/cpp/concepts-avances-poo',
+                        'advanced-programming-languages/cpp/factory-pattern',
                     ]
                 },
             ]
