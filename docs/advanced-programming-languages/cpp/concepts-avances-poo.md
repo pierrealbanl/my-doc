@@ -320,7 +320,7 @@ Dans ce cas, les objets sont vus comme des `Vehicle`, même s’ils sont en réa
 
 ## 1.3. Interfaces et classes abstraites
 
-> **Une interface** est une classe abstraite qui sert uniquement à définir un contrat de comportement, sans fournir d’implémentation ni d’état.
+> **Une interface** définit un contrat de comportement qu’une classe doit respecter, sans fournir d’implémentation ni contenir d’état.
 
 > **Une classe abstraite** est une classe qu’on ne peut pas instancier, parce qu’elle contient au moins une méthode virtuelle pure (classe abstraite = classe de base incomplète).
 
@@ -330,6 +330,8 @@ Ne pas confondre **méthode virtuelle** et **méthode virtuelle pure** : ce n’
 > Méthode virtuelle pure : `virtual void func() = 0;`
 > 
 > Méthode virtuelle : `virtual void func();`
+
+Il faut noter qu’une classe abstraite peut contenir des méthodes virtuelles, alors qu’une interface ne doit pas en contenir.
 :::
 
 ```cpp title="IVehicle.hpp"
@@ -348,8 +350,6 @@ Ne pas confondre **méthode virtuelle** et **méthode virtuelle pure** : ce n’
 
 #endif
 ```
-
-Dans l’exemple ci-dessus, on montre la définition d’une interface, qui est en pratique une classe abstraite.
 
 Pour créer une interface, on déclare uniquement des méthodes virtuelles pures (à implémenter plus tard dans des sous-classes), ainsi qu’un destructeur virtuel défini par défaut, indispensable pour permettre une destruction correcte via un pointeur de base.
 
