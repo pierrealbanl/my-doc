@@ -16,6 +16,14 @@ module.exports = {
                 },
             ]
         },
-        'maitriser-anglais'
+        {
+            type: 'category',
+            label: 'Boost Your English',
+            items: [
+                'boost-your-english/fondamentaux-grammaticaux',
+                'boost-your-english/vocabulaire-expressions-utiles',
+                'boost-your-english/smart-english-tips',
+            ]
+        }
     ],
 }
