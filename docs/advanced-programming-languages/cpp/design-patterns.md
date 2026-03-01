@@ -1,11 +1,13 @@
 ---
-id: factory-pattern
-title: 2. Comprendre et implémenter le Factory Pattern
+id: design-patterns
+title: 2. Comprendre et implémenter des design patterns
 ---
 
-# Comprendre et implémenter le Factory Pattern
+# Comprendre et implémenter des design patterns
 
 > Un design pattern est une façon d’organiser le code pour résoudre un problème de manière claire, maintenable et efficace. Il aide notamment à structurer le code de manière cohérente et à éviter de réinventer des solutions déjà connues.
+
+## 2.1. Le Factory Pattern
 
 Le **Factory Pattern** est un design pattern dont l’objectif est de créer des objets sans exposer leur logique de création au reste du programme. Plutôt que d’instancier directement des objets avec new, on confie cette responsabilité à une factory. Nous allons l’illustrer à travers un exemple concret.
 
