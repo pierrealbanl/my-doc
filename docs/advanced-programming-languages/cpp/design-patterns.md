@@ -53,9 +53,11 @@ VehicleFactory::VehicleFactory() {
 }
 
 std::unique_ptr<IVehicle> VehicleFactory::create(const std::string &key, const Color color) {
-   if (_map.contains(key))
-      return _map[key](color);
-   return nullptr;
+    const auto it = _map.find(key);
+
+    if (it == _map.end())
+        return nullptr;
+    return it->second(color);
 }
 ```
 
