@@ -1,4 +1,5 @@
-/* This file is based on the design language defined by IBM in particular,
+/**
+ * This file is based on the design language defined by IBM in particular,
  * its color palette described at: https://www.ibm.com/design/language/color.
  * This documentation is provided for non-commercial purposes and
  * without any direct or official involvement from IBM.
@@ -39,7 +40,7 @@ body {
     --ifm-color-content: #343a3f;
     --ifm-color-secondary: #878d96;
 
-    --ifm-menu-link-sublist-icon: url("../icons/arrow--up.svg");
+    --ifm-menu-link-sublist-icon: url("../../assets/icons/arrow--up.svg");
 }
 
 /* Defines the visual style for informational alerts. */

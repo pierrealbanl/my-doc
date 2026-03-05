@@ -13,20 +13,20 @@ Le **Factory Pattern** est un design pattern dont l’objectif est de créer des
 
 ```cpp title="VehicleFactory.hpp"
 #ifndef VEHICLE_FACTORY_HPP
-    #define VEHICLE_FACTORY_HPP
+#define VEHICLE_FACTORY_HPP
 
-    #include <functional>
-    #include <map>
-    #include <memory>
-    #include "IVehicle.hpp"
+#include <functional>
+#include <map>
+#include <memory>
+#include "IVehicle.hpp"
 
-    class VehicleFactory {
-    public:
-        VehicleFactory();
-        std::unique_ptr<IVehicle> create(const std::string &key, Color color);
-    private:
-        std::map<std::string, std::function<std::unique_ptr<IVehicle>(Color)>> _map;
-    };
+class VehicleFactory {
+public:
+    VehicleFactory();
+    std::unique_ptr<IVehicle> create(const std::string &key, Color color);
+private:
+    std::map<std::string, std::function<std::unique_ptr<IVehicle>(Color)>> _map;
+};
 
 #endif
 ```
@@ -34,22 +34,23 @@ Le **Factory Pattern** est un design pattern dont l’objectif est de créer des
 ```cpp title="VehicleFactory.cpp"
 #include "VehicleFactory.hpp"
 #include <memory>
-#include "Ferrari.hpp"
-#include "Tesla.hpp"
+#include "VehicleA.hpp"
+#include "VehicleB.hpp"
 
 VehicleFactory::VehicleFactory() {
-   /* `std::make_unique` sert à créer un objet alloué dynamiquement
-    * et à le placer directement dans un `std::unique_ptr`.
-    *
-    * `std::unique_ptr` possède un objet dynamique et gère automatiquement sa destruction.
-    */
-   _map["Ferrari"] = [](Color c) {
-      return std::make_unique<Ferrari>(c);
-   };
+    /**
+     * `std::make_unique` sert à créer un objet alloué dynamiquement
+     * et à le placer directement dans un `std::unique_ptr`.
+     *
+     * `std::unique_ptr` possède un objet dynamique et gère automatiquement sa destruction.
+     */
+    _map["vA"] = [](Color c) {
+        return std::make_unique<VehicleA>(c);
+    };
 
-   _map["Tesla"] = [](Color c) {
-      return std::make_unique<Tesla>(c);
-   };
+    _map["vB"] = [](Color c) {
+        return std::make_unique<VehicleB>(c);
+    };
 }
 
 std::unique_ptr<IVehicle> VehicleFactory::create(const std::string &key, const Color color) {
@@ -66,11 +67,11 @@ std::unique_ptr<IVehicle> VehicleFactory::create(const std::string &key, const C
 
 int main() {
     VehicleFactory vehicleFactory;
-    const std::unique_ptr<IVehicle> ferrari = vehicleFactory.create("Ferrari", Color::Red);
-    const std::unique_ptr<IVehicle> tesla = vehicleFactory.create("Tesla", Color::White);
+    const std::unique_ptr<IVehicle> vA = vehicleFactory.create("vA", Color::Red);
+    const std::unique_ptr<IVehicle> vB = vehicleFactory.create("vB", Color::White);
 
-    ferrari->displayFuelType();
-    tesla->displayFuelType();
+    vA->displayFuelType();
+    vB->displayFuelType();
 }
 ```
 

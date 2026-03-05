@@ -17,73 +17,75 @@ Pour créer une classe, on définit d’abord sa déclaration dans un fichier d�
 
 ```cpp title="Vehicle.hpp"
 #ifndef VEHICLE_HPP
-    #define VEHICLE_HPP
+#define VEHICLE_HPP
 
-    // Une énumération définit un type contenant un ensemble fixe de valeurs possibles.
-    enum class Color {
-        Black,
-        White,
-        Gray,
-        Silver,
-        Red,
-        DarkRed,
-        Crimson,
-        Pink,
-        HotPink,
-        Blue,
-        DarkBlue,
-        Navy,
-        SkyBlue,
-        Cyan,
-        Turquoise,
-        Green,
-        DarkGreen,
-        Lime,
-        Olive,
-        Teal,
-        Yellow,
-        Gold,
-        Orange,
-        DarkOrange,
-        Purple,
-        Indigo,
-        Violet,
-        Magenta,
-        Brown,
-        SaddleBrown,
-        Chocolate,
-        Beige,
-        Ivory,
-        Coral
-    };
+// Une énumération définit un type contenant un ensemble fixe de valeurs possibles.
+enum class Color {
+    Black,
+    White,
+    Gray,
+    Silver,
+    Red,
+    DarkRed,
+    Crimson,
+    Pink,
+    HotPink,
+    Blue,
+    DarkBlue,
+    Navy,
+    SkyBlue,
+    Cyan,
+    Turquoise,
+    Green,
+    DarkGreen,
+    Lime,
+    Olive,
+    Teal,
+    Yellow,
+    Gold,
+    Orange,
+    DarkOrange,
+    Purple,
+    Indigo,
+    Violet,
+    Magenta,
+    Brown,
+    SaddleBrown,
+    Chocolate,
+    Beige,
+    Ivory,
+    Coral
+};
 
-    class Vehicle {
-    public:
-        /* Le constructeur `Vehicle` est une fonction spéciale appelée lors de la
-         * création d’un objet `Vehicle`. Il sert à initialiser l’objet avec la
-         * couleur passée en paramètre.
-         *
-         * NOTE : Si une classe ne possède aucune propriété à initialiser,
-         * on peut utiliser un constructeur par défaut :
-         * `Vehicle() = default;`
-         */
-        Vehicle(Color color);
+class Vehicle {
+public:
+    /** 
+     * Le constructeur `Vehicle` est une fonction spéciale appelée lors de la
+     * création d’un objet `Vehicle`. Il sert à initialiser l’objet avec la
+     * couleur passée en paramètre.
+     *
+     * NOTE : Si une classe ne possède aucune propriété à initialiser,
+     * on peut utiliser un constructeur par défaut :
+     * `Vehicle() = default;`
+     */
+    Vehicle(Color color);
 
-        /* Le destructeur est appelé quand l’objet disparaît, pour libérer les ressources
-         * qu’il utilisait. Ici, il est défini par défaut car la classe ne gère aucune
-         * ressource dynamique (mémoire allouée manuellement, fichiers, connexions, etc.).
-         */
-        ~Vehicle() = default;
+    /** 
+     * Le destructeur est appelé quand l’objet disparaît, pour libérer les ressources
+     * qu’il utilisait. Ici, il est défini par défaut car la classe ne gère aucune
+     * ressource dynamique (mémoire allouée manuellement, fichiers, connexions, etc.).
+     */
+    ~Vehicle() = default;
 
-        // Un setter permet de modifier une valeur
-        void setColor(Color color);
+    // Un setter permet de modifier une valeur
+    void setColor(Color color);
 
-        // Un getter permet de lire une valeur
-        Color getColor() const;
-    private:
-        // La propriété `_color` stocke la couleur associée au véhicule
-        Color _color;
-    };
+    // Un getter permet de lire une valeur
+    Color getColor() const;
+private:
+    // La propriété `_color` stocke la couleur associée au véhicule
+    Color _color;
+};
 
 #endif
 ```
@@ -119,11 +121,11 @@ Une fois la classe définie, il est possible de créer une instance de la classe
 #include "Vehicle.hpp"
 
 int main() {
-    // `ferrari` est une instance de `Vehicle`
-    Vehicle const ferrari(Color::Red);
+    // Créer un nouvel objet `vehicle`, c'est-à-dire une instance de `Vehicle`.
+    Vehicle const vehicle(Color::Red);
 
-    if (ferrari.getColor() == Color::Red)
-        std::cout << "La couleur de la Ferrari est rouge !" << std::endl;
+    if (vehicle.getColor() == Color::Red)
+        std::cout << "La couleur de la voiture est rouge !" << std::endl;
 }
 ```
 
@@ -139,24 +141,24 @@ Si cela paraît flou, c’est normal : le concept sera abordé progressivement, 
 
 ```cpp title="Vehicle.hpp"
 #ifndef VEHICLE_HPP
-    #define VEHICLE_HPP
+#define VEHICLE_HPP
 
-    enum class Color {...};
+enum class Color {...};
 
-    class Vehicle {
-    public:
-        Vehicle(Color color);
-        // Évite les problèmes de ressources non libérées, les fuites mémoire et les comportements indéfinis
-        virtual ~Vehicle() = default;
+class Vehicle {
+public:
+    Vehicle(Color color);
+    // Évite les problèmes de ressources non libérées, les fuites mémoire et les comportements indéfinis
+    virtual ~Vehicle() = default;
 
-        void setColor(Color color);
-        Color getColor() const;
+    void setColor(Color color);
+    Color getColor() const;
 
-        // `virtual` permet de choisir la méthode à appeler au moment de l’exécution
-        virtual void displayFuelType() const = 0;
-    protected:
-        Color _color;
-    };
+    // `virtual` permet de choisir la méthode à appeler au moment de l’exécution
+    virtual void displayFuelType() const = 0;
+protected:
+    Color _color;
+};
 
 #endif
 ```
@@ -179,79 +181,76 @@ Color Vehicle::getColor() const {
 }
 ```
 
-```cpp title="Ferrari.hpp"
-#ifndef FERRARI_HPP
-    #define FERRARI_HPP
+```cpp title="VehicleA.hpp"
+#ifndef VEHICLE_A_HPP
+#define VEHICLE_A_HPP
 
-    #include "Vehicle.hpp"
+#include "Vehicle.hpp"
 
-    // Déclaration de la classe `Ferrari` héritant publiquement de `Vehicle`
-    class Ferrari : public Vehicle {
-    public:
-        Ferrari(Color color);
-        ~Ferrari() override = default;
+// Déclaration de la classe `VehicleA` héritant publiquement de `Vehicle`
+class VehicleA : public Vehicle {
+public:
+    VehicleA(Color color);
+    ~VehicleA() override = default;
 
-        void displayFuelType() const override;
-    };
+    void displayFuelType() const override;
+};
 
 #endif
 ```
 
-```cpp title="Ferrari.cpp"
-#include "Ferrari.hpp"
+```cpp title="VehicleA.cpp"
+#include "VehicleA.hpp"
 #include <iostream>
 
-Ferrari::Ferrari(const Color color) : Vehicle(color) {}
+VehicleA::VehicleA(const Color color) : Vehicle(color) {}
 
-void Ferrari::displayFuelType() const {
+void VehicleA::displayFuelType() const {
     std::cout << "Le carburant utilisé est du SP98, optimisé pour les moteurs haute performance." << std::endl;
 }
 ```
 
-```cpp title="Tesla.hpp"
-#ifndef TESLA_HPP
-    #define TESLA_HPP
+```cpp title="VehicleB.hpp"
+#ifndef VEHICLE_B_HPP
+#define VEHICLE_B_HPP
 
-    #include "Vehicle.hpp"
+#include "Vehicle.hpp"
 
-    // Déclaration de la classe `Tesla` héritant publiquement de `Vehicle`
-    class Tesla : public Vehicle {
-    public:
-        Tesla(Color color);
-        ~Tesla() override = default;
+// Déclaration de la classe `VehicleB` héritant publiquement de `Vehicle`
+class VehicleB : public Vehicle {
+public:
+    VehicleB(Color color);
+    ~VehicleB() override = default;
 
-        void displayFuelType() const override;
-    };
+    void displayFuelType() const override;
+};
 
 #endif
 ```
 
-```cpp title="Tesla.cpp"
-#include "Tesla.hpp"
+```cpp title="VehicleB.cpp"
+#include "VehicleB.hpp"
 #include <iostream>
 
-Tesla::Tesla(const Color color) : Vehicle(color) {}
+VehicleB::VehicleB(const Color color) : Vehicle(color) {}
 
-void Tesla::displayFuelType() const {
-    std::cout << "Ce véhicule est alimenté exclusivement par l’électricité." << std::endl;
+void VehicleB::displayFuelType() const {
+    std::cout << "Le carburant utilisé est du SP98, optimisé pour les moteurs haute performance." << std::endl;
 }
-
 ```
 
 ```cpp title="main.cpp"
-#include "Ferrari.hpp"
-#include "Tesla.hpp"
+#include "VehicleA.hpp"
+#include "VehicleB.hpp"
 
 int main() {
-    // `new Ferrari(...)` alloue un objet en mémoire et renvoie son adresse
-    const Vehicle *ferrari = new Ferrari(Color::Red);
-    ferrari->displayFuelType();
-    
-    const Vehicle *tesla = new Tesla(Color::White);
-    tesla->displayFuelType();
+    // Créer un nouvel objet `vA`, c'est-à-dire une instance de `VehicleA` qui hérite de `Vehicle`.
+    const VehicleA vA(Color::Red);
+    vA.displayFuelType();
 
-    delete ferrari;
-    delete tesla;
+    // Créer un nouvel objet `vB`, c'est-à-dire une instance de `VehicleB` qui hérite de `Vehicle`.
+    const VehicleB vB(Color::White);
+    vB.displayFuelType();
 }
 ```
 
@@ -262,12 +261,12 @@ Dans un premier temps, il convient de définir l’héritage et de comprendre so
 > **L’héritage** permet à une sous-classe de réutiliser les propriétés et les méthodes d’une super-classe.
 
 ```cpp
-class Ferrari : public Vehicle {...};
+class VehicleA : public Vehicle {...};
 
-class Tesla : public Vehicle {...};
+class VehicleB : public Vehicle {...};
 ```
 
-Le mot-clé `public Vehicle` signifie _"hérite de"_. Ainsi, les classes `Ferrari` et `Tesla` héritent des propriétés et des méthodes de la super-classe `Vehicle`. Elles deviennent donc des sous-classes de `Vehicle`.
+Le mot-clé `public Vehicle` signifie _"hérite de"_. Ainsi, les classes `VehicleA` et `VehicleB` héritent des propriétés et des méthodes de la super-classe `Vehicle`. Elles deviennent donc des sous-classes de `Vehicle`.
 
 :::warning
 Point très important à comprendre concernant l’héritage : il arrive que certaines méthodes soient redéfinies (overriding) dans une sous-classe. Toutefois, une sous-classe peut également choisir de ne pas redéfinir une méthode et d’utiliser directement celle héritée de la classe parente.
@@ -285,13 +284,13 @@ La classe `Vehicle` définit :
 virtual void displayFuelType() const = 0;
 ```
 
-Dans les sous-classes `Ferrari` et `Tesla`, la même méthode est redéfinie :
+Dans les sous-classes `VehicleA` et `VehicleB`, la même méthode est redéfinie :
 
-```cpp title="Ferrari.hpp, Tesla.hpp"
+```cpp title="VehicleA.hpp, VehicleB.hpp"
 void displayFuelType() const override;
 ```
 
-```cpp title="Ferrari.cpp, Tesla.hpp"
+```cpp title="VehicleA.cpp, VehicleB.cpp"
 void Ferrari::displayFuelType() const {
     std::cout << "Le carburant utilisé est du SP98, optimisé pour les moteurs haute performance." << std::endl;
 }
@@ -307,14 +306,14 @@ void Tesla::displayFuelType() const {
 Pour comprendre le mot-clé `virtual`, il faut d’abord comprendre une problématique liée à l’héritage en programmation orientée objet. Lorsque deux objets différents partagent une même classe parente et appellent la même méthode, le compilateur ne sait pas toujours quelle version de la méthode utiliser.
 
 ```cpp
-const Vehicle *ferrari = new Ferrari(Color::Red);
-ferrari->displayFuelType();
+const Vehicle *vA = new VehicleA(Color::Red);
+vA->displayFuelType();
 
-const Vehicle *tesla = new Tesla(Color::White);
-tesla->displayFuelType();
+const Vehicle *vB = new VehicleB(Color::White);
+vB->displayFuelType();
 ```
 
-Dans ce cas, les objets sont vus comme des `Vehicle`, même s’ils sont en réalité une `Ferrari` et une `Tesla`. Sans mécanisme particulier, c’est la méthode de la classe `Vehicle` qui serait appelée. C’est ici qu’intervient le mot-clé `virtual`, qui permet **la liaison dynamique.**
+Dans ce cas, les objets sont vus comme des `Vehicle`, même s’ils sont en réalité une `VehicleA` et une `VehicleB`. Sans mécanisme particulier, c’est la méthode de la classe `Vehicle` qui serait appelée. C’est ici qu’intervient le mot-clé `virtual`, qui permet **la liaison dynamique.**
 
 > **La liaison dynamique** est un mécanisme qui détermine quelle méthode redéfinie (overriding) doit être exécutée au moment de l’exécution, selon le type réel de l’objet.
 
@@ -336,17 +335,17 @@ Il faut noter qu’une classe abstraite peut contenir des méthodes virtuelles, 
 
 ```cpp title="IVehicle.hpp"
 #ifndef IVEHICLE_HPP
-    #define IVEHICLE_HPP
+#define IVEHICLE_HPP
 
-    enum class Color {...};
+enum class Color {...};
 
-    class IVehicle {
-    public:
-        virtual ~IVehicle() = default;
-        virtual void setColor(Color color) = 0;
-        virtual Color getColor() const = 0;
-        virtual void displayFuelType() const = 0;
-    };
+class IVehicle {
+public:
+    virtual ~IVehicle() = default;
+    virtual void setColor(Color color) = 0;
+    virtual Color getColor() const = 0;
+    virtual void displayFuelType() const = 0;
+};
 
 #endif
 ```
@@ -355,20 +354,20 @@ Pour créer une interface, on déclare uniquement des méthodes virtuelles pures
 
 ```cpp title="AVehicle.hpp"
 #ifndef AVEHICLE_HPP
-    #define AVEHICLE_HPP
+#define AVEHICLE_HPP
 
-    #include "IVehicle.hpp"
+#include "IVehicle.hpp"
 
-    class AVehicle : public IVehicle {
-    public:
-        AVehicle(Color color);
-        ~AVehicle() override = default;
+class AVehicle : public IVehicle {
+public:
+    AVehicle(Color color);
+    ~AVehicle() override = default;
 
-        void setColor(Color color) override;
-        Color getColor() const override;
-    protected:
-        Color _color;
-    };
+    void setColor(Color color) override;
+    Color getColor() const override;
+protected:
+    Color _color;
+};
 
 #endif
 ```
@@ -390,76 +389,76 @@ flowchart TD
 
     IVehicle[IVehicle]
     AVehicle[AVehicle]
-    Ferrari[Ferrari]
-    Tesla[Tesla]
-    ExperimentalVehicle[ExperimentalVehicle]
+    VehicleA[VehicleA]
+    VehicleB[VehicleB]
+    VehicleC[VehicleC]
 
     IVehicle --> AVehicle
-    AVehicle --> Ferrari
-    AVehicle --> Tesla
-    Ferrari --> ExperimentalVehicle
-    Tesla --> ExperimentalVehicle
+    AVehicle --> VehicleA
+    AVehicle --> VehicleB
+    VehicleA --> VehicleC
+    VehicleB --> VehicleC
 
     style IVehicle fill:#F7F1B8,stroke:#888,color:#333
-    style ExperimentalVehicle fill:#CDECCD,stroke:#7AA87A,color:#1F3D1F
+    style VehicleC fill:#CDECCD,stroke:#7AA87A,color:#1F3D1F
     style AVehicle fill:#CFE8FF,stroke:#6FA3D9,color:#1B3A57
-    style Ferrari fill:#F2F2F2,stroke:#888,color:#333
-    style Tesla fill:#F2F2F2,stroke:#888,color:#333
+    style VehicleA fill:#F2F2F2,stroke:#888,color:#333
+    style VehicleB fill:#F2F2F2,stroke:#888,color:#333
 ```
 
 ---
 
-Il suffit de faire hériter `Ferrari` et `Tesla` dans la déclaration de la classe :
+Il suffit de faire hériter `VehicleA` et `VehicleB` dans la déclaration de la classe :
 
-```cpp title="ExperimentalVehicle.hpp"
-#ifndef EXPERIMENTAL_VEHICLE_HPP
-    #define EXPERIMENTAL_VEHICLE_HPP
+```cpp title="VehicleC.hpp"
+#ifndef VEHICLE_C_HPP
+#define VEHICLE_C_HPP
 
-    #include "Ferrari.hpp"
-    #include "Tesla.hpp"
+#include "VehicleA.hpp"
+#include "VehicleB.hpp"
 
-    class ExperimentalVehicle : public Ferrari, public Tesla {
-    public:
-        ExperimentalVehicle(Color color);
-        ~ExperimentalVehicle() override = default;
+class VehicleC : public VehicleA, public VehicleB {
+public:
+    VehicleC(Color color);
+    ~VehicleC() override = default;
 
-        void displayFuelType() const override;
-    };
+    void displayFuelType() const override;
+};
 
 #endif
 ```
 
 Puis, dans le constructeur, on appelle les constructeurs de chacune des classes parentes :
 
-```cpp title="ExperimentalVehicle.cpp"
-#include "ExperimentalVehicle.hpp"
+```cpp title="VehicleC.cpp"
+#include "VehicleC.hpp"
 #include <iostream>
 
-ExperimentalVehicle::ExperimentalVehicle(const Color color) 
-    : AVehicle(color), Ferrari(color), Tesla(color) {}
+VehicleC::VehicleC(const Color color)
+    : AVehicle(color), VehicleA(color), VehicleB(color) {}
 
-void ExperimentalVehicle::displayFuelType() const {
+void VehicleC::displayFuelType() const {
     std::cout << "Ce véhicule expérimental fonctionne en mode hybride." << std::endl;
 }
 ```
 
 :::warning
-Le problème ici est que `ExperimentalVehicle` contient deux copies distinctes de `AVehicle`.
+Le problème ici est que `VehicleC` contient deux copies distinctes de `AVehicle`.
 
 ```cpp
-ExperimentalVehicle ev(Color::Red);
-ev.setColor(Color::Black); // Ambiguïté sur les membres
+VehicleC vC(Color::Red);
+vC.setColor(Color::Black); // Ambiguïté sur les membres
 ```
 
-Ici, le compilateur ne sait pas si l’on souhaite appeler `Ferrari::AVehicle::setColor` ou `Tesla::AVehicle::setColor`. 
+Ici, le compilateur ne sait pas si l’on souhaite appeler `VehicleA::AVehicle::setColor` ou `VehicleB::AVehicle::setColor`. 
 
 :::success
 Il faut donc partager une seule instance de `AVehicle` entre les deux classes en utilisant l’héritage virtuel :
 
 ```cpp
-class Ferrari : virtual public AVehicle {...}
-class Tesla : virtual public AVehicle {...}
+class VehicleA : virtual public AVehicle {...}
+class VehicleB : virtual public AVehicle {...}
 ```
 
-Dans le cas d’un héritage virtuel, c’est la classe la plus dérivée `ExperimentalVehicle` qui est responsable de la construction de la base virtuelle `AVehicle`.
+Dans le cas d’un héritage virtuel, c’est la classe la plus dérivée `VehicleC` qui est responsable de la construction de la base virtuelle `AVehicle`.
 :::
