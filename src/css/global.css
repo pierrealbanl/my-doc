@@ -38,6 +38,8 @@ body {
     --ifm-background-color: #ffffff;
     --ifm-color-content: #343a3f;
     --ifm-color-secondary: #878d96;
+
+    --ifm-menu-link-sublist-icon: url("../icons/arrow--up.svg");
 }
 
 /* Defines the visual style for informational alerts. */
@@ -69,18 +71,22 @@ body {
 }
 
 h1 {
+    font-weight: 400;
     font-size: 31px;
 }
 
 h2 {
+    font-weight: 400;
     font-size: 27px;
 }
 
 h3 {
+    font-weight: 400;
     font-size: 23px;
 }
 
 h4 {
+    font-weight: 400;
     font-size: 20px;
 }
 
@@ -105,7 +111,7 @@ h4 {
 
 /* Defines the style of the sidebar container on documentation pages. */
 .theme-doc-sidebar-container {
-    --doc-sidebar-width: 280px;
+    --doc-sidebar-width: 325px;
     background: #ffffff;
     box-shadow: none;
 }
@@ -167,4 +173,17 @@ h4 {
 /* Hides the bottom documentation pagination. */
 .pagination-nav {
     display: none;
+}
+
+.menu__link--sublist-caret:after {
+    width: 1.1rem;
+    height: 1.1rem;
+    min-width: 1.1rem;
+    background-size: 1.1rem 1.1rem;
+}
+
+@media (min-width: 997px) {
+    [class*="docRoot"] {
+        width: auto !important;
+    }
 }

@@ -7,7 +7,7 @@ title: 2. Vocabulaire et expressions utiles
 
 Cette section regroupe une liste de vocabulaire et d’expressions courantes en anglais. Elle permet d’enrichir son lexique, de mieux comprendre des situations du quotidien, professionnelles ou scolaires, et d’améliorer son expression écrite et orale.
 
-## 🧠 Verbes & Actions
+## Verbes & Actions
 
 | **Mots**             | **Indication**                   | **Exemples**                                                                                                                                                                                                                                  |
 |:---------------------|:---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -26,7 +26,7 @@ Cette section regroupe une liste de vocabulaire et d’expressions courantes en 
 | **to die**           | Mourir                           | *His grandfather **died** last year.* → Son grand-père est mort l’année dernière.                                                                                                                                                             |
 
 
-## 📚 Mots grammaticaux
+## Mots grammaticaux
 
 | **Mots**            | **Indication**                                                                                              | **Exemples**                                                                                                                                                                                                                                             |
 |:--------------------|:------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -48,7 +48,7 @@ Cette section regroupe une liste de vocabulaire et d’expressions courantes en 
 | **even if**         | Même si                                                                                                     | *I’ll go **even if** it rains.* → J’irai même s’il pleut.                                                                                                                                                                                                |
 | **once**            | Une fois que                                                                                                | ***Once** you arrive, call me.* → Une fois que tu arrives, appelle-moi.                                                                                                                                                                                  |
 
-## 💼 Business, travail
+## Business, travail
 
 | **Mots**                   | **Indication**                                                                           | **Exemples**                                                                                                                                                                                                                                                                                                                             |
 |:---------------------------|:-----------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -65,7 +65,7 @@ Cette section regroupe une liste de vocabulaire et d’expressions courantes en 
 | **proper**                 | Correct, approprié, adéquat                                                              | *That’s not the **proper** way to do it.* → Ce n’est pas la bonne manière de faire.                                                                                                                                                                                                                                                      |
 
 
-## 🏡 Vie quotidienne
+## Vie quotidienne
 
 | **Mots**                           | **Indication**                               | **Exemples**                                                                                                                                                                                                                                                                                     |
 |:-----------------------------------|:---------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -87,7 +87,7 @@ Cette section regroupe une liste de vocabulaire et d’expressions courantes en 
 | **luckily**                        | Heureusement                                 | ***Luckily**, nobody was hurt.* → Heureusement, personne n’a été blessé.                                                                                                                                                                                                                         |
 | **poetry**                         | La poésie                                    | *She loves reading **poetry**.* → Elle aime lire de la poésie.                                                                                                                                                                                                                                   |
 
-## 🚈 Transport, déplacements
+## Transport, déplacements
 
 | **Mots**              | **Indication**                                                                  | **Exemples**                                                                                                                                                                                   |
 | :-------------------- | :------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -100,7 +100,7 @@ Cette section regroupe une liste de vocabulaire et d’expressions courantes en 
 | **come home**   | Rentrer à la maison                                                 | *He **came home** after work.* → Il est rentré à la maison après le travail.                                                                                                                                                                                                                |
 | **see off**     | Accompagner quelqu’un pour lui dire au revoir ou repousser, chasser | *We went to the airport to **see her off**.* → Nous sommes allés à l’aéroport pour lui dire au revoir.<br/>*They **saw me off** at the train station.* → Ils m'ont accompagné à la gare pour me dire au revoir. <br/> The dog **saw off** the intruder. → Le chien a mis en fuite l’intrus. |
 
-## 🗣️ Exprimer une opinion, une impression
+## Exprimer une opinion, une impression
 
 | **Expressions** | **Indication**                                                          | **Exemples**                                                                                                                                                                              |
 | :-------------- | :---------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -108,7 +108,7 @@ Cette section regroupe une liste de vocabulaire et d’expressions courantes en 
 | **come across** | Rencontrer, tomber sur quelque chose ou donner une impression, paraître | *I **came across** an old friend at the market.* → Je suis tombé sur un vieil ami au marché.<br/>*He **comes across** as very confident.* → Il donne l’impression d’être très sûr de lui. |
 | **how sweet**   | Comme c'est mignon, que c'est gentil                                    | *Aww, **how sweet**!* → Aww, comme c’est mignon !                                                                                                                                         |
 
-## 🫂 Actions, comportement
+## Actions, comportement
 
 | **Expressions**      | **Indication**                                                  | **Exemples**                                                                                                                                                                                        |
 | :------------------- | :-------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -116,7 +116,7 @@ Cette section regroupe une liste de vocabulaire et d’expressions courantes en 
 | **trip over**        | Trébucher sur quelque chose (on précise ce qui cause la chute). | *She **tripped over** a rock.* → Elle a trébuché sur une pierre.                                                                                                                                    |
 | **to pay attention** | Faire attention, être attentif                                  | *You need to **pay attention** to the road while driving.* → Tu dois faire attention à la route en conduisant. <br/> *Please **pay attention** in class.* → S'il te plaît, sois attentif en classe. |
 
-## 📊 Fréquence, probabilité, distance
+## Fréquence, probabilité, distance
 
 | **Expressions**                                          | **Indication**                                             | **Exemples**                                                                                                                    |
 | :------------------------------------------------------- | :--------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------ |

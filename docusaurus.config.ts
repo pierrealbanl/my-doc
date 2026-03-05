@@ -42,7 +42,7 @@ module.exports = {
                     type: 'doc',
                     docId: 'intro',
                     position: 'left',
-                    label: 'Documentation'
+                    label: 'Documentation | © 2026 Pierre-Alban Louradour'
                 },
             ],
         },
