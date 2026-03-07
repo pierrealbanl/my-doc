@@ -31,10 +31,15 @@ body {
     --ifm-color-primary-lighter: #d0e2ff;
     --ifm-color-primary-lightest: #edf5ff;
 
-    --ifm-color-info: #edf5ff;
-    --ifm-color-success: #24a148;
-    --ifm-color-warning: #f1c21b;
-    --ifm-color-danger: #da1e28;
+    --ifm-color-info: #fafafa;
+    --ifm-color-success: #fafafa;
+    --ifm-color-warning: #fafafa;
+    --ifm-color-danger: #fafafa;
+
+    --ifm-color-info-contrast-foreground: var(--ifm-color-content);
+    --ifm-color-success-contrast-foreground: var(--ifm-color-content);
+    --ifm-color-warning-contrast-foreground: var(--ifm-color-content);
+    --ifm-color-danger-contrast-foreground: var(--ifm-color-content);
 
     --ifm-background-color: #ffffff;
     --ifm-color-content: #343a3f;
@@ -52,23 +57,43 @@ body {
 
 /* Defines the visual style for success alerts. */
 .alert--success {
-    --ifm-alert-background-color: color-mix(in oklab, var(--ifm-background-color) 90%, var(--ifm-color-success));
-    --ifm-alert-border-color: color-mix(in oklab, var(--ifm-background-color) 90%, var(--ifm-color-success));
+    --ifm-alert-background-color: var(--ifm-color-success);
+    --ifm-alert-border-color: var(--ifm-color-success);
     border-radius: 0;
 }
 
 /* Defines the visual style for warning alerts. */
 .alert--warning {
-    --ifm-alert-background-color: color-mix(in oklab, var(--ifm-background-color) 90%, var(--ifm-color-warning));
-    --ifm-alert-border-color: color-mix(in oklab, var(--ifm-background-color) 90%, var(--ifm-color-warning));
+    --ifm-alert-background-color: var(--ifm-color-warning);
+    --ifm-alert-border-color: var(--ifm-color-warning);
     border-radius: 0;
 }
 
 /* Defines the visual style for danger alerts. */
 .alert--danger {
-    --ifm-alert-background-color: color-mix(in oklab, var(--ifm-background-color) 90%, var(--ifm-color-danger));
-    --ifm-alert-border-color: color-mix(in oklab, var(--ifm-background-color) 90%, var(--ifm-color-danger));
+    --ifm-alert-background-color: var(--ifm-color-danger);
+    --ifm-alert-border-color: var(--ifm-color-danger);
     border-radius: 0;
+}
+
+.alert--info :not(pre) > code  {
+    color: var(--ifm-color-content);
+    background-color: #F6F7F8
+}
+
+.alert--success :not(pre) > code  {
+    color: var(--ifm-color-content);
+    background-color: #F6F7F8
+}
+
+.alert--warning :not(pre) > code  {
+    color: var(--ifm-color-content);
+    background-color: #F6F7F8
+}
+
+.alert--danger :not(pre) > code  {
+    color: var(--ifm-color-content);
+    background-color: #F6F7F8
 }
 
 h1 {

@@ -42,7 +42,7 @@ Exemple : When **I arrived**, the train **had** already **left**. → Le train e
 | **-ant**      | **-ing**  → fascinating |
 | **-ieux**     | **-ious** → curious     |
 
-## 3.5. Best Practices
+## 3.4. Best Practices
 
 1. En anglais, lorsqu’on parle de manger ou boire quelque chose, on utilise le verbe HAVE et non TAKE. Ce n’est pas naturel en anglais pour commander ou exprimer une envie de manger : *I’ll **have** a pizza. et non I’ll **take** a pizza. → Je prendrai une pizza.*
 

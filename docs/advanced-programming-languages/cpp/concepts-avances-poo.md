@@ -380,7 +380,7 @@ La méthode `displayFuelType()` devra être implémentée dans les classes concr
 
 > **L’héritage multiple** est un mécanisme qui permet à une classe d’hériter de plusieurs classes parentes simultanément. La classe dérivée combine ainsi les propriétés et les méthodes de chacune de ses classes de base.
 
-Pour comprendre l’héritage multiple, on va reprendre le code utilisé précédemment pour présenter le polymorphisme, puis ajouter une troisième sous-classe qui héritera à la fois de `Ferrari` et de `Tesla`. On l’appellera `ExperimentalVehicle`.
+Pour comprendre l’héritage multiple, on va reprendre le code utilisé précédemment pour présenter le polymorphisme, puis ajouter une troisième sous-classe qui héritera à la fois de `VehicleA` et de `VehicleB`. On l’appellera `VehicleC`.
 
 L’héritage multiple peut conduire à une structure appelée **héritage en diamant** lorsque plusieurs classes parentes partagent une même classe de base :
 
@@ -451,6 +451,7 @@ vC.setColor(Color::Black); // Ambiguïté sur les membres
 ```
 
 Ici, le compilateur ne sait pas si l’on souhaite appeler `VehicleA::AVehicle::setColor` ou `VehicleB::AVehicle::setColor`. 
+:::
 
 :::success
 Il faut donc partager une seule instance de `AVehicle` entre les deux classes en utilisant l’héritage virtuel :
